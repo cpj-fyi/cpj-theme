@@ -5,6 +5,7 @@
   "license": "MIT",
   "author": {
     "name": "Clay Parker Jones",
+    "email": "clay@cpj.fyi",
     "url": "https://cpj.fyi"
   },
   "engines": {
@@ -71,12 +72,7 @@
         "default": "",
         "description": "Custom HTML to display in the sidebar (optional)"
       },
-      "show_chapter_progress": {
-        "type": "boolean",
-        "default": true,
-        "description": "Show reading progress for book chapters"
-      },
-      "footer_tagline": {
+            "footer_tagline": {
         "type": "text",
         "default": "Exploring the hidden patterns that shape how we work.",
         "description": "Tagline displayed in the footer"
