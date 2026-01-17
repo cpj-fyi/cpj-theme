@@ -15,6 +15,12 @@ collections:
     filter: tag:essays
     data: tag.essays
 
+  /five-things/:
+    permalink: /five-things/{slug}/
+    template: tag-five-things
+    filter: tag:five-things
+    data: tag.five-things
+
   /radar/:
     permalink: /radar/{slug}/
     template: tag-radar
@@ -24,7 +30,7 @@ collections:
   /:
     permalink: /{slug}/
     template: index
-    filter: tag:-essays+tag:-radar
+    filter: tag:-essays+tag:-five-things+tag:-radar
 
 taxonomies:
   tag: /tag/{slug}/
