@@ -553,11 +553,12 @@ body.tag-radar .nav-radar {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-4);
+    align-items: start;
 }
 
 @media (min-width: 640px) {
     .post-card {
-        grid-template-columns: 1fr 200px;
+        grid-template-columns: 1fr 180px;
         gap: var(--space-6);
     }
 
@@ -571,8 +572,13 @@ body.tag-radar .nav-radar {
     }
 }
 
+/* Text-only cards (no image, full width) */
+.post-card-text-only {
+    display: block;
+}
+
 .post-card-image {
-    aspect-ratio: 16/9;
+    aspect-ratio: 1/1;
     overflow: hidden;
     background: var(--color-bg-alt);
 }
@@ -588,6 +594,15 @@ body.tag-radar .nav-radar {
     transform: scale(1.02);
 }
 
+/* Tag wrapper - only show first tag */
+.post-card-tag-wrapper {
+    margin-bottom: var(--space-2);
+}
+
+.post-card-tag-wrapper .post-card-tag:not(:first-child) {
+    display: none;
+}
+
 .post-card-tag {
     font-family: var(--font-sans);
     font-size: var(--text-xs);
@@ -595,7 +610,6 @@ body.tag-radar .nav-radar {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--color-accent);
-    margin-bottom: var(--space-2);
 }
 
 .post-card-title {

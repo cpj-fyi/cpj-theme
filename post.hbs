@@ -73,7 +73,28 @@
                     </div>
                     <div class="related-posts-grid">
                         {{#foreach posts}}
-                            {{> "post-card"}}
+                            <article class="post-card post-card-text-only">
+                                <div class="post-card-tag-wrapper">
+                                    {{#foreach tags}}
+                                        {{#match slug "essays"}}
+                                        {{else match slug "radar"}}
+                                        {{else match slug "five-things"}}
+                                        {{else}}
+                                            <span class="post-card-tag">{{name}}</span>
+                                        {{/match}}
+                                    {{/foreach}}
+                                </div>
+                                <h3 class="post-card-title">
+                                    <a href="{{url}}">{{title}}</a>
+                                </h3>
+                                <p class="post-card-excerpt">{{excerpt}}</p>
+                                <div class="post-card-meta">
+                                    <span>{{date format="MMM D, YYYY"}}</span>
+                                    {{#if reading_time}}
+                                        <span>{{reading_time}}</span>
+                                    {{/if}}
+                                </div>
+                            </article>
                         {{/foreach}}
                     </div>
                 </div>

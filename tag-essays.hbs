@@ -34,7 +34,16 @@
                                 </div>
                             {{/if}}
                             <div class="post-card-content">
-                                <div class="post-card-tag">Essay</div>
+                                <div class="post-card-tag-wrapper">
+                                    {{#foreach tags}}
+                                        {{#match slug "essays"}}
+                                        {{else match slug "radar"}}
+                                        {{else match slug "five-things"}}
+                                        {{else}}
+                                            <span class="post-card-tag">{{name}}</span>
+                                        {{/match}}
+                                    {{/foreach}}
+                                </div>
                                 <h2 class="post-card-title">
                                     <a href="{{url}}">{{title}}</a>
                                 </h2>
