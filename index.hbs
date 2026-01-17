@@ -32,15 +32,15 @@
                     </a>
                 </li>
                 <li class="book-section-item">
-                    <a href="{{@site.url}}/tag/learning/" class="book-section-link">
-                        <span>Learning</span>
-                        <span class="book-section-count">{{#get "pages" filter="tag:learning" limit="100"}}{{#foreach pages}}{{#if @last}}{{@number}}{{/if}}{{/foreach}}{{/get}} chapters</span>
-                    </a>
-                </li>
-                <li class="book-section-item">
                     <a href="{{@site.url}}/tag/practice/" class="book-section-link">
                         <span>Practice</span>
                         <span class="book-section-count">{{#get "pages" filter="tag:practice" limit="100"}}{{#foreach pages}}{{#if @last}}{{@number}}{{/if}}{{/foreach}}{{/get}} chapters</span>
+                    </a>
+                </li>
+                <li class="book-section-item">
+                    <a href="{{@site.url}}/tag/learning/" class="book-section-link">
+                        <span>Learning</span>
+                        <span class="book-section-count">{{#get "pages" filter="tag:learning" limit="100"}}{{#foreach pages}}{{#if @last}}{{@number}}{{/if}}{{/foreach}}{{/get}} chapters</span>
                     </a>
                 </li>
                 <li class="book-section-item">
@@ -84,7 +84,7 @@
                                     <div class="post-card-meta">
                                         <span>{{date format="MMM D, YYYY"}}</span>
                                         {{#if reading_time}}
-                                            <span>{{reading_time}} min read</span>
+                                            <span>{{reading_time}}</span>
                                         {{/if}}
                                     </div>
                                 </div>

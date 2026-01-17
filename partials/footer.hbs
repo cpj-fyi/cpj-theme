@@ -10,13 +10,13 @@
             </div>
 
             <div class="footer-column">
-                <h4>Chapters</h4>
+                <h4>Sections</h4>
                 <ul>
                     <li><a href="{{@site.url}}/tag/foundations/">Foundations</a></li>
                     <li><a href="{{@site.url}}/tag/structuring/">Structuring</a></li>
                     <li><a href="{{@site.url}}/tag/direction/">Direction</a></li>
-                    <li><a href="{{@site.url}}/tag/learning/">Learning</a></li>
                     <li><a href="{{@site.url}}/tag/practice/">Practice</a></li>
+                    <li><a href="{{@site.url}}/tag/learning/">Learning</a></li>
                     <li><a href="{{@site.url}}/tag/space/">Space</a></li>
                 </ul>
             </div>
@@ -30,14 +30,25 @@
                 </ul>
             </div>
 
-            <div class="footer-column">
-                <h4>About</h4>
+            {{#if @site.navigation}}
+            <div class="footer-column footer-column-nav">
                 <ul>
                     {{#foreach @site.navigation}}
                         <li><a href="{{url}}">{{label}}</a></li>
                     {{/foreach}}
                 </ul>
             </div>
+            {{/if}}
+
+            {{#if @site.secondary_navigation}}
+            <div class="footer-column footer-column-nav">
+                <ul>
+                    {{#foreach @site.secondary_navigation}}
+                        <li><a href="{{url}}">{{label}}</a></li>
+                    {{/foreach}}
+                </ul>
+            </div>
+            {{/if}}
         </div>
 
         <div class="footer-newsletter">

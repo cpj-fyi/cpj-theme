@@ -15,7 +15,7 @@
     </div>
 
     {{!-- List of chapters in this section --}}
-    {{#get "pages" filter="tag:{{section_slug}}" limit="50" order="title asc"}}
+    {{#get "pages" filter="tag:{{section_slug}}" limit="50" order="published_at asc"}}
         {{#if pages}}
             <nav class="chapter-list-nav">
                 <ul class="chapter-list">

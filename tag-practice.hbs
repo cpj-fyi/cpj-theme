@@ -31,7 +31,7 @@
                 <h2 class="section-title">Chapters</h2>
             </div>
 
-            {{#get "pages" filter="tag:practice" limit="50" order="title asc"}}
+            {{#get "pages" filter="tag:practice" limit="50" order="published_at asc"}}
                 {{#if pages}}
                     <div class="chapter-list-detailed">
                         {{#foreach pages}}
