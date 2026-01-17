@@ -1,0 +1,30 @@
+{{!< default}}
+
+{{!--
+    Default page template
+    For general pages (about, contact, etc.)
+    Book chapters should use page-chapter.hbs custom template
+--}}
+
+{{#post}}
+<article class="page {{post_class}}">
+    <header class="post-header">
+        <h1 class="post-title">{{title}}</h1>
+        {{#if custom_excerpt}}
+            <p class="post-excerpt">{{custom_excerpt}}</p>
+        {{/if}}
+    </header>
+
+    {{#if feature_image}}
+        <figure class="post-feature-image">
+            <img src="{{feature_image}}" alt="{{title}}">
+        </figure>
+    {{/if}}
+
+    <div class="post-body">
+        <div class="content">
+            {{content}}
+        </div>
+    </div>
+</article>
+{{/post}}

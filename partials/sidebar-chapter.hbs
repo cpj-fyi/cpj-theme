@@ -1,0 +1,38 @@
+{{!--
+    Chapter sidebar navigation
+    Shows all chapters in the current subsection
+    Expects: section_slug, current_slug to be set in context
+--}}
+
+<aside class="chapter-sidebar">
+    <div class="chapter-sidebar-header">
+        <div class="chapter-section-label">{{@custom.book_title}}</div>
+        {{#get "tags" filter="slug:{{section_slug}}" limit="1"}}
+            {{#foreach tags}}
+                <h2 class="chapter-section-name">{{name}}</h2>
+            {{/foreach}}
+        {{/get}}
+    </div>
+
+    {{!-- List of chapters in this section --}}
+    {{#get "pages" filter="tag:{{section_slug}}" limit="50" order="title asc"}}
+        {{#if pages}}
+            <nav class="chapter-list-nav">
+                <ul class="chapter-list">
+                    {{#foreach pages}}
+                        <li class="chapter-list-item">
+                            <a href="{{url}}" class="chapter-list-link {{#if (match slug current_slug)}}is-current{{/if}}">
+                                {{title}}
+                            </a>
+                        </li>
+                    {{/foreach}}
+                </ul>
+            </nav>
+        {{/if}}
+    {{/get}}
+
+    {{!-- Navigation to other sections --}}
+    <div class="chapter-nav">
+        {{> "book-nav" current_section=section_slug}}
+    </div>
+</aside>

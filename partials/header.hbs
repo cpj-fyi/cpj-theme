@@ -1,0 +1,31 @@
+<header class="site-header">
+    <div class="container">
+        <div class="header-inner">
+            <div class="site-masthead">
+                <a href="{{@site.url}}">{{@site.title}}</a>
+            </div>
+
+            <nav class="site-nav" id="site-nav">
+                <ul class="nav-list">
+                    <li><a href="{{@site.url}}" {{#is "home"}}class="active"{{/is}}>Home</a></li>
+                    <li><a href="{{@site.url}}/foundations/" {{#is "tag" slug="foundations"}}class="active"{{/is}}>Book</a></li>
+                    <li><a href="{{@site.url}}/essays/" {{#is "tag" slug="essays"}}class="active"{{/is}}>Essays</a></li>
+                    <li><a href="{{@site.url}}/radar/" {{#is "tag" slug="radar"}}class="active"{{/is}}>Radar</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                {{#if @member}}
+                    <a href="#/portal/account" class="btn btn-ghost">Account</a>
+                {{else}}
+                    <a href="#/portal/signin" class="btn btn-ghost">Sign in</a>
+                    <a href="#/portal/signup" class="btn btn-primary">Subscribe</a>
+                {{/if}}
+
+                <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+                    {{> "icons/menu"}}
+                </button>
+            </div>
+        </div>
+    </div>
+</header>

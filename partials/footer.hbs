@@ -1,0 +1,64 @@
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-main">
+            <div class="footer-book">
+                <div class="footer-book-label">The Book</div>
+                <h3 class="footer-book-title">{{@custom.book_title}}</h3>
+                <div class="footer-book-author">by {{@custom.book_author}}</div>
+                <p class="footer-book-description">{{@custom.book_description}}</p>
+                <a href="{{@custom.book_cta_url}}" class="btn btn-primary">{{@custom.book_cta_text}}</a>
+            </div>
+
+            <div class="footer-column">
+                <h4>Chapters</h4>
+                <ul>
+                    <li><a href="{{@site.url}}/tag/foundations/">Foundations</a></li>
+                    <li><a href="{{@site.url}}/tag/structuring/">Structuring</a></li>
+                    <li><a href="{{@site.url}}/tag/direction/">Direction</a></li>
+                    <li><a href="{{@site.url}}/tag/learning/">Learning</a></li>
+                    <li><a href="{{@site.url}}/tag/practice/">Practice</a></li>
+                    <li><a href="{{@site.url}}/tag/space/">Space</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Content</h4>
+                <ul>
+                    <li><a href="{{@site.url}}/essays/">Essays</a></li>
+                    <li><a href="{{@site.url}}/radar/">Radar</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>About</h4>
+                <ul>
+                    {{#foreach @site.navigation}}
+                        <li><a href="{{url}}">{{label}}</a></li>
+                    {{/foreach}}
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-newsletter">
+            <div class="footer-newsletter-inner">
+                <div class="footer-newsletter-text">
+                    <h4>{{@custom.sidebar_newsletter_heading}}</h4>
+                    <p>{{@custom.sidebar_newsletter_text}}</p>
+                </div>
+                <form class="footer-newsletter-form" data-members-form>
+                    <input type="email" name="email" placeholder="Your email address" required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-copyright">
+                &copy; {{date format="YYYY"}} {{@site.title}}. {{@custom.footer_tagline}}
+            </div>
+            <div class="footer-powered">
+                <a href="https://ghost.org" target="_blank" rel="noopener">Powered by Ghost</a>
+            </div>
+        </div>
+    </div>
+</footer>

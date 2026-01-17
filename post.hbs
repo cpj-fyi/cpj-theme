@@ -1,0 +1,84 @@
+{{!< default}}
+
+{{!--
+    Single post template
+    Detects if post is essay or radar and adjusts layout accordingly
+--}}
+
+{{#post}}
+<article class="post {{post_class}}">
+    <header class="post-header">
+        {{#if primary_tag}}
+            <a href="{{primary_tag.url}}" class="post-tag">{{primary_tag.name}}</a>
+        {{/if}}
+
+        <h1 class="post-title">{{title}}</h1>
+
+        {{#if custom_excerpt}}
+            <p class="post-excerpt">{{custom_excerpt}}</p>
+        {{/if}}
+
+        <div class="post-meta">
+            {{#foreach authors}}
+                <span>{{name}}</span>
+            {{/foreach}}
+            <span>{{date format="MMMM D, YYYY"}}</span>
+            {{#if reading_time}}
+                <span>{{reading_time}} min read</span>
+            {{/if}}
+        </div>
+    </header>
+
+    {{#if feature_image}}
+        <figure class="post-feature-image">
+            <img src="{{feature_image}}" alt="{{title}}">
+            {{#if feature_image_caption}}
+                <figcaption>{{feature_image_caption}}</figcaption>
+            {{/if}}
+        </figure>
+    {{/if}}
+
+    <div class="post-body">
+        <div class="content">
+            {{content}}
+        </div>
+
+        {{!-- Membership CTA for non-members on paid content --}}
+        {{#unless @member}}
+            {{#has visibility="paid"}}
+                {{> "membership-cta"}}
+            {{/has}}
+            {{#has visibility="members"}}
+                {{> "membership-cta"}}
+            {{/has}}
+        {{/unless}}
+
+        {{!-- Tags --}}
+        {{#if tags}}
+            <div class="post-tags">
+                {{#foreach tags}}
+                    <a href="{{url}}" class="post-tag-link">{{name}}</a>
+                {{/foreach}}
+            </div>
+        {{/if}}
+    </div>
+
+    {{!-- Related posts --}}
+    {{#get "posts" filter="id:-{{id}}+tag:{{primary_tag.slug}}" limit="3" include="tags,authors"}}
+        {{#if posts}}
+            <section class="related-posts">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Related</h2>
+                    </div>
+                    <div class="related-posts-grid">
+                        {{#foreach posts}}
+                            {{> "post-card"}}
+                        {{/foreach}}
+                    </div>
+                </div>
+            </section>
+        {{/if}}
+    {{/get}}
+</article>
+{{/post}}

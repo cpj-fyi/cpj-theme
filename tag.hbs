@@ -1,0 +1,38 @@
+{{!< default}}
+
+{{!--
+    Default tag archive template
+    Used for tags that don't have a specific template
+--}}
+
+<header class="archive-header">
+    <div class="container">
+        <h1 class="archive-title">{{tag.name}}</h1>
+        {{#if tag.description}}
+            <p class="archive-description">{{tag.description}}</p>
+        {{/if}}
+        <div class="archive-count">{{plural pagination.total empty="No posts" singular="% post" plural="% posts"}}</div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="essays-layout">
+        <div class="essays-main">
+            {{#if posts}}
+                <div class="essays-grid">
+                    {{#foreach posts}}
+                        {{> "post-card"}}
+                    {{/foreach}}
+                </div>
+            {{else}}
+                <p>No posts found.</p>
+            {{/if}}
+        </div>
+
+        <aside class="sidebar">
+            {{> "sidebar"}}
+        </aside>
+    </div>
+
+    {{pagination}}
+</div>

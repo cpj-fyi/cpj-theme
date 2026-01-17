@@ -1,0 +1,63 @@
+{{!--
+    Configurable sidebar
+    Includes: featured post, newsletter signup, custom HTML
+    All configurable via Ghost Admin > Design > Site design
+--}}
+
+{{!-- Featured post widget --}}
+{{#if @custom.sidebar_featured_slug}}
+    {{#get "posts" filter="slug:{{@custom.sidebar_featured_slug}}" limit="1" include="tags"}}
+        {{#if posts}}
+            <div class="sidebar-widget sidebar-featured">
+                <h3 class="sidebar-widget-title">Featured</h3>
+                {{#foreach posts}}
+                    <article class="post-card">
+                        {{#if feature_image}}
+                            <div class="post-card-image">
+                                <a href="{{url}}">
+                                    <img src="{{feature_image}}" alt="{{title}}">
+                                </a>
+                            </div>
+                        {{/if}}
+                        <h4 class="post-card-title">
+                            <a href="{{url}}">{{title}}</a>
+                        </h4>
+                        <p class="post-card-excerpt">{{excerpt words="20"}}</p>
+                    </article>
+                {{/foreach}}
+            </div>
+        {{/if}}
+    {{/get}}
+{{/if}}
+
+{{!-- Newsletter signup widget --}}
+<div class="sidebar-widget sidebar-newsletter">
+    <h3 class="sidebar-widget-title">{{@custom.sidebar_newsletter_heading}}</h3>
+    <p class="newsletter-text">{{@custom.sidebar_newsletter_text}}</p>
+    <form class="newsletter-form" data-members-form>
+        <input type="email" name="email" class="newsletter-input" placeholder="Your email address" required>
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+    </form>
+</div>
+
+{{!-- Custom HTML widget --}}
+{{#if @custom.sidebar_custom_html}}
+    <div class="sidebar-widget sidebar-custom">
+        {{{@custom.sidebar_custom_html}}}
+    </div>
+{{/if}}
+
+{{!-- Recent posts widget --}}
+<div class="sidebar-widget sidebar-recent">
+    <h3 class="sidebar-widget-title">Recent</h3>
+    {{#get "posts" limit="5" include="tags"}}
+        <ul class="sidebar-recent-list">
+            {{#foreach posts}}
+                <li>
+                    <a href="{{url}}">{{title}}</a>
+                    <span class="sidebar-recent-date">{{date format="MMM D"}}</span>
+                </li>
+            {{/foreach}}
+        </ul>
+    {{/get}}
+</div>

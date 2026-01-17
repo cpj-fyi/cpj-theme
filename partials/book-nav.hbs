@@ -1,0 +1,28 @@
+{{!--
+    Book section navigation
+    Links to all 6 book subsections
+    Highlights current section if current_section is passed
+--}}
+
+<nav class="book-nav">
+    <ul class="book-nav-list">
+        <li class="book-nav-item {{#if (match current_section "foundations")}}is-current{{/if}}">
+            <a href="{{@site.url}}/tag/foundations/">Foundations</a>
+        </li>
+        <li class="book-nav-item {{#if (match current_section "structuring")}}is-current{{/if}}">
+            <a href="{{@site.url}}/tag/structuring/">Structuring</a>
+        </li>
+        <li class="book-nav-item {{#if (match current_section "direction")}}is-current{{/if}}">
+            <a href="{{@site.url}}/tag/direction/">Direction</a>
+        </li>
+        <li class="book-nav-item {{#if (match current_section "learning")}}is-current{{/if}}">
+            <a href="{{@site.url}}/tag/learning/">Learning</a>
+        </li>
+        <li class="book-nav-item {{#if (match current_section "practice")}}is-current{{/if}}">
+            <a href="{{@site.url}}/tag/practice/">Practice</a>
+        </li>
+        <li class="book-nav-item {{#if (match current_section "space")}}is-current{{/if}}">
+            <a href="{{@site.url}}/tag/space/">Space</a>
+        </li>
+    </ul>
+</nav>

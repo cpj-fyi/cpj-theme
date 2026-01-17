@@ -1,0 +1,86 @@
+{
+  "name": "cpj-theme",
+  "description": "A custom Ghost theme for cpj.fyi - Hidden Patterns by Clay Parker Jones",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "Clay Parker Jones",
+    "url": "https://cpj.fyi"
+  },
+  "engines": {
+    "ghost": ">=6.0.0"
+  },
+  "keywords": [
+    "ghost",
+    "theme",
+    "ghost-theme"
+  ],
+  "config": {
+    "posts_per_page": 12,
+    "image_sizes": {
+      "xs": 150,
+      "s": 300,
+      "m": 600,
+      "l": 1000,
+      "xl": 2000
+    },
+    "card_assets": true,
+    "custom": {
+      "book_title": {
+        "type": "text",
+        "default": "Hidden Patterns",
+        "description": "The title of your book"
+      },
+      "book_author": {
+        "type": "text",
+        "default": "Clay Parker Jones",
+        "description": "The author of your book"
+      },
+      "book_description": {
+        "type": "text",
+        "default": "A book about patterns that shape how we work and live.",
+        "description": "Short description for the book (used in footer and homepage)"
+      },
+      "book_cta_text": {
+        "type": "text",
+        "default": "Start Reading",
+        "description": "Call-to-action button text for the book"
+      },
+      "book_cta_url": {
+        "type": "text",
+        "default": "/foundations/",
+        "description": "URL for the book CTA button (first chapter or section)"
+      },
+      "sidebar_featured_slug": {
+        "type": "text",
+        "default": "",
+        "description": "Slug of a post to feature in the sidebar"
+      },
+      "sidebar_newsletter_heading": {
+        "type": "text",
+        "default": "Stay Updated",
+        "description": "Heading for the newsletter signup in sidebar"
+      },
+      "sidebar_newsletter_text": {
+        "type": "text",
+        "default": "Get new essays and updates delivered to your inbox.",
+        "description": "Description text for newsletter signup"
+      },
+      "sidebar_custom_html": {
+        "type": "text",
+        "default": "",
+        "description": "Custom HTML to display in the sidebar (optional)"
+      },
+      "show_chapter_progress": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show reading progress for book chapters"
+      },
+      "footer_tagline": {
+        "type": "text",
+        "default": "Exploring the hidden patterns that shape how we work.",
+        "description": "Tagline displayed in the footer"
+      }
+    }
+  }
+}

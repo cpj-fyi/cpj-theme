@@ -1,0 +1,26 @@
+{{!--
+    Chapter list partial
+    Lists all chapters (pages) tagged with a specific section
+    Expects: section_slug to be set
+--}}
+
+{{#get "pages" filter="tag:{{section_slug}}" limit="50" order="title asc"}}
+    {{#if pages}}
+        <div class="chapter-list-wrapper">
+            <ul class="chapter-list">
+                {{#foreach pages}}
+                    <li class="chapter-list-item">
+                        <a href="{{url}}" class="chapter-list-link">
+                            <span class="chapter-list-title">{{title}}</span>
+                            {{#if excerpt}}
+                                <span class="chapter-list-excerpt">{{excerpt words="15"}}</span>
+                            {{/if}}
+                        </a>
+                    </li>
+                {{/foreach}}
+            </ul>
+        </div>
+    {{else}}
+        <p class="chapter-list-empty">No chapters available yet.</p>
+    {{/if}}
+{{/get}}

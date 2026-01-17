@@ -1,0 +1,14 @@
+{{!< default}}
+
+{{!--
+    Error page template
+    Handles 404 and other errors
+--}}
+
+<div class="error-page">
+    <div class="error-content">
+        <h1 class="error-code">{{statusCode}}</h1>
+        <p class="error-message">{{message}}</p>
+        <a href="{{@site.url}}" class="btn btn-primary">Back to Home</a>
+    </div>
+</div>
