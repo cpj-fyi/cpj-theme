@@ -542,6 +542,16 @@ body.page-template .book-subnav {
     margin-bottom: var(--space-8);
 }
 
+.book-cover {
+    margin-bottom: var(--space-6);
+}
+
+.book-cover img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
 .book-label {
     font-family: var(--font-sans);
     font-size: var(--text-xs);
@@ -616,16 +626,15 @@ body.page-template .book-subnav {
     align-items: center;
     justify-content: space-between;
     margin-bottom: var(--space-6);
-    padding-bottom: var(--space-3);
-    border-bottom: 2px solid var(--color-text);
 }
 
 .section-title {
     font-family: var(--font-sans);
-    font-size: var(--text-sm);
-    font-weight: 700;
+    font-size: var(--text-xs);
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    color: var(--color-accent);
     margin: 0;
 }
 
@@ -1396,6 +1405,7 @@ body.page-template .book-subnav {
 }
 
 .footer-column a {
+    font-family: var(--font-sans);
     font-size: var(--text-sm);
     color: rgba(255, 255, 255, 0.7);
     transition: color var(--transition-fast);

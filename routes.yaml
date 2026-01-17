@@ -1,36 +1,24 @@
 # CPJ Theme Routes Configuration
 # Upload this file via Ghost Admin > Settings > Labs > Routes
-#
-# This configuration sets up:
-# - /essays/ as a collection for posts tagged "essays"
-# - /radar/ as a collection for posts tagged "radar"
-# - Tag archives at /topic/{slug}/
 
 routes:
+  /: index
 
 collections:
   /essays/:
     permalink: /essays/{slug}/
     template: tag-essays
     filter: tag:essays
-    data: tag.essays
 
   /five-things/:
     permalink: /five-things/{slug}/
     template: tag-five-things
     filter: tag:five-things
-    data: tag.five-things
 
   /radar/:
     permalink: /radar/{slug}/
     template: tag-radar
     filter: tag:radar
-    data: tag.radar
-
-  /:
-    permalink: /{slug}/
-    template: index
-    filter: tag:-essays+tag:-five-things+tag:-radar
 
 taxonomies:
   tag: /tag/{slug}/
