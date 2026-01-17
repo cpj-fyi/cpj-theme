@@ -56,7 +56,7 @@
     --max-width-content: 720px;
     --max-width-wide: 960px;
     --sidebar-width: 280px;
-    --header-height: 80px;
+    --header-height: 44px;
 
     /* Transitions */
     --transition-fast: 150ms ease;
@@ -219,48 +219,33 @@ hr {
 
 .site-header {
     background: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
     position: sticky;
     top: 0;
     z-index: 100;
+}
+
+.header-main {
+    border-bottom: 1px solid var(--color-border);
 }
 
 .header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: var(--header-height);
-    gap: var(--space-8);
-}
-
-/* Masthead */
-.site-masthead {
-    flex-shrink: 0;
-}
-
-.site-masthead a {
-    font-family: var(--font-serif);
-    font-size: var(--text-3xl);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--color-text);
-}
-
-.site-masthead a:hover {
-    color: var(--color-text);
+    height: 44px;
+    gap: var(--space-6);
 }
 
 /* Navigation */
 .site-nav {
     display: flex;
     align-items: center;
-    gap: var(--space-8);
 }
 
 .nav-list {
     display: flex;
     align-items: center;
-    gap: var(--space-6);
+    gap: var(--space-5);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -268,19 +253,47 @@ hr {
 
 .nav-list a {
     font-family: var(--font-sans);
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--color-text-secondary);
-    padding: var(--space-2) 0;
+    padding: var(--space-1) 0;
     border-bottom: 2px solid transparent;
     transition: all var(--transition-fast);
 }
 
 .nav-list a:hover {
     color: var(--color-text);
-    border-bottom-color: var(--color-accent);
+    border-bottom-color: var(--color-text);
+}
+
+/* Header actions */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.header-link {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+}
+
+.header-link:hover {
+    color: var(--color-text);
+}
+
+.header-link-primary {
+    color: var(--color-accent);
+}
+
+.header-link-primary:hover {
+    color: var(--color-accent-hover);
 }
 
 /* Active nav states based on body class */
@@ -291,18 +304,71 @@ body.tag-direction .nav-book,
 body.tag-learning .nav-book,
 body.tag-practice .nav-book,
 body.tag-space .nav-book,
+body.tag-start-end .nav-book,
+body.page-template .nav-book,
 body.tag-essays .nav-essays,
 body.tag-five-things .nav-five-things,
 body.tag-radar .nav-radar {
     color: var(--color-text);
-    border-bottom-color: var(--color-accent);
+    border-bottom-color: var(--color-text);
 }
 
-/* Header actions */
-.header-actions {
+/* ==========================================================================
+   Book Sub-Navigation
+   ========================================================================== */
+
+.book-subnav {
+    display: none;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* Show book subnav only in book area */
+body.tag-foundations .book-subnav,
+body.tag-structuring .book-subnav,
+body.tag-direction .book-subnav,
+body.tag-learning .book-subnav,
+body.tag-practice .book-subnav,
+body.tag-space .book-subnav,
+body.tag-start-end .book-subnav,
+body.page-template .book-subnav {
+    display: block;
+}
+
+.book-subnav-inner {
     display: flex;
     align-items: center;
-    gap: var(--space-4);
+}
+
+.book-subnav-list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    list-style: none;
+    margin: 0;
+    padding: var(--space-2) 0;
+}
+
+.book-subnav-link {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+}
+
+.book-subnav-link:hover {
+    color: var(--color-text);
+}
+
+.book-subnav-buy {
+    color: var(--color-accent);
+}
+
+.book-subnav-buy:hover {
+    color: var(--color-accent-hover);
 }
 
 /* Mobile menu toggle */
@@ -409,6 +475,35 @@ body.tag-radar .nav-radar {
 .btn-large {
     padding: var(--space-4) var(--space-8);
     font-size: var(--text-base);
+}
+
+/* ==========================================================================
+   Homepage Hero Banner
+   ========================================================================== */
+
+.home-hero {
+    background: var(--color-text);
+    padding: var(--space-16) 0;
+}
+
+.home-hero-name {
+    font-family: var(--font-serif);
+    font-size: var(--text-6xl);
+    font-weight: 400;
+    font-style: italic;
+    color: #FFFFFF;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+@media (max-width: 768px) {
+    .home-hero {
+        padding: var(--space-10) 0;
+    }
+
+    .home-hero-name {
+        font-size: var(--text-4xl);
+    }
 }
 
 /* ==========================================================================
@@ -553,34 +648,19 @@ body.tag-radar .nav-radar {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-4);
-    align-items: start;
 }
 
-@media (min-width: 640px) {
-    .post-card {
-        grid-template-columns: 1fr 180px;
-        gap: var(--space-6);
-    }
-
-    .post-card-image {
-        order: 2;
-        margin-bottom: 0;
-    }
-
-    .post-card-content {
-        order: 1;
-    }
-}
-
-/* Text-only cards (no image, full width) */
-.post-card-text-only {
-    display: block;
-}
-
+/* Mobile: image on top with fixed aspect ratio */
 .post-card-image {
-    aspect-ratio: 1/1;
+    aspect-ratio: 16/9;
     overflow: hidden;
     background: var(--color-bg-alt);
+}
+
+.post-card-image a {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .post-card-image img {
@@ -592,6 +672,42 @@ body.tag-radar .nav-radar {
 
 .post-card:hover .post-card-image img {
     transform: scale(1.02);
+}
+
+/* Desktop: image on right, filling full height (non-featured cards only) */
+@media (min-width: 640px) {
+    .post-card:not(.post-card-featured):not(.post-card-text-only) {
+        grid-template-columns: 1fr 140px;
+        gap: var(--space-6);
+    }
+
+    /* Explicitly place content in column 1, image in column 2 */
+    .post-card:not(.post-card-featured) .post-card-content {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .post-card:not(.post-card-featured) .post-card-image {
+        grid-column: 2;
+        grid-row: 1;
+        aspect-ratio: auto;
+        position: relative;
+        min-height: 120px;
+    }
+
+    /* Absolute positioning to fill the grid cell */
+    .post-card:not(.post-card-featured) .post-card-image a {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+/* Text-only cards (no image, full width) */
+.post-card-text-only {
+    display: block;
 }
 
 /* Tag wrapper - only show first tag */

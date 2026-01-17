@@ -1,5 +1,12 @@
 {{!< default}}
 
+{{!-- Hero banner with author name --}}
+<div class="home-hero">
+    <div class="container">
+        <h1 class="home-hero-name">{{@custom.book_author}}</h1>
+    </div>
+</div>
+
 <div class="container">
     <div class="home-layout">
         {{!-- Left column: Book section --}}
@@ -13,6 +20,12 @@
             <p class="book-description">{{@custom.book_description}}</p>
 
             <ul class="book-sections">
+                <li class="book-section-item">
+                    <a href="{{@site.url}}/tag/start-end/" class="book-section-link">
+                        <span>Start & End</span>
+                        <span class="book-section-count">{{#get "pages" filter="tag:start-end" limit="100"}}{{#foreach pages}}{{#if @last}}{{@number}}{{/if}}{{/foreach}}{{/get}} chapters</span>
+                    </a>
+                </li>
                 <li class="book-section-item">
                     <a href="{{@site.url}}/tag/foundations/" class="book-section-link">
                         <span>Foundations</span>

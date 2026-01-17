@@ -1,11 +1,14 @@
 {{!--
     Book section navigation
-    Links to all 6 book subsections
+    Links to all book subsections
     Highlights current section if current_section is passed
 --}}
 
 <nav class="book-nav">
     <ul class="book-nav-list">
+        <li class="book-nav-item {{#if (match current_section "start-end")}}is-current{{/if}}">
+            <a href="{{@site.url}}/tag/start-end/">Start & End</a>
+        </li>
         <li class="book-nav-item {{#if (match current_section "foundations")}}is-current{{/if}}">
             <a href="{{@site.url}}/tag/foundations/">Foundations</a>
         </li>

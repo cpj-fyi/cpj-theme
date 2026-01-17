@@ -1,32 +1,33 @@
 <header class="site-header">
-    <div class="container">
-        <div class="header-inner">
-            <div class="site-masthead">
-                <a href="{{@site.url}}">{{@site.title}}</a>
-            </div>
+    <div class="header-main">
+        <div class="container">
+            <div class="header-inner">
+                <nav class="site-nav" id="site-nav">
+                    <ul class="nav-list">
+                        <li><a href="{{@site.url}}" class="nav-home">Home</a></li>
+                        <li><a href="{{@site.url}}/tag/foundations/" class="nav-book">Book</a></li>
+                        <li><a href="{{@site.url}}/essays/" class="nav-essays">Essays</a></li>
+                        <li><a href="{{@site.url}}/five-things/" class="nav-five-things">Five Things</a></li>
+                        <li><a href="{{@site.url}}/radar/" class="nav-radar">Radar</a></li>
+                    </ul>
+                </nav>
 
-            <nav class="site-nav" id="site-nav">
-                <ul class="nav-list">
-                    <li><a href="{{@site.url}}" class="nav-home">Home</a></li>
-                    <li><a href="{{@site.url}}/tag/foundations/" class="nav-book">Book</a></li>
-                    <li><a href="{{@site.url}}/essays/" class="nav-essays">Essays</a></li>
-                    <li><a href="{{@site.url}}/five-things/" class="nav-five-things">Five Things</a></li>
-                    <li><a href="{{@site.url}}/radar/" class="nav-radar">Radar</a></li>
-                </ul>
-            </nav>
+                <div class="header-actions">
+                    {{#if @member}}
+                        <a href="#/portal/account" class="header-link">Account</a>
+                    {{else}}
+                        <a href="#/portal/signin" class="header-link">Sign in</a>
+                        <a href="#/portal/signup" class="header-link header-link-primary">Subscribe</a>
+                    {{/if}}
 
-            <div class="header-actions">
-                {{#if @member}}
-                    <a href="#/portal/account" class="btn btn-ghost">Account</a>
-                {{else}}
-                    <a href="#/portal/signin" class="btn btn-ghost">Sign in</a>
-                    <a href="#/portal/signup" class="btn btn-primary">Subscribe</a>
-                {{/if}}
-
-                <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
-                    {{> "icons/menu"}}
-                </button>
+                    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+                        {{> "icons/menu"}}
+                    </button>
+                </div>
             </div>
         </div>
     </div>
+
+    {{!-- Book sub-navigation - only shows in book area --}}
+    {{> "book-subnav"}}
 </header>

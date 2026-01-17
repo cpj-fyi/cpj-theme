@@ -12,6 +12,7 @@
             <div class="footer-column">
                 <h4>Sections</h4>
                 <ul>
+                    <li><a href="{{@site.url}}/tag/start-end/">Start & End</a></li>
                     <li><a href="{{@site.url}}/tag/foundations/">Foundations</a></li>
                     <li><a href="{{@site.url}}/tag/structuring/">Structuring</a></li>
                     <li><a href="{{@site.url}}/tag/direction/">Direction</a></li>
@@ -34,7 +35,7 @@
             <div class="footer-column footer-column-nav">
                 <ul>
                     {{#foreach @site.navigation}}
-                        <li><a href="{{url}}">{{label}}</a></li>
+                        <li><a href="{{this.url}}">{{this.label}}</a></li>
                     {{/foreach}}
                 </ul>
             </div>
@@ -44,7 +45,7 @@
             <div class="footer-column footer-column-nav">
                 <ul>
                     {{#foreach @site.secondary_navigation}}
-                        <li><a href="{{url}}">{{label}}</a></li>
+                        <li><a href="{{this.url}}">{{this.label}}</a></li>
                     {{/foreach}}
                 </ul>
             </div>
