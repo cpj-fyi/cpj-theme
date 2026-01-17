@@ -13,16 +13,42 @@
             <p class="book-description">{{@custom.book_description}}</p>
 
             <ul class="book-sections">
-                {{#get "tags" filter="slug:[foundations,structuring,direction,learning,practice,space]" include="count.posts" limit="6"}}
-                    {{#foreach tags}}
-                        <li class="book-section-item">
-                            <a href="{{url}}" class="book-section-link">
-                                <span>{{name}}</span>
-                                <span class="book-section-count">{{count.posts}} chapters</span>
-                            </a>
-                        </li>
-                    {{/foreach}}
-                {{/get}}
+                <li class="book-section-item">
+                    <a href="{{@site.url}}/tag/foundations/" class="book-section-link">
+                        <span>Foundations</span>
+                        <span class="book-section-count">{{#get "pages" filter="tag:foundations" limit="100"}}{{#foreach pages}}{{#if @last}}{{@number}}{{/if}}{{/foreach}}{{/get}} chapters</span>
+                    </a>
+                </li>
+                <li class="book-section-item">
+                    <a href="{{@site.url}}/tag/structuring/" class="book-section-link">
+                        <span>Structuring</span>
+                        <span class="book-section-count">{{#get "pages" filter="tag:structuring" limit="100"}}{{#foreach pages}}{{#if @last}}{{@number}}{{/if}}{{/foreach}}{{/get}} chapters</span>
+                    </a>
+                </li>
+                <li class="book-section-item">
+                    <a href="{{@site.url}}/tag/direction/" class="book-section-link">
+                        <span>Direction</span>
+                        <span class="book-section-count">{{#get "pages" filter="tag:direction" limit="100"}}{{#foreach pages}}{{#if @last}}{{@number}}{{/if}}{{/foreach}}{{/get}} chapters</span>
+                    </a>
+                </li>
+                <li class="book-section-item">
+                    <a href="{{@site.url}}/tag/learning/" class="book-section-link">
+                        <span>Learning</span>
+                        <span class="book-section-count">{{#get "pages" filter="tag:learning" limit="100"}}{{#foreach pages}}{{#if @last}}{{@number}}{{/if}}{{/foreach}}{{/get}} chapters</span>
+                    </a>
+                </li>
+                <li class="book-section-item">
+                    <a href="{{@site.url}}/tag/practice/" class="book-section-link">
+                        <span>Practice</span>
+                        <span class="book-section-count">{{#get "pages" filter="tag:practice" limit="100"}}{{#foreach pages}}{{#if @last}}{{@number}}{{/if}}{{/foreach}}{{/get}} chapters</span>
+                    </a>
+                </li>
+                <li class="book-section-item">
+                    <a href="{{@site.url}}/tag/space/" class="book-section-link">
+                        <span>Space</span>
+                        <span class="book-section-count">{{#get "pages" filter="tag:space" limit="100"}}{{#foreach pages}}{{#if @last}}{{@number}}{{/if}}{{/foreach}}{{/get}} chapters</span>
+                    </a>
+                </li>
             </ul>
 
             <a href="{{@custom.book_cta_url}}" class="btn btn-primary btn-large">{{@custom.book_cta_text}}</a>
