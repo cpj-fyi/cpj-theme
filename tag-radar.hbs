@@ -3,6 +3,7 @@
 {{!--
     Radar archive template
     Compact feed layout for shorter posts
+    Uses {{#get}} to fetch all posts with radar tag
 --}}
 
 <header class="archive-header">
@@ -13,22 +14,24 @@
         {{else}}
             <p class="archive-description">Quick takes, links, and observations.</p>
         {{/if}}
-        <div class="archive-count">{{plural pagination.total empty="No posts" singular="% post" plural="% posts"}}</div>
+        {{#get "posts" filter="tag:radar" limit="100"}}
+            <div class="archive-count">{{plural posts.length empty="No posts" singular="% post" plural="% posts"}}</div>
+        {{/get}}
     </div>
 </header>
 
 <div class="container">
     <div class="radar-layout">
-        {{#if posts}}
-            <div class="radar-list">
-                {{#foreach posts}}
-                    {{> "post-card-radar"}}
-                {{/foreach}}
-            </div>
-        {{else}}
-            <p>No radar posts yet.</p>
-        {{/if}}
-
-        {{pagination}}
+        {{#get "posts" filter="tag:radar" limit="100" include="tags"}}
+            {{#if posts}}
+                <div class="radar-list">
+                    {{#foreach posts}}
+                        {{> "post-card-radar"}}
+                    {{/foreach}}
+                </div>
+            {{else}}
+                <p>No radar posts yet.</p>
+            {{/if}}
+        {{/get}}
     </div>
 </div>

@@ -3,6 +3,7 @@
 {{!--
     Essays archive template
     Magazine-style layout with featured essay and grid
+    Uses {{#get}} to fetch all posts with essays tag
 --}}
 
 <header class="archive-header">
@@ -13,17 +14,18 @@
         {{else}}
             <p class="archive-description">Longer pieces exploring ideas in depth.</p>
         {{/if}}
-        <div class="archive-count">{{plural pagination.total empty="No essays" singular="% essay" plural="% essays"}}</div>
+        {{#get "posts" filter="tag:essays" limit="100"}}
+            <div class="archive-count">{{plural posts.length empty="No essays" singular="% essay" plural="% essays"}}</div>
+        {{/get}}
     </div>
 </header>
 
 <div class="container">
     <div class="essays-layout">
         <div class="essays-main">
-            {{#if posts}}
-                {{!-- Featured essay (first post on first page) --}}
-                {{#is "paged"}}
-                {{else}}
+            {{#get "posts" filter="tag:essays" limit="100" include="tags,authors"}}
+                {{#if posts}}
+                    {{!-- Featured essay (first post) --}}
                     {{#foreach posts from="1" to="1"}}
                         <article class="post-card post-card-featured">
                             {{#if feature_image}}
@@ -57,29 +59,21 @@
                             </div>
                         </article>
                     {{/foreach}}
-                {{/is}}
 
-                {{!-- Essays grid --}}
-                <div class="essays-grid">
-                    {{#is "paged"}}
-                        {{#foreach posts}}
-                            {{> "post-card-essay"}}
-                        {{/foreach}}
-                    {{else}}
+                    {{!-- Essays grid --}}
+                    <div class="essays-grid">
                         {{#foreach posts from="2"}}
                             {{> "post-card-essay"}}
                         {{/foreach}}
-                    {{/is}}
-                </div>
-            {{else}}
-                <p>No essays published yet.</p>
-            {{/if}}
+                    </div>
+                {{else}}
+                    <p>No essays published yet.</p>
+                {{/if}}
+            {{/get}}
         </div>
 
         <aside class="sidebar">
             {{> "sidebar"}}
         </aside>
     </div>
-
-    {{pagination}}
 </div>
