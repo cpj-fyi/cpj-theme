@@ -1023,6 +1023,13 @@ body.page-template .book-subnav {
     color: var(--color-accent-hover);
 }
 
+/* Numbered links in chapter content (e.g., footnote references) */
+.content a.numbered-link {
+    font-variant: small-caps;
+    letter-spacing: 0.05em;
+    text-transform: lowercase;
+}
+
 .content img {
     margin: var(--space-8) 0;
     border-radius: 2px;

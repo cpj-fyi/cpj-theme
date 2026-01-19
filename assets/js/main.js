@@ -12,6 +12,7 @@
         initSmoothScroll();
         initNewsletterForms();
         initChapterProgress();
+        initNumberedLinks();
     });
 
     /**
@@ -127,6 +128,27 @@
 
         window.addEventListener('scroll', updateProgress, { passive: true });
         updateProgress();
+    }
+
+    /**
+     * Numbered Links in Chapter Content
+     * Adds small-caps styling to links containing numbers (e.g., footnote references)
+     * Only applies to chapter pages, in the main content area
+     */
+    function initNumberedLinks() {
+        // Only run on chapter pages (check for chapter-specific elements)
+        const chapterBody = document.querySelector('.page-template .post-body .content');
+        if (!chapterBody) return;
+
+        // Find all links in the chapter content
+        const links = chapterBody.querySelectorAll('a');
+
+        links.forEach(function(link) {
+            // Check if link text contains a number
+            if (/\d/.test(link.textContent)) {
+                link.classList.add('numbered-link');
+            }
+        });
     }
 
     /**
