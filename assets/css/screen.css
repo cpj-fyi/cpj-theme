@@ -481,7 +481,7 @@ body.tag-space .subnav-space {
 
 @media (max-width: 1024px) {
     .mobile-chapter-nav {
-        display: block;
+        display: block !important;
         position: relative;
         z-index: 50;
         background: var(--color-bg);
@@ -490,7 +490,10 @@ body.tag-space .subnav-space {
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        margin-top: 0;
+        margin: 0;
+        /* Break out of article container to be full-width */
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
     }
 
     .mobile-chapter-nav::-webkit-scrollbar {
@@ -536,27 +539,27 @@ body.tag-space .subnav-space {
     }
 
     .chapter-btn-foundations.is-current {
-        background: var(--color-accent);
+        background: #ff3252;
     }
 
     .chapter-btn-structuring.is-current {
-        background: var(--color-accent);
+        background: #e9306b;
     }
 
     .chapter-btn-direction.is-current {
-        background: var(--color-accent);
+        background: #d83586;
     }
 
     .chapter-btn-learning.is-current {
-        background: var(--color-accent);
+        background: #9f36ce;
     }
 
     .chapter-btn-practice.is-current {
-        background: var(--color-accent);
+        background: #bd31bf;
     }
 
     .chapter-btn-space.is-current {
-        background: var(--color-accent);
+        background: #8438f2;
     }
 
     /* Hide desktop chapter sidebar on mobile */
@@ -1574,6 +1577,7 @@ body.tag-space .subnav-space {
 
 .archive-header {
     padding: var(--space-12) 0;
+    padding-top: var(--space-16, 4rem);
     text-align: center;
     border-bottom: 1px solid var(--color-border);
     margin-bottom: var(--space-12);
