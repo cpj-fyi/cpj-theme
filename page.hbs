@@ -9,11 +9,11 @@
 {{#post}}
     {{!-- Check if this is a book chapter by looking for section tags --}}
     {{#has tag="start-end, foundations, structuring, direction, learning, practice, space"}}
-        {{!-- Mobile chapter nav - horizontal scrollable buttons --}}
-        {{> "mobile-chapter-nav"}}
-
         {{!-- Book chapter layout with sidebar --}}
         <article class="page chapter-page {{post_class}}">
+            {{!-- Mobile chapter nav - horizontal scrollable buttons --}}
+            {{> "mobile-chapter-nav"}}
+
             <div class="container">
                 <div class="chapter-layout">
                     {{!-- Chapter sidebar - desktop only --}}
