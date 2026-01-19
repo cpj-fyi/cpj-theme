@@ -51,24 +51,25 @@
                                 <span class="mobile-time"></span>
                             </div>
                             <div class="mobile-moonphase">
-                                <svg class="moonphase-svg" viewBox="0 0 32 16" aria-hidden="true">
+                                <svg class="moonphase-svg" viewBox="0 0 32 32" aria-hidden="true">
                                     <defs>
+                                        <mask id="moonApertureMobile">
+                                            <rect width="32" height="32" fill="black"/>
+                                            <circle cx="16" cy="16" r="12" fill="white"/>
+                                        </mask>
                                         <radialGradient id="moonGlowMobile" cx="35%" cy="35%" r="55%">
                                             <stop offset="0%" stop-color="#FFFEF5"/>
                                             <stop offset="70%" stop-color="#E8E4D0"/>
                                             <stop offset="100%" stop-color="#D0C8B0"/>
                                         </radialGradient>
-                                        <clipPath id="moonWindowMobile">
-                                            <path d="M0,16 L0,6 A16,6 0 0,1 32,6 L32,16 Z"/>
-                                        </clipPath>
                                     </defs>
-                                    <g clip-path="url(#moonWindowMobile)">
-                                        <rect x="0" y="0" width="32" height="32" fill="#0A3A5C"/>
-                                        <g class="moonphase-disc-mobile">
-                                            <circle cx="16" cy="22" r="7" fill="url(#moonGlowMobile)"/>
-                                            <circle cx="16" cy="-10" r="7" fill="url(#moonGlowMobile)"/>
-                                        </g>
+                                    <circle cx="16" cy="16" r="12" fill="#0A3A5C"/>
+                                    <g class="moonphase-disc-mobile" mask="url(#moonApertureMobile)">
+                                        <rect x="-16" y="-16" width="64" height="64" fill="#0A3A5C"/>
+                                        <circle cx="16" cy="-8" r="9" fill="url(#moonGlowMobile)"/>
+                                        <circle cx="16" cy="40" r="9" fill="url(#moonGlowMobile)"/>
                                     </g>
+                                    <circle cx="16" cy="16" r="12" fill="none" stroke="var(--color-border)" stroke-width="1"/>
                                 </svg>
                             </div>
                         </div>
