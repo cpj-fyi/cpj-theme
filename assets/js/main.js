@@ -357,21 +357,25 @@
         }
 
         /**
-         * Position the moon disc based on current phase
-         * Moon at cy=22 (below aperture). Dome aperture shows y=6 to y=16.
-         * Moon rises into view, peeks up from bottom at crescent, fully visible at full moon.
-         * Phase 0 (new moon) = moon just hidden (translateY = 2)
-         * Phase 0.5 (full moon) = moon centered in dome (translateY = -11)
+         * Rotate the moon disc based on current phase
+         * Disc rotates to show the correct phase through the circular aperture.
+         * Phase 0 (new moon) = disc rotated so no moon visible (moons at top/bottom)
+         * Phase 0.5 (full moon) = full moon centered in aperture
+         *
+         * The disc has two moons at cy=-8 and cy=40, spaced 48 units apart.
+         * One full rotation (360°) = one lunar cycle.
          */
         function updateMoonPhase(phase) {
-            // Cosine wave: +2 at new moon (hidden), -11 at full moon (centered)
-            const translateY = -4.5 + 6.5 * Math.cos(phase * 2 * Math.PI);
+            // Convert phase (0-1) to rotation degrees
+            // Phase 0 (new moon): rotate so moons are hidden (at 0° or 180°)
+            // Phase 0.5 (full moon): rotate so moon is centered (at 90° or 270°)
+            const rotation = phase * 360;
 
             if (moonDisc) {
-                moonDisc.setAttribute('transform', `translate(0, ${translateY})`);
+                moonDisc.setAttribute('transform', `rotate(${rotation}, 16, 16)`);
             }
             if (mobileMoonDisc) {
-                mobileMoonDisc.setAttribute('transform', `translate(0, ${translateY})`);
+                mobileMoonDisc.setAttribute('transform', `rotate(${rotation}, 16, 16)`);
             }
 
             // Update title with phase name
