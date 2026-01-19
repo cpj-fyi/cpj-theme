@@ -1,0 +1,11 @@
+# CPJ Theme Redirects
+# Upload this file via Ghost Admin > Settings > Labs > Redirects
+#
+# Redirects old post URLs from /{slug}/ to /posts/{slug}/
+# Excludes known routes: posts, essays, radar, five-things, tag, author, etc.
+
+301:
+  # Catch-all: redirect old root-level post URLs to /posts/
+  # Matches: /any-post-slug/ or /any-post-slug
+  # Excludes: posts, essays, radar, five-things, tag, author, everything, ghost, p, members, subscribe, account, assets, content, public, sitemap, robots
+  ^/(?!posts|essays|radar|five-things|tag|author|everything|ghost|p/|members|subscribe|account|assets|content|public|sitemap|robots|rss|amp)([a-z0-9-]+)/?$: /posts/$1/
