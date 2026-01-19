@@ -3,6 +3,7 @@
 {{!--
     Learning section - Book subsection template
     Shows all chapters in the Learning section
+    Section navigation handled by top nav (book-subnav)
 --}}
 
 <header class="archive-header">
@@ -16,39 +17,24 @@
 </header>
 
 <div class="container">
-    <div class="chapter-layout">
-        <aside class="chapter-sidebar">
-            <div class="chapter-sidebar-header">
-                <div class="chapter-section-label">Sections</div>
-                <h2 class="chapter-section-name">{{@custom.book_title}}</h2>
-            </div>
-
-            {{> "book-nav" current_section="learning"}}
-        </aside>
-
-        <div class="chapter-content">
-            <div class="section-header">
-                <h2 class="section-title">Chapters</h2>
-            </div>
-
-            {{#get "pages" filter="tag:learning" limit="50" order="published_at asc"}}
-                {{#if pages}}
-                    <div class="chapter-list-detailed">
-                        {{#foreach pages}}
-                            <article class="chapter-list-item-detailed">
-                                <h3 class="chapter-list-item-title">
-                                    <a href="{{url}}">{{title}}</a>
-                                </h3>
-                                {{#if custom_excerpt}}
-                                    <p class="chapter-list-item-excerpt">{{custom_excerpt}}</p>
-                                {{/if}}
-                            </article>
-                        {{/foreach}}
-                    </div>
-                {{else}}
-                    <p>No chapters available yet.</p>
-                {{/if}}
-            {{/get}}
-        </div>
+    <div class="section-content">
+        {{#get "pages" filter="tag:learning" limit="50" order="published_at asc"}}
+            {{#if pages}}
+                <div class="chapter-list-detailed">
+                    {{#foreach pages}}
+                        <article class="chapter-list-item-detailed">
+                            <h3 class="chapter-list-item-title">
+                                <a href="{{url}}">{{title}}</a>
+                            </h3>
+                            {{#if custom_excerpt}}
+                                <p class="chapter-list-item-excerpt">{{custom_excerpt}}</p>
+                            {{/if}}
+                        </article>
+                    {{/foreach}}
+                </div>
+            {{else}}
+                <p>No chapters available yet.</p>
+            {{/if}}
+        {{/get}}
     </div>
 </div>

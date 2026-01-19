@@ -13,30 +13,33 @@
         <article class="page chapter-page {{post_class}}">
             <div class="container">
                 <div class="chapter-layout">
-                    {{!-- Chapter sidebar --}}
-                    <aside class="chapter-sidebar">
-                        <div class="chapter-sidebar-header">
-                            <div class="chapter-section-label">{{@custom.book_title}}</div>
-                            {{#foreach tags}}
-                                {{#match slug "start-end"}}<h2 class="chapter-section-name"><a href="{{@site.url}}/tag/start-end/">Start & End</a></h2>{{/match}}
-                                {{#match slug "foundations"}}<h2 class="chapter-section-name"><a href="{{@site.url}}/tag/foundations/">Foundations</a></h2>{{/match}}
-                                {{#match slug "structuring"}}<h2 class="chapter-section-name"><a href="{{@site.url}}/tag/structuring/">Structuring</a></h2>{{/match}}
-                                {{#match slug "direction"}}<h2 class="chapter-section-name"><a href="{{@site.url}}/tag/direction/">Direction</a></h2>{{/match}}
-                                {{#match slug "learning"}}<h2 class="chapter-section-name"><a href="{{@site.url}}/tag/learning/">Learning</a></h2>{{/match}}
-                                {{#match slug "practice"}}<h2 class="chapter-section-name"><a href="{{@site.url}}/tag/practice/">Practice</a></h2>{{/match}}
-                                {{#match slug "space"}}<h2 class="chapter-section-name"><a href="{{@site.url}}/tag/space/">Space</a></h2>{{/match}}
-                            {{/foreach}}
-                        </div>
+                    {{!-- Chapter sidebar - collapsible on mobile --}}
+                    <aside class="chapter-sidebar" id="chapter-sidebar">
+                        {{!-- Toggle header for mobile --}}
+                        <button class="chapter-nav-toggle" id="chapter-nav-toggle" aria-expanded="false" aria-controls="chapter-list-nav">
+                            <span class="chapter-nav-toggle-text">
+                                {{#foreach tags}}
+                                    {{#match slug "start-end"}}Chapters in Start & End{{/match}}
+                                    {{#match slug "foundations"}}Chapters in Foundations{{/match}}
+                                    {{#match slug "structuring"}}Chapters in Structuring{{/match}}
+                                    {{#match slug "direction"}}Chapters in Direction{{/match}}
+                                    {{#match slug "learning"}}Chapters in Learning{{/match}}
+                                    {{#match slug "practice"}}Chapters in Practice{{/match}}
+                                    {{#match slug "space"}}Chapters in Space{{/match}}
+                                {{/foreach}}
+                            </span>
+                            <span class="chapter-nav-toggle-icon">{{> "icons/chevron"}}</span>
+                        </button>
 
                         {{!-- List chapters in this section --}}
-                        <nav class="chapter-list-nav">
+                        <nav class="chapter-list-nav" id="chapter-list-nav">
                             {{#foreach tags}}
                                 {{#match slug "start-end"}}
                                     {{#get "pages" filter="tag:start-end" limit="50" order="published_at asc" as |chapters|}}
                                         <ul class="chapter-list">
                                             {{#foreach chapters}}
                                                 <li class="chapter-list-item">
-                                                    <a href="{{url}}" class="chapter-list-link ">{{title}}</a>
+                                                    <a href="{{url}}" class="chapter-list-link">{{title}}</a>
                                                 </li>
                                             {{/foreach}}
                                         </ul>
@@ -47,7 +50,7 @@
                                         <ul class="chapter-list">
                                             {{#foreach chapters}}
                                                 <li class="chapter-list-item">
-                                                    <a href="{{url}}" class="chapter-list-link ">{{title}}</a>
+                                                    <a href="{{url}}" class="chapter-list-link">{{title}}</a>
                                                 </li>
                                             {{/foreach}}
                                         </ul>
@@ -58,7 +61,7 @@
                                         <ul class="chapter-list">
                                             {{#foreach chapters}}
                                                 <li class="chapter-list-item">
-                                                    <a href="{{url}}" class="chapter-list-link ">{{title}}</a>
+                                                    <a href="{{url}}" class="chapter-list-link">{{title}}</a>
                                                 </li>
                                             {{/foreach}}
                                         </ul>
@@ -69,7 +72,7 @@
                                         <ul class="chapter-list">
                                             {{#foreach chapters}}
                                                 <li class="chapter-list-item">
-                                                    <a href="{{url}}" class="chapter-list-link ">{{title}}</a>
+                                                    <a href="{{url}}" class="chapter-list-link">{{title}}</a>
                                                 </li>
                                             {{/foreach}}
                                         </ul>
@@ -80,7 +83,7 @@
                                         <ul class="chapter-list">
                                             {{#foreach chapters}}
                                                 <li class="chapter-list-item">
-                                                    <a href="{{url}}" class="chapter-list-link ">{{title}}</a>
+                                                    <a href="{{url}}" class="chapter-list-link">{{title}}</a>
                                                 </li>
                                             {{/foreach}}
                                         </ul>
@@ -91,7 +94,7 @@
                                         <ul class="chapter-list">
                                             {{#foreach chapters}}
                                                 <li class="chapter-list-item">
-                                                    <a href="{{url}}" class="chapter-list-link ">{{title}}</a>
+                                                    <a href="{{url}}" class="chapter-list-link">{{title}}</a>
                                                 </li>
                                             {{/foreach}}
                                         </ul>
@@ -102,7 +105,7 @@
                                         <ul class="chapter-list">
                                             {{#foreach chapters}}
                                                 <li class="chapter-list-item">
-                                                    <a href="{{url}}" class="chapter-list-link ">{{title}}</a>
+                                                    <a href="{{url}}" class="chapter-list-link">{{title}}</a>
                                                 </li>
                                             {{/foreach}}
                                         </ul>

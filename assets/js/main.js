@@ -17,6 +17,7 @@
         initDateTimeMoonphase();
         initCurrentChapter();
         initRadarScan();
+        initChapterNavToggle();
     });
 
     /**
@@ -34,6 +35,29 @@
                 link.getAttribute('href') === currentPath.replace(/\/$/, '') ||
                 link.getAttribute('href') + '/' === currentPath) {
                 link.classList.add('is-current');
+            }
+        });
+    }
+
+    /**
+     * Chapter Nav Toggle (Mobile)
+     * Collapses/expands the chapter list on mobile
+     */
+    function initChapterNavToggle() {
+        const toggle = document.getElementById('chapter-nav-toggle');
+        const nav = document.getElementById('chapter-list-nav');
+
+        if (!toggle || !nav) return;
+
+        toggle.addEventListener('click', function() {
+            const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+
+            if (isExpanded) {
+                toggle.setAttribute('aria-expanded', 'false');
+                nav.classList.remove('is-open');
+            } else {
+                toggle.setAttribute('aria-expanded', 'true');
+                nav.classList.add('is-open');
             }
         });
     }

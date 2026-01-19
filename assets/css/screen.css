@@ -1252,8 +1252,74 @@ body.tag-space .subnav-space {
         position: relative;
         top: 0;
         max-height: none;
-        padding-bottom: var(--space-8);
-        border-bottom: 1px solid var(--color-border);
+        padding-bottom: 0;
+        border-bottom: none;
+        margin-bottom: var(--space-6);
+    }
+}
+
+/* Chapter nav toggle (mobile collapsible) */
+.chapter-nav-toggle {
+    display: none;
+    width: 100%;
+    padding: var(--space-4);
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    transition: background var(--transition-fast);
+}
+
+.chapter-nav-toggle:hover {
+    background: var(--color-bg-card);
+}
+
+.chapter-nav-toggle-text {
+    color: var(--color-text);
+}
+
+.chapter-nav-toggle-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: var(--color-text-secondary);
+    transition: transform var(--transition-fast);
+}
+
+.chapter-nav-toggle-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.chapter-nav-toggle[aria-expanded="true"] .chapter-nav-toggle-icon {
+    transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+    .chapter-nav-toggle {
+        display: flex;
+    }
+
+    .chapter-list-nav {
+        display: none;
+        padding: var(--space-4);
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-border);
+        border-top: none;
+    }
+
+    .chapter-list-nav.is-open {
+        display: block;
+    }
+
+    .chapter-sidebar {
         margin-bottom: var(--space-8);
     }
 }
@@ -2891,6 +2957,12 @@ body.tag-radar .footer-bottom a:hover {
     margin-top: var(--space-3);
     font-size: var(--text-sm);
     color: var(--color-accent);
+}
+
+/* Section content (for book subsection pages without sidebar) */
+.section-content {
+    max-width: var(--max-width-content);
+    padding: var(--space-8) 0 var(--space-12);
 }
 
 /* Chapter list detailed (for subsection pages) */
