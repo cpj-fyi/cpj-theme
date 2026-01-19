@@ -1302,28 +1302,50 @@ body.tag-space .subnav-space {
     transform: rotate(180deg);
 }
 
+.chapter-nav-toggle::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 3px;
+    background: var(--color-text-muted);
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
 @media (max-width: 1024px) {
     .chapter-nav-toggle {
         display: flex;
+        position: relative;
+        padding-bottom: calc(var(--space-4) + 8px);
+    }
+
+    .chapter-nav-toggle::after {
+        opacity: 0.4;
     }
 
     .chapter-list-nav {
-        display: none;
-        padding: var(--space-4);
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 var(--space-4);
         background: var(--color-bg-card);
         border: 1px solid var(--color-border);
         border-top: none;
+        transition: max-height var(--transition-base), padding var(--transition-base);
     }
 
     .chapter-list-nav.is-open {
-        display: block;
+        max-height: 600px; /* Enough for ~15 chapters */
+        padding: var(--space-4);
     }
 
     .chapter-sidebar {
         margin-bottom: var(--space-6);
     }
 
-    /* Hide old header elements if they exist */
     .chapter-sidebar-header {
         display: none;
     }
