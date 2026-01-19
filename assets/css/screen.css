@@ -343,17 +343,13 @@ hr {
 .header-moonphase {
     display: flex;
     align-items: center;
-    justify-content: center;
-    cursor: help;
 }
 
-/* Watch-style moonphase display */
 .moonphase-watch {
     width: 32px;
-    height: 16px;
-    border-radius: 16px 16px 0 0;
+    height: 32px;
+    border-radius: 50%;
     overflow: hidden;
-    box-shadow: inset 0 0 0 1px var(--color-border);
 }
 
 .moonphase-svg {
@@ -362,8 +358,20 @@ hr {
     display: block;
 }
 
-#moonphase-disc {
+#moonphase-disc,
+.moonphase-disc-mobile {
+    transform-origin: 16px 16px;
     transition: transform 1s ease-out;
+}
+
+.mobile-moonphase {
+    width: 32px;
+    height: 32px;
+}
+
+.mobile-moonphase .moonphase-svg {
+    width: 100%;
+    height: 100%;
 }
 
 /* Active nav states based on body class */
