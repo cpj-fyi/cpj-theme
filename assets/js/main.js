@@ -17,19 +17,19 @@
         initDateTimeMoonphase();
         initCurrentChapter();
         initRadarScan();
-        initChapterNavToggle();
+        initMobileChapterNav();
     });
 
     /**
      * Current Chapter Highlighting
-     * Highlights the current chapter in the sidebar navigation
+     * Highlights the current chapter in the sidebar navigation (desktop)
+     * and mobile chapter buttons
      */
     function initCurrentChapter() {
         const chapterLinks = document.querySelectorAll('.chapter-list-link');
-        if (!chapterLinks.length) return;
-
         const currentPath = window.location.pathname;
 
+        // Desktop sidebar links
         chapterLinks.forEach(function(link) {
             if (link.getAttribute('href') === currentPath ||
                 link.getAttribute('href') === currentPath.replace(/\/$/, '') ||
@@ -40,89 +40,47 @@
     }
 
     /**
-     * Chapter Nav Toggle (Mobile)
-     * Collapses/expands the chapter list on mobile with tap and swipe support
+     * Mobile Chapter Navigation
+     * Horizontal scrollable row of chapter buttons
+     * - Extracts chapter numbers from URLs
+     * - Highlights current chapter
+     * - Scrolls current button into view
      */
-    function initChapterNavToggle() {
-        const toggle = document.getElementById('chapter-nav-toggle');
-        const nav = document.getElementById('chapter-list-nav');
+    function initMobileChapterNav() {
+        const mobileNav = document.querySelector('.mobile-chapter-nav');
+        if (!mobileNav) return;
 
-        if (!toggle || !nav) return;
+        const buttons = mobileNav.querySelectorAll('.chapter-btn');
+        const currentPath = window.location.pathname;
 
-        let startY = 0;
-        let currentY = 0;
-        let isDragging = false;
-        const SWIPE_THRESHOLD = 30; // pixels needed to trigger open/close
-        const DRAG_DEAD_ZONE = 10; // pixels before drag is recognized
+        buttons.forEach(function(btn) {
+            const url = btn.getAttribute('data-chapter-url') || btn.getAttribute('href');
 
-        function openNav() {
-            toggle.setAttribute('aria-expanded', 'true');
-            nav.classList.add('is-open');
-        }
-
-        function closeNav() {
-            toggle.setAttribute('aria-expanded', 'false');
-            nav.classList.remove('is-open');
-        }
-
-        function isOpen() {
-            return toggle.getAttribute('aria-expanded') === 'true';
-        }
-
-        // Click/tap toggle
-        toggle.addEventListener('click', function(e) {
-            // Ignore if this was the end of a drag
-            if (isDragging) {
-                return;
-            }
-
-            if (isOpen()) {
-                closeNav();
-            } else {
-                openNav();
-            }
-        });
-
-        // Touch/drag support
-        toggle.addEventListener('touchstart', function(e) {
-            startY = e.touches[0].clientY;
-            currentY = startY;
-        }, { passive: true });
-
-        toggle.addEventListener('touchmove', function(e) {
-            currentY = e.touches[0].clientY;
-            const deltaY = currentY - startY;
-
-            // Mark as dragging if movement exceeds dead zone
-            if (Math.abs(deltaY) > DRAG_DEAD_ZONE) {
-                isDragging = true;
-            }
-        }, { passive: true });
-
-        toggle.addEventListener('touchend', function() {
-            const deltaY = currentY - startY;
-
-            if (isDragging) {
-                // Swipe down to open, swipe up to close
-                if (deltaY > SWIPE_THRESHOLD && !isOpen()) {
-                    openNav();
-                } else if (deltaY < -SWIPE_THRESHOLD && isOpen()) {
-                    closeNav();
+            // Extract chapter number from URL (e.g., /13-network-of-teams/ → 13)
+            // Only for buttons that don't already have text content (Start & End has labels)
+            if (!btn.textContent.trim()) {
+                const match = url.match(/\/(\d+)-/);
+                if (match) {
+                    btn.textContent = match[1];
                 }
             }
 
-            startY = 0;
-            currentY = 0;
-            setTimeout(function() {
-                isDragging = false;
-            }, 100);
-        });
+            // Highlight current chapter
+            if (url === currentPath ||
+                url === currentPath.replace(/\/$/, '') ||
+                url + '/' === currentPath) {
+                btn.classList.add('is-current');
 
-        toggle.addEventListener('touchcancel', function() {
-            startY = 0;
-            currentY = 0;
-            isDragging = false;
-        }, { passive: true });
+                // Scroll current button into view (centered)
+                setTimeout(function() {
+                    btn.scrollIntoView({
+                        behavior: 'smooth',
+                        inline: 'center',
+                        block: 'nearest'
+                    });
+                }, 100);
+            }
+        });
     }
 
     /**

@@ -471,6 +471,97 @@ body.tag-space .subnav-space {
     border-bottom-color: var(--color-text);
 }
 
+/* ==========================================================================
+   Mobile Chapter Navigation (horizontal scrollable buttons)
+   ========================================================================== */
+
+.mobile-chapter-nav {
+    display: none; /* Hidden on desktop */
+}
+
+@media (max-width: 1024px) {
+    .mobile-chapter-nav {
+        display: block;
+        background: var(--color-bg);
+        border-bottom: 1px solid var(--color-border);
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .mobile-chapter-nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .mobile-chapter-nav-inner {
+        display: flex;
+        gap: var(--space-2);
+        padding: var(--space-3) var(--space-4);
+        min-width: max-content;
+    }
+
+    .chapter-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 48px;
+        height: 48px;
+        padding: 0 var(--space-3);
+        background: #E5E5E5;
+        color: var(--color-text);
+        font-family: var(--font-sans);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        border-radius: 8px;
+        white-space: nowrap;
+        transition: all var(--transition-fast);
+    }
+
+    .chapter-btn:hover {
+        background: #D5D5D5;
+    }
+
+    /* Active chapter button - highlighted with section color */
+    .chapter-btn.is-current {
+        color: white;
+    }
+
+    /* Section-specific active colors */
+    .chapter-btn-start-end.is-current {
+        background: #222222;
+    }
+
+    .chapter-btn-foundations.is-current {
+        background: var(--color-accent);
+    }
+
+    .chapter-btn-structuring.is-current {
+        background: var(--color-accent);
+    }
+
+    .chapter-btn-direction.is-current {
+        background: var(--color-accent);
+    }
+
+    .chapter-btn-learning.is-current {
+        background: var(--color-accent);
+    }
+
+    .chapter-btn-practice.is-current {
+        background: var(--color-accent);
+    }
+
+    .chapter-btn-space.is-current {
+        background: var(--color-accent);
+    }
+
+    /* Hide desktop chapter sidebar on mobile */
+    .chapter-sidebar {
+        display: none;
+    }
+}
+
 /* Mobile logo (only shows on mobile) */
 .mobile-logo {
     display: none;
@@ -1263,99 +1354,6 @@ body.tag-space .subnav-space {
         padding-bottom: 0;
         border-bottom: none;
         margin-bottom: var(--space-6);
-    }
-}
-
-/* Chapter nav toggle (mobile collapsible) */
-.chapter-nav-toggle {
-    display: none;
-    width: 100%;
-    padding: var(--space-4);
-    background: var(--color-bg-alt);
-    border: 1px solid var(--color-border);
-    font-family: var(--font-sans);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    text-align: left;
-    cursor: pointer;
-    align-items: center;
-    justify-content: space-between;
-    transition: background var(--transition-fast);
-}
-
-.chapter-nav-toggle:hover {
-    background: var(--color-bg-card);
-}
-
-.chapter-nav-toggle-text {
-    color: var(--color-text);
-}
-
-.chapter-nav-toggle-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    color: var(--color-text-secondary);
-    transition: transform var(--transition-fast);
-}
-
-.chapter-nav-toggle-icon svg {
-    width: 16px;
-    height: 16px;
-}
-
-.chapter-nav-toggle[aria-expanded="true"] .chapter-nav-toggle-icon {
-    transform: rotate(180deg);
-}
-
-.chapter-nav-toggle::after {
-    content: '';
-    position: absolute;
-    bottom: 4px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 32px;
-    height: 3px;
-    background: var(--color-text-muted);
-    border-radius: 2px;
-    opacity: 0;
-    transition: opacity var(--transition-fast);
-}
-
-@media (max-width: 1024px) {
-    .chapter-nav-toggle {
-        display: flex;
-        position: relative;
-        padding-bottom: calc(var(--space-4) + 8px);
-    }
-
-    .chapter-nav-toggle::after {
-        opacity: 0.4;
-    }
-
-    .chapter-list-nav {
-        max-height: 0;
-        overflow: hidden;
-        padding: 0 var(--space-4);
-        background: var(--color-bg-card);
-        border: 1px solid var(--color-border);
-        border-top: none;
-        transition: max-height var(--transition-base), padding var(--transition-base);
-    }
-
-    .chapter-list-nav.is-open {
-        max-height: 600px; /* Enough for ~15 chapters */
-        padding: var(--space-4);
-    }
-
-    .chapter-sidebar {
-        margin-bottom: var(--space-6);
-    }
-
-    .chapter-sidebar-header {
-        display: none;
     }
 }
 

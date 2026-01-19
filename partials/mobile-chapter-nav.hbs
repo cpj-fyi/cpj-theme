@@ -1,0 +1,67 @@
+{{!--
+    Mobile Chapter Navigation
+    Horizontal scrollable row of chapter buttons, shown only on mobile
+    Each section has its own accent color for the active state
+    Numbers are extracted from URLs by JavaScript (e.g., /13-network-of-teams/ → 13)
+--}}
+
+<nav class="mobile-chapter-nav">
+    <div class="mobile-chapter-nav-inner">
+        {{#foreach tags}}
+            {{#match slug "start-end"}}
+                {{#get "pages" filter="tag:start-end" limit="50" order="published_at asc" as |chapters|}}
+                    {{#foreach chapters}}
+                        <a href="{{url}}" class="chapter-btn chapter-btn-start-end" data-chapter-url="{{url}}">
+                            {{!-- Special labels for Start & End section --}}
+                            {{#has index="0"}}Intro{{/has}}
+                            {{#has index="1"}}Patterns{{/has}}
+                            {{#has index="2"}}Goal Index{{/has}}
+                        </a>
+                    {{/foreach}}
+                {{/get}}
+            {{/match}}
+            {{#match slug "foundations"}}
+                {{#get "pages" filter="tag:foundations" limit="50" order="published_at asc" as |chapters|}}
+                    {{#foreach chapters}}
+                        <a href="{{url}}" class="chapter-btn chapter-btn-foundations" data-chapter-url="{{url}}"></a>
+                    {{/foreach}}
+                {{/get}}
+            {{/match}}
+            {{#match slug "structuring"}}
+                {{#get "pages" filter="tag:structuring" limit="50" order="published_at asc" as |chapters|}}
+                    {{#foreach chapters}}
+                        <a href="{{url}}" class="chapter-btn chapter-btn-structuring" data-chapter-url="{{url}}"></a>
+                    {{/foreach}}
+                {{/get}}
+            {{/match}}
+            {{#match slug "direction"}}
+                {{#get "pages" filter="tag:direction" limit="50" order="published_at asc" as |chapters|}}
+                    {{#foreach chapters}}
+                        <a href="{{url}}" class="chapter-btn chapter-btn-direction" data-chapter-url="{{url}}"></a>
+                    {{/foreach}}
+                {{/get}}
+            {{/match}}
+            {{#match slug "learning"}}
+                {{#get "pages" filter="tag:learning" limit="50" order="published_at asc" as |chapters|}}
+                    {{#foreach chapters}}
+                        <a href="{{url}}" class="chapter-btn chapter-btn-learning" data-chapter-url="{{url}}"></a>
+                    {{/foreach}}
+                {{/get}}
+            {{/match}}
+            {{#match slug "practice"}}
+                {{#get "pages" filter="tag:practice" limit="50" order="published_at asc" as |chapters|}}
+                    {{#foreach chapters}}
+                        <a href="{{url}}" class="chapter-btn chapter-btn-practice" data-chapter-url="{{url}}"></a>
+                    {{/foreach}}
+                {{/get}}
+            {{/match}}
+            {{#match slug "space"}}
+                {{#get "pages" filter="tag:space" limit="50" order="published_at asc" as |chapters|}}
+                    {{#foreach chapters}}
+                        <a href="{{url}}" class="chapter-btn chapter-btn-space" data-chapter-url="{{url}}"></a>
+                    {{/foreach}}
+                {{/get}}
+            {{/match}}
+        {{/foreach}}
+    </div>
+</nav>
