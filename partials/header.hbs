@@ -66,8 +66,9 @@
                                     <circle cx="16" cy="16" r="12" fill="#0A3A5C"/>
                                     <g class="moonphase-disc-mobile" mask="url(#moonApertureMobile)">
                                         <rect x="-16" y="-16" width="64" height="64" fill="#0A3A5C"/>
-                                        <circle cx="16" cy="-8" r="9" fill="url(#moonGlowMobile)"/>
-                                        <circle cx="16" cy="40" r="9" fill="url(#moonGlowMobile)"/>
+                                        <!-- Two moons at orbital radius 12 from center (16,16) -->
+                                        <circle cx="16" cy="4" r="9" fill="url(#moonGlowMobile)"/>
+                                        <circle cx="16" cy="28" r="9" fill="url(#moonGlowMobile)"/>
                                     </g>
                                     <circle cx="16" cy="16" r="12" fill="none" stroke="var(--color-border)" stroke-width="1"/>
                                 </svg>
@@ -112,9 +113,11 @@
                                 <!-- Rotating disc with two moons -->
                                 <g id="moonphase-disc" mask="url(#moonAperture)">
                                     <rect x="-16" y="-16" width="64" height="64" fill="#0A3A5C"/>
-                                    <!-- Two moons positioned for rotation -->
-                                    <circle cx="16" cy="-8" r="9" fill="url(#moonGlow)"/>
-                                    <circle cx="16" cy="40" r="9" fill="url(#moonGlow)"/>
+                                    <!-- Two moons at orbital radius 12 from center (16,16) -->
+                                    <!-- At 0° rotation: moons at top/bottom edges of aperture -->
+                                    <!-- At 90° rotation: moons pass through center height for max visibility -->
+                                    <circle cx="16" cy="4" r="9" fill="url(#moonGlow)"/>
+                                    <circle cx="16" cy="28" r="9" fill="url(#moonGlow)"/>
                                 </g>
                                 <!-- Border ring -->
                                 <circle cx="16" cy="16" r="12" fill="none" stroke="var(--color-border)" stroke-width="1"/>

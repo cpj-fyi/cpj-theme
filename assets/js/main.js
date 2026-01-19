@@ -359,17 +359,22 @@
         /**
          * Rotate the moon disc based on current phase
          * Disc rotates to show the correct phase through the circular aperture.
-         * Phase 0 (new moon) = disc rotated so no moon visible (moons at top/bottom)
-         * Phase 0.5 (full moon) = full moon centered in aperture
+         * Phase 0 (new moon) = minimal moon visible
+         * Phase 0.5 (full moon) = maximum moon visible
          *
-         * The disc has two moons at cy=-8 and cy=40, spaced 48 units apart.
-         * One full rotation (360°) = one lunar cycle.
+         * The disc has two moons at cy=4 and cy=28, positioned at orbital radius 12
+         * from the center (16, 16). One full rotation (360°) = one lunar cycle.
+         *
+         * A 90° offset is applied so that:
+         * - At phase 0 (new moon), moons are at top/bottom edges of aperture (minimal visibility)
+         * - At phase 0.5 (full moon), moons are at left/right passing through center height
+         *   for maximum visibility through the circular aperture
          */
         function updateMoonPhase(phase) {
-            // Convert phase (0-1) to rotation degrees
-            // Phase 0 (new moon): rotate so moons are hidden (at 0° or 180°)
-            // Phase 0.5 (full moon): rotate so moon is centered (at 90° or 270°)
-            const rotation = phase * 360;
+            // Convert phase (0-1) to rotation degrees with 90° offset
+            // The offset ensures full moon (phase 0.5) shows maximum moon visibility
+            // and new moon (phase 0) shows minimal visibility
+            const rotation = (phase * 360) + 90;
 
             if (moonDisc) {
                 moonDisc.setAttribute('transform', `rotate(${rotation}, 16, 16)`);
