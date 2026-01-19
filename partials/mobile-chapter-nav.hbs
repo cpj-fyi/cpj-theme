@@ -6,9 +6,6 @@
 
 <nav class="mobile-chapter-nav">
     <div class="mobile-chapter-nav-inner">
-        {{!-- Test: static output to verify partial is loading --}}
-        <span class="chapter-nav-test">NAV LOADED</span>
-
         {{#foreach tags}}
             {{#match slug "start-end"}}
                 {{#get "pages" filter="tag:start-end" limit="50" order="published_at asc" as |chapters|}}
