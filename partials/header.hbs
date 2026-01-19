@@ -92,29 +92,31 @@
                     </div>
                     <div class="header-moonphase" id="header-moonphase" title="Current moon phase">
                         <div class="moonphase-watch">
-                            {{!-- Watch-style moonphase complication --}}
-                            <svg class="moonphase-svg" viewBox="0 0 32 16" aria-hidden="true">
+                            <svg class="moonphase-svg" viewBox="0 0 32 32" aria-hidden="true">
                                 <defs>
+                                    <!-- Circular aperture mask - shows only a circle -->
+                                    <mask id="moonAperture">
+                                        <rect width="32" height="32" fill="black"/>
+                                        <circle cx="16" cy="16" r="12" fill="white"/>
+                                    </mask>
+                                    <!-- Moon gradient for 3D effect -->
                                     <radialGradient id="moonGlow" cx="35%" cy="35%" r="55%">
                                         <stop offset="0%" stop-color="#FFFEF5"/>
                                         <stop offset="70%" stop-color="#E8E4D0"/>
                                         <stop offset="100%" stop-color="#D0C8B0"/>
                                     </radialGradient>
-                                    {{!-- Dome-shaped aperture: curved top, flat bottom --}}
-                                    <clipPath id="moonWindow">
-                                        <path d="M0,16 L0,6 A16,6 0 0,1 32,6 L32,16 Z"/>
-                                    </clipPath>
                                 </defs>
-                                {{!-- Content visible through dome aperture --}}
-                                <g clip-path="url(#moonWindow)">
-                                    {{!-- Night sky --}}
-                                    <rect x="0" y="0" width="32" height="32" fill="#0A3A5C"/>
-                                    {{!-- Moon disc - rises from bottom --}}
-                                    <g id="moonphase-disc">
-                                        <circle cx="16" cy="22" r="7" fill="url(#moonGlow)"/>
-                                        <circle cx="16" cy="-10" r="7" fill="url(#moonGlow)"/>
-                                    </g>
+                                <!-- Night sky background -->
+                                <circle cx="16" cy="16" r="12" fill="#0A3A5C"/>
+                                <!-- Rotating disc with two moons -->
+                                <g id="moonphase-disc" mask="url(#moonAperture)">
+                                    <rect x="-16" y="-16" width="64" height="64" fill="#0A3A5C"/>
+                                    <!-- Two moons positioned for rotation -->
+                                    <circle cx="16" cy="-8" r="9" fill="url(#moonGlow)"/>
+                                    <circle cx="16" cy="40" r="9" fill="url(#moonGlow)"/>
                                 </g>
+                                <!-- Border ring -->
+                                <circle cx="16" cy="16" r="12" fill="none" stroke="var(--color-border)" stroke-width="1"/>
                             </svg>
                         </div>
                     </div>
