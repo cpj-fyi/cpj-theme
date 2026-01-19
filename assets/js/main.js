@@ -41,7 +41,7 @@
 
     /**
      * Chapter Nav Toggle (Mobile)
-     * Collapses/expands the chapter list on mobile
+     * Collapses/expands the chapter list on mobile with tap and swipe support
      */
     function initChapterNavToggle() {
         const toggle = document.getElementById('chapter-nav-toggle');
@@ -49,16 +49,71 @@
 
         if (!toggle || !nav) return;
 
-        toggle.addEventListener('click', function() {
-            const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+        let startY = 0;
+        let currentY = 0;
+        let isDragging = false;
+        const SWIPE_THRESHOLD = 30; // pixels needed to trigger open/close
 
-            if (isExpanded) {
-                toggle.setAttribute('aria-expanded', 'false');
-                nav.classList.remove('is-open');
-            } else {
-                toggle.setAttribute('aria-expanded', 'true');
-                nav.classList.add('is-open');
+        function openNav() {
+            toggle.setAttribute('aria-expanded', 'true');
+            nav.classList.add('is-open');
+        }
+
+        function closeNav() {
+            toggle.setAttribute('aria-expanded', 'false');
+            nav.classList.remove('is-open');
+        }
+
+        function isOpen() {
+            return toggle.getAttribute('aria-expanded') === 'true';
+        }
+
+        // Click/tap toggle
+        toggle.addEventListener('click', function(e) {
+            // Ignore if this was the end of a drag
+            if (isDragging) {
+                isDragging = false;
+                return;
             }
+
+            if (isOpen()) {
+                closeNav();
+            } else {
+                openNav();
+            }
+        });
+
+        // Touch/drag support
+        toggle.addEventListener('touchstart', function(e) {
+            startY = e.touches[0].clientY;
+            currentY = startY;
+        }, { passive: true });
+
+        toggle.addEventListener('touchmove', function(e) {
+            currentY = e.touches[0].clientY;
+            const deltaY = currentY - startY;
+
+            // Visual feedback during drag
+            if (Math.abs(deltaY) > 10) {
+                isDragging = true;
+            }
+        }, { passive: true });
+
+        toggle.addEventListener('touchend', function() {
+            const deltaY = currentY - startY;
+
+            if (isDragging) {
+                // Swipe down to open, swipe up to close
+                if (deltaY > SWIPE_THRESHOLD && !isOpen()) {
+                    openNav();
+                } else if (deltaY < -SWIPE_THRESHOLD && isOpen()) {
+                    closeNav();
+                }
+            }
+
+            startY = 0;
+            currentY = 0;
+            // isDragging is reset in click handler
         });
     }
 
