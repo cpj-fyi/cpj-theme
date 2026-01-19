@@ -39,19 +39,21 @@
     {{/if}}
 
     <div class="post-body">
-        <div class="content">
-            {{content}}
-        </div>
+        <div class="content-wrapper{{#unless @member}}{{#has visibility="paid,members"}} content-gated{{/has}}{{/unless}}">
+            <div class="content">
+                {{content}}
+            </div>
 
-        {{!-- Membership CTA for non-members on paid content --}}
-        {{#unless @member}}
-            {{#has visibility="paid"}}
-                {{> "membership-cta"}}
-            {{/has}}
-            {{#has visibility="members"}}
-                {{> "membership-cta"}}
-            {{/has}}
-        {{/unless}}
+            {{!-- Membership CTA for non-members on paid content --}}
+            {{#unless @member}}
+                {{#has visibility="paid"}}
+                    {{> "membership-cta"}}
+                {{/has}}
+                {{#has visibility="members"}}
+                    {{> "membership-cta"}}
+                {{/has}}
+            {{/unless}}
+        </div>
 
         {{!-- Tags --}}
         {{#if tags}}

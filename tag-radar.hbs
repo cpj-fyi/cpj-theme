@@ -2,36 +2,44 @@
 
 {{!--
     Radar archive template
-    Compact feed layout for shorter posts
-    Uses {{#get}} to fetch all posts with radar tag
+    Dark mode design matching essays/five-things structure
 --}}
 
-<header class="archive-header">
-    <div class="container">
-        <h1 class="archive-title">Radar</h1>
-        {{#if tag.description}}
-            <p class="archive-description">{{tag.description}}</p>
-        {{else}}
-            <p class="archive-description">Quick takes, links, and observations.</p>
-        {{/if}}
-        {{#get "posts" filter="tag:radar" limit="100"}}
-            <div class="archive-count">{{plural posts.length empty="No posts" singular="% post" plural="% posts"}}</div>
-        {{/get}}
-    </div>
-</header>
-
-<div class="container">
-    <div class="radar-layout">
-        {{#get "posts" filter="tag:radar" limit="100" include="tags"}}
-            {{#if posts}}
-                <div class="radar-list">
-                    {{#foreach posts}}
-                        {{> "post-card-radar"}}
-                    {{/foreach}}
-                </div>
+<div class="radar-feed">
+    <header class="archive-header archive-header-radar">
+        <div class="container">
+            <h1 class="archive-title">Radar</h1>
+            {{#if tag.description}}
+                <p class="archive-description">{{tag.description}}</p>
             {{else}}
-                <p>No radar posts yet.</p>
+                <p class="archive-description">Daily observations on organization design.</p>
             {{/if}}
-        {{/get}}
+            {{#get "posts" filter="tag:radar" limit="100"}}
+                <div class="archive-count">{{plural posts.length empty="No posts" singular="% post" plural="% posts"}}</div>
+            {{/get}}
+        </div>
+        <div class="radar-dot"></div>
+    </header>
+
+    <div class="container">
+        <div class="essays-layout">
+            <div class="essays-main">
+                {{#get "posts" filter="tag:radar" limit="100" include="tags,authors"}}
+                    {{#if posts}}
+                        <div class="essays-grid">
+                            {{#foreach posts}}
+                                {{> "post-card-essay"}}
+                            {{/foreach}}
+                        </div>
+                    {{else}}
+                        <p>No radar posts yet.</p>
+                    {{/if}}
+                {{/get}}
+            </div>
+
+            <aside class="sidebar">
+                {{> "sidebar"}}
+            </aside>
+        </div>
     </div>
 </div>

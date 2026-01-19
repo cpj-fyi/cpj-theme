@@ -4,6 +4,9 @@
 <div class="home-hero">
     <div class="container">
         <h1 class="home-hero-name">{{@custom.book_author}}</h1>
+        {{#if @site.description}}
+            <p class="home-hero-description">{{@site.description}}</p>
+        {{/if}}
     </div>
 </div>
 
@@ -11,16 +14,14 @@
     <div class="home-layout">
         {{!-- Left column: Book section --}}
         <div class="home-book">
+            <div class="book-label">The Book</div>
             <div class="book-cover">
                 <img src="https://www.cpj.fyi/content/images/2025/06/hidden-patterns-clay-parker-jones-book-6.jpg" alt="{{@custom.book_title}}">
             </div>
             <div class="book-header">
-                <div class="book-label">The Book</div>
                 <h1 class="book-title">{{@custom.book_title}}</h1>
                 <div class="book-author">by {{@custom.book_author}}</div>
             </div>
-
-            <p class="book-description">{{@custom.book_description}}</p>
 
             <ul class="book-sections">
                 <li class="book-section-item">
@@ -67,7 +68,10 @@
                 </li>
             </ul>
 
-            <a href="{{@custom.book_cta_url}}" class="btn btn-primary btn-large">{{@custom.book_cta_text}}</a>
+            <div class="book-buttons">
+                <a href="{{@site.url}}/tag/start-end/" class="btn btn-primary btn-large">Start Reading</a>
+                <a href="https://www.amazon.com/Hidden-Patterns-Playbook-Human-Workplaces/dp/1637748582" class="btn btn-primary btn-large" target="_blank" rel="noopener">Buy</a>
+            </div>
         </div>
 
         {{!-- Right column: Latest content --}}
@@ -126,23 +130,51 @@
                 {{/get}}
             </section>
 
-            {{!-- Radar section --}}
-            <section class="home-radar">
-                <div class="section-header">
-                    <h2 class="section-title">Radar</h2>
-                    <a href="{{@site.url}}/radar/" class="section-link">View all</a>
-                </div>
-
-                {{#get "posts" filter="tag:radar" limit="5" include="tags"}}
-                    {{#if posts}}
-                        <div class="radar-list">
-                            {{#foreach posts}}
-                                {{> "post-card-radar"}}
-                            {{/foreach}}
-                        </div>
-                    {{/if}}
-                {{/get}}
-            </section>
         </div>
     </div>
 </div>
+
+{{!-- Radar section - full width dark mode --}}
+<section class="home-radar-section">
+    <div class="container">
+        <div class="section-header section-header-radar">
+            <div class="section-header-content">
+                <h2 class="section-title section-title-radar">Radar</h2>
+                <p class="section-subtitle">Daily observations on organization design.</p>
+            </div>
+            <a href="{{@site.url}}/radar/" class="section-link">View all</a>
+            <div class="radar-dot"></div>
+        </div>
+
+        {{#get "posts" filter="tag:radar" limit="3" include="tags"}}
+            {{#if posts}}
+                <div class="related-posts-grid">
+                    {{#foreach posts}}
+                        <article class="post-card post-card-text-only">
+                            <div class="post-card-tag-wrapper">
+                                {{#foreach tags}}
+                                    {{#match slug "essays"}}
+                                    {{else match slug "radar"}}
+                                    {{else match slug "five-things"}}
+                                    {{else}}
+                                        <span class="post-card-tag">{{name}}</span>
+                                    {{/match}}
+                                {{/foreach}}
+                            </div>
+                            <h3 class="post-card-title">
+                                <a href="{{url}}">{{title}}</a>
+                            </h3>
+                            <p class="post-card-excerpt">{{excerpt}}</p>
+                            <div class="post-card-meta">
+                                <span>{{date format="MMM D, YYYY"}}</span>
+                                {{#if reading_time}}
+                                    <span>{{reading_time}}</span>
+                                {{/if}}
+                            </div>
+                        </article>
+                    {{/foreach}}
+                </div>
+            {{/if}}
+        {{/get}}
+    </div>
+</section>

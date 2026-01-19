@@ -3,6 +3,7 @@
 
 routes:
   /: index
+  /everything/: everything
 
 collections:
   /essays/:
@@ -19,6 +20,11 @@ collections:
     permalink: /radar/{slug}/
     template: tag-radar
     filter: tag:radar
+
+  # Catch-all for posts that don't match other collections
+  /posts/:
+    permalink: /posts/{slug}/
+    template: index
 
 taxonomies:
   tag: /tag/{slug}/

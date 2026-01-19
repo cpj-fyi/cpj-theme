@@ -1,0 +1,63 @@
+{{!< default}}
+
+{{!--
+    Everything archive
+    Shows all posts and pages in chronological order
+--}}
+
+<div class="archive-layout">
+    <header class="archive-header">
+        <h1 class="archive-title">Everything</h1>
+        <p class="archive-description">All posts and pages, most recent first.</p>
+    </header>
+
+    <div class="archive-content">
+        {{!-- Get all posts --}}
+        {{#get "posts" limit="all" include="tags,authors"}}
+            {{#if posts}}
+                <div class="archive-list">
+                    {{#foreach posts}}
+                        <article class="archive-item">
+                            <time class="archive-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MMM D, YYYY"}}</time>
+                            <div class="archive-item-content">
+                                {{#if primary_tag}}
+                                    <span class="archive-tag">{{primary_tag.name}}</span>
+                                {{/if}}
+                                <h2 class="archive-item-title">
+                                    <a href="{{url}}">{{title}}</a>
+                                </h2>
+                                {{#if custom_excerpt}}
+                                    <p class="archive-item-excerpt">{{custom_excerpt}}</p>
+                                {{else}}
+                                    <p class="archive-item-excerpt">{{excerpt words="20"}}</p>
+                                {{/if}}
+                            </div>
+                        </article>
+                    {{/foreach}}
+                </div>
+            {{/if}}
+        {{/get}}
+
+        {{!-- Get all pages (book chapters, etc.) --}}
+        {{#get "pages" limit="all" include="tags"}}
+            {{#if pages}}
+                <h2 class="archive-section-title">Pages & Chapters</h2>
+                <div class="archive-list">
+                    {{#foreach pages}}
+                        <article class="archive-item">
+                            <time class="archive-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MMM D, YYYY"}}</time>
+                            <div class="archive-item-content">
+                                {{#if primary_tag}}
+                                    <span class="archive-tag">{{primary_tag.name}}</span>
+                                {{/if}}
+                                <h2 class="archive-item-title">
+                                    <a href="{{url}}">{{title}}</a>
+                                </h2>
+                            </div>
+                        </article>
+                    {{/foreach}}
+                </div>
+            {{/if}}
+        {{/get}}
+    </div>
+</div>

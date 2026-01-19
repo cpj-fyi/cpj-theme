@@ -2,32 +2,178 @@
 
 {{!--
     Default page template
-    For general pages (about, contact, etc.)
-    Book chapters should use page-chapter.hbs custom template
+    Detects if page is a book chapter (has section tag) and shows chapter layout with sidebar
+    Otherwise shows standard page layout
 --}}
 
 {{#post}}
-<article class="page {{post_class}}">
-    <header class="post-header">
-        <h1 class="post-title">{{title}}</h1>
-        {{#if custom_excerpt}}
-            <p class="post-excerpt">{{custom_excerpt}}</p>
-        {{/if}}
-    </header>
+    {{!-- Check if this is a book chapter by looking for section tags --}}
+    {{#has tag="start-end, foundations, structuring, direction, learning, practice, space"}}
+        {{!-- Book chapter layout with sidebar --}}
+        <article class="page chapter-page {{post_class}}">
+            <div class="container">
+                <div class="chapter-layout">
+                    {{!-- Chapter sidebar --}}
+                    <aside class="chapter-sidebar">
+                        <div class="chapter-sidebar-header">
+                            <div class="chapter-section-label">{{@custom.book_title}}</div>
+                            {{#foreach tags}}
+                                {{#match slug "start-end"}}<h2 class="chapter-section-name"><a href="{{@site.url}}/tag/start-end/">Start & End</a></h2>{{/match}}
+                                {{#match slug "foundations"}}<h2 class="chapter-section-name"><a href="{{@site.url}}/tag/foundations/">Foundations</a></h2>{{/match}}
+                                {{#match slug "structuring"}}<h2 class="chapter-section-name"><a href="{{@site.url}}/tag/structuring/">Structuring</a></h2>{{/match}}
+                                {{#match slug "direction"}}<h2 class="chapter-section-name"><a href="{{@site.url}}/tag/direction/">Direction</a></h2>{{/match}}
+                                {{#match slug "learning"}}<h2 class="chapter-section-name"><a href="{{@site.url}}/tag/learning/">Learning</a></h2>{{/match}}
+                                {{#match slug "practice"}}<h2 class="chapter-section-name"><a href="{{@site.url}}/tag/practice/">Practice</a></h2>{{/match}}
+                                {{#match slug "space"}}<h2 class="chapter-section-name"><a href="{{@site.url}}/tag/space/">Space</a></h2>{{/match}}
+                            {{/foreach}}
+                        </div>
 
-    {{#if feature_image}}
-        <figure class="post-feature-image">
-            <img src="{{feature_image}}" alt="{{title}}">
-            {{#if feature_image_caption}}
-                <figcaption>{{feature_image_caption}}</figcaption>
+                        {{!-- List chapters in this section --}}
+                        <nav class="chapter-list-nav">
+                            {{#foreach tags}}
+                                {{#match slug "start-end"}}
+                                    {{#get "pages" filter="tag:start-end" limit="50" order="published_at asc" as |chapters|}}
+                                        <ul class="chapter-list">
+                                            {{#foreach chapters}}
+                                                <li class="chapter-list-item">
+                                                    <a href="{{url}}" class="chapter-list-link ">{{title}}</a>
+                                                </li>
+                                            {{/foreach}}
+                                        </ul>
+                                    {{/get}}
+                                {{/match}}
+                                {{#match slug "foundations"}}
+                                    {{#get "pages" filter="tag:foundations" limit="50" order="published_at asc" as |chapters|}}
+                                        <ul class="chapter-list">
+                                            {{#foreach chapters}}
+                                                <li class="chapter-list-item">
+                                                    <a href="{{url}}" class="chapter-list-link ">{{title}}</a>
+                                                </li>
+                                            {{/foreach}}
+                                        </ul>
+                                    {{/get}}
+                                {{/match}}
+                                {{#match slug "structuring"}}
+                                    {{#get "pages" filter="tag:structuring" limit="50" order="published_at asc" as |chapters|}}
+                                        <ul class="chapter-list">
+                                            {{#foreach chapters}}
+                                                <li class="chapter-list-item">
+                                                    <a href="{{url}}" class="chapter-list-link ">{{title}}</a>
+                                                </li>
+                                            {{/foreach}}
+                                        </ul>
+                                    {{/get}}
+                                {{/match}}
+                                {{#match slug "direction"}}
+                                    {{#get "pages" filter="tag:direction" limit="50" order="published_at asc" as |chapters|}}
+                                        <ul class="chapter-list">
+                                            {{#foreach chapters}}
+                                                <li class="chapter-list-item">
+                                                    <a href="{{url}}" class="chapter-list-link ">{{title}}</a>
+                                                </li>
+                                            {{/foreach}}
+                                        </ul>
+                                    {{/get}}
+                                {{/match}}
+                                {{#match slug "learning"}}
+                                    {{#get "pages" filter="tag:learning" limit="50" order="published_at asc" as |chapters|}}
+                                        <ul class="chapter-list">
+                                            {{#foreach chapters}}
+                                                <li class="chapter-list-item">
+                                                    <a href="{{url}}" class="chapter-list-link ">{{title}}</a>
+                                                </li>
+                                            {{/foreach}}
+                                        </ul>
+                                    {{/get}}
+                                {{/match}}
+                                {{#match slug "practice"}}
+                                    {{#get "pages" filter="tag:practice" limit="50" order="published_at asc" as |chapters|}}
+                                        <ul class="chapter-list">
+                                            {{#foreach chapters}}
+                                                <li class="chapter-list-item">
+                                                    <a href="{{url}}" class="chapter-list-link ">{{title}}</a>
+                                                </li>
+                                            {{/foreach}}
+                                        </ul>
+                                    {{/get}}
+                                {{/match}}
+                                {{#match slug "space"}}
+                                    {{#get "pages" filter="tag:space" limit="50" order="published_at asc" as |chapters|}}
+                                        <ul class="chapter-list">
+                                            {{#foreach chapters}}
+                                                <li class="chapter-list-item">
+                                                    <a href="{{url}}" class="chapter-list-link ">{{title}}</a>
+                                                </li>
+                                            {{/foreach}}
+                                        </ul>
+                                    {{/get}}
+                                {{/match}}
+                            {{/foreach}}
+                        </nav>
+                    </aside>
+
+                    {{!-- Chapter content --}}
+                    <div class="chapter-content">
+                        <header class="post-header">
+                            <h1 class="post-title">{{title}}</h1>
+                            {{#if custom_excerpt}}
+                                <p class="post-excerpt">{{custom_excerpt}}</p>
+                            {{/if}}
+                        </header>
+
+                        {{#if feature_image}}
+                            <figure class="post-feature-image">
+                                <img src="{{feature_image}}" alt="{{title}}">
+                                {{#if feature_image_caption}}
+                                    <figcaption>{{feature_image_caption}}</figcaption>
+                                {{/if}}
+                            </figure>
+                        {{/if}}
+
+                        <div class="post-body">
+                            <div class="content-wrapper{{#unless @member}}{{#has visibility="paid,members"}} content-gated{{/has}}{{/unless}}">
+                                <div class="content">
+                                    {{content}}
+                                </div>
+
+                                {{#unless @member}}
+                                    {{#has visibility="paid"}}
+                                        {{> "membership-cta"}}
+                                    {{/has}}
+                                    {{#has visibility="members"}}
+                                        {{> "membership-cta"}}
+                                    {{/has}}
+                                {{/unless}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    {{else}}
+        {{!-- Standard page layout --}}
+        <article class="page {{post_class}}">
+            <header class="post-header">
+                <h1 class="post-title">{{title}}</h1>
+                {{#if custom_excerpt}}
+                    <p class="post-excerpt">{{custom_excerpt}}</p>
+                {{/if}}
+            </header>
+
+            {{#if feature_image}}
+                <figure class="post-feature-image">
+                    <img src="{{feature_image}}" alt="{{title}}">
+                    {{#if feature_image_caption}}
+                        <figcaption>{{feature_image_caption}}</figcaption>
+                    {{/if}}
+                </figure>
             {{/if}}
-        </figure>
-    {{/if}}
 
-    <div class="post-body">
-        <div class="content">
-            {{content}}
-        </div>
-    </div>
-</article>
+            <div class="post-body">
+                <div class="content">
+                    {{content}}
+                </div>
+            </div>
+        </article>
+    {{/has}}
 {{/post}}

@@ -79,6 +79,32 @@ Configurable in Ghost Admin → Design:
 3. Check post visibility settings
 4. Templates use `{{#get}}` so multi-tag posts should appear in listings
 
+## Moonphase Implementation
+
+The header includes a watch-style moonphase complication that shows the current lunar phase.
+
+### Structure (partials/header.hbs)
+- **SVG viewBox**: `0 0 32 16`
+- **Aperture**: Dome-shaped clipPath (curved top, flat bottom) using path `M0,16 L0,6 A16,6 0 0,1 32,6 L32,16 Z`
+- **Two moons**: At `cy=22` and `cy=-10`, spaced 32 units apart vertically
+- **Moon rises from bottom**: Translates vertically so moon peeks up through flat bottom edge
+
+### Animation (assets/js/main.js)
+```javascript
+// Phase calculation from known new moon (Jan 6, 2000)
+const synodicMonth = 29.53058867; // days
+const phase = (daysSinceKnown / synodicMonth) % 1;
+
+// Position: +2 at new moon (hidden), -11 at full moon (centered)
+const translateY = -4.5 + 6.5 * Math.cos(phase * 2 * Math.PI);
+```
+
+### Visual behavior
+- **New moon (phase 0)**: Moon hidden below aperture
+- **Crescent phases**: Moon partially visible, peeking up from bottom
+- **Full moon (phase 0.5)**: Moon centered in dome aperture
+- **CSS container**: `.moonphase-watch` with `border-radius: 16px 16px 0 0` for dome shape
+
 ## GitHub
 
 Repo: https://github.com/cpj-fyi/cpj-theme
