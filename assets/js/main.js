@@ -53,6 +53,7 @@
         let currentY = 0;
         let isDragging = false;
         const SWIPE_THRESHOLD = 30; // pixels needed to trigger open/close
+        const DRAG_DEAD_ZONE = 10; // pixels before drag is recognized
 
         function openNav() {
             toggle.setAttribute('aria-expanded', 'true');
@@ -72,7 +73,6 @@
         toggle.addEventListener('click', function(e) {
             // Ignore if this was the end of a drag
             if (isDragging) {
-                isDragging = false;
                 return;
             }
 
@@ -93,8 +93,8 @@
             currentY = e.touches[0].clientY;
             const deltaY = currentY - startY;
 
-            // Visual feedback during drag
-            if (Math.abs(deltaY) > 10) {
+            // Mark as dragging if movement exceeds dead zone
+            if (Math.abs(deltaY) > DRAG_DEAD_ZONE) {
                 isDragging = true;
             }
         }, { passive: true });
@@ -113,8 +113,16 @@
 
             startY = 0;
             currentY = 0;
-            // isDragging is reset in click handler
+            setTimeout(function() {
+                isDragging = false;
+            }, 100);
         });
+
+        toggle.addEventListener('touchcancel', function() {
+            startY = 0;
+            currentY = 0;
+            isDragging = false;
+        }, { passive: true });
     }
 
     /**
