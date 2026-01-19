@@ -712,9 +712,9 @@ body.tag-space .subnav-space {
 
     .mobile-moonphase {
         width: 32px;
-        height: 16px;
+        height: 32px;
         overflow: hidden;
-        border-radius: 16px 16px 0 0;
+        border-radius: 50%;
     }
 
     .mobile-moonphase .moonphase-svg {
