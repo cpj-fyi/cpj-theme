@@ -1302,7 +1302,7 @@ body.tag-space .subnav-space {
     transform: rotate(180deg);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .chapter-nav-toggle {
         display: flex;
     }
@@ -1320,29 +1320,13 @@ body.tag-space .subnav-space {
     }
 
     .chapter-sidebar {
-        margin-bottom: var(--space-8);
+        margin-bottom: var(--space-6);
     }
-}
 
-.chapter-sidebar-header {
-    margin-bottom: var(--space-6);
-    padding-bottom: var(--space-4);
-    border-bottom: 1px solid var(--color-text);
-}
-
-.chapter-section-label {
-    font-family: var(--font-sans);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-accent);
-    margin-bottom: var(--space-1);
-}
-
-.chapter-section-name {
-    font-size: var(--text-xl);
-    margin: 0;
+    /* Hide old header elements if they exist */
+    .chapter-sidebar-header {
+        display: none;
+    }
 }
 
 /* Chapter list in sidebar */
@@ -1419,7 +1403,23 @@ body.tag-space .subnav-space {
     max-width: var(--max-width-content);
 }
 
-@media (max-width: 768px) {
+/* Chapter page post header - override default post-header styles */
+.chapter-page .post-header {
+    max-width: none;
+    margin: 0;
+    padding: var(--space-8) 0 var(--space-6);
+    text-align: left;
+}
+
+.chapter-page .post-title {
+    text-align: left;
+}
+
+.chapter-page .post-excerpt {
+    text-align: left;
+}
+
+@media (max-width: 1024px) {
     .chapter-content {
         max-width: none;
     }
@@ -1427,6 +1427,10 @@ body.tag-space .subnav-space {
     .chapter-content .post-body {
         padding-left: 0;
         padding-right: 0;
+    }
+
+    .chapter-page .post-header {
+        padding-top: var(--space-6);
     }
 }
 
