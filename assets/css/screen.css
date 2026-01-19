@@ -1353,6 +1353,17 @@ body.tag-space .subnav-space {
     max-width: var(--max-width-content);
 }
 
+@media (max-width: 768px) {
+    .chapter-content {
+        max-width: none;
+    }
+
+    .chapter-content .post-body {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
 .chapter-header {
     margin-bottom: var(--space-12);
 }
