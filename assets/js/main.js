@@ -17,19 +17,19 @@
         initDateTimeMoonphase();
         initCurrentChapter();
         initRadarScan();
-        initChapterNavToggle();
+        initMobileChapterNav();
     });
 
     /**
      * Current Chapter Highlighting
-     * Highlights the current chapter in the sidebar navigation
+     * Highlights the current chapter in the sidebar navigation (desktop)
+     * and mobile chapter buttons
      */
     function initCurrentChapter() {
         const chapterLinks = document.querySelectorAll('.chapter-list-link');
-        if (!chapterLinks.length) return;
-
         const currentPath = window.location.pathname;
 
+        // Desktop sidebar links
         chapterLinks.forEach(function(link) {
             if (link.getAttribute('href') === currentPath ||
                 link.getAttribute('href') === currentPath.replace(/\/$/, '') ||
@@ -40,24 +40,45 @@
     }
 
     /**
-     * Chapter Nav Toggle (Mobile)
-     * Collapses/expands the chapter list on mobile
+     * Mobile Chapter Navigation
+     * Horizontal scrollable row of chapter buttons
+     * - Extracts chapter numbers from URLs
+     * - Highlights current chapter
+     * - Scrolls current button into view
      */
-    function initChapterNavToggle() {
-        const toggle = document.getElementById('chapter-nav-toggle');
-        const nav = document.getElementById('chapter-list-nav');
+    function initMobileChapterNav() {
+        const mobileNav = document.querySelector('.mobile-chapter-nav');
+        if (!mobileNav) return;
 
-        if (!toggle || !nav) return;
+        const buttons = mobileNav.querySelectorAll('.chapter-btn');
+        const currentPath = window.location.pathname;
 
-        toggle.addEventListener('click', function() {
-            const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+        buttons.forEach(function(btn) {
+            const url = btn.getAttribute('data-chapter-url') || btn.getAttribute('href');
 
-            if (isExpanded) {
-                toggle.setAttribute('aria-expanded', 'false');
-                nav.classList.remove('is-open');
-            } else {
-                toggle.setAttribute('aria-expanded', 'true');
-                nav.classList.add('is-open');
+            // Extract chapter number from URL (e.g., /13-network-of-teams/ → 13)
+            // Only for buttons that don't already have text content (Start & End has labels)
+            if (!btn.textContent.trim()) {
+                const match = url.match(/\/(\d+)-/);
+                if (match) {
+                    btn.textContent = match[1];
+                }
+            }
+
+            // Highlight current chapter
+            if (url === currentPath ||
+                url === currentPath.replace(/\/$/, '') ||
+                url + '/' === currentPath) {
+                btn.classList.add('is-current');
+
+                // Scroll current button into view (centered)
+                setTimeout(function() {
+                    btn.scrollIntoView({
+                        behavior: 'smooth',
+                        inline: 'center',
+                        block: 'nearest'
+                    });
+                }, 100);
             }
         });
     }
@@ -294,21 +315,30 @@
         }
 
         /**
-         * Position the moon disc based on current phase
-         * Moon at cy=22 (below aperture). Dome aperture shows y=6 to y=16.
-         * Moon rises into view, peeks up from bottom at crescent, fully visible at full moon.
-         * Phase 0 (new moon) = moon just hidden (translateY = 2)
-         * Phase 0.5 (full moon) = moon centered in dome (translateY = -11)
+         * Rotate the moon disc based on current phase
+         * Disc rotates to show the correct phase through the circular aperture.
+         * Phase 0 (new moon) = minimal moon visible
+         * Phase 0.5 (full moon) = maximum moon visible
+         *
+         * The disc has two moons at cy=4 and cy=28, positioned at orbital radius 12
+         * from the center (16, 16). One full rotation (360°) = one lunar cycle.
+         *
+         * A 90° offset is applied so that:
+         * - At phase 0 (new moon), moons are at top/bottom edges of aperture (minimal visibility)
+         * - At phase 0.5 (full moon), moons are at left/right passing through center height
+         *   for maximum visibility through the circular aperture
          */
         function updateMoonPhase(phase) {
-            // Cosine wave: +2 at new moon (hidden), -11 at full moon (centered)
-            const translateY = -4.5 + 6.5 * Math.cos(phase * 2 * Math.PI);
+            // Convert phase (0-1) to rotation degrees with 90° offset
+            // The offset ensures full moon (phase 0.5) shows maximum moon visibility
+            // and new moon (phase 0) shows minimal visibility
+            const rotation = (phase * 360) + 90;
 
             if (moonDisc) {
-                moonDisc.setAttribute('transform', `translate(0, ${translateY})`);
+                moonDisc.setAttribute('transform', `rotate(${rotation}, 16, 16)`);
             }
             if (mobileMoonDisc) {
-                mobileMoonDisc.setAttribute('transform', `translate(0, ${translateY})`);
+                mobileMoonDisc.setAttribute('transform', `rotate(${rotation}, 16, 16)`);
             }
 
             // Update title with phase name

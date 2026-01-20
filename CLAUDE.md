@@ -104,10 +104,10 @@ JavaScript in `initCurrentChapter()` adds `.is-current` class to the current cha
 The header includes a watch-style moonphase complication that shows the current lunar phase.
 
 ### Structure (partials/header.hbs)
-- **SVG viewBox**: `0 0 32 16`
-- **Aperture**: Dome-shaped clipPath (curved top, flat bottom)
-- **Two moons**: At `cy=22` and `cy=-10`, spaced 32 units apart vertically
-- **Moon rises from bottom**: Translates vertically so moon peeks up through flat bottom edge
+- **SVG viewBox**: `0 0 32 32`
+- **Aperture**: Circular mask at cx=16, cy=16, r=12 (reveals from y=4 to y=28)
+- **Two moons**: At `cy=4` and `cy=28` (orbital radius 12 from center), r=9 each
+- **Rotation-based animation**: Disc rotates around center (16, 16)
 
 ### Animation (assets/js/main.js)
 ```javascript
@@ -115,8 +115,11 @@ The header includes a watch-style moonphase complication that shows the current 
 const synodicMonth = 29.53058867; // days
 const phase = (daysSinceKnown / synodicMonth) % 1;
 
-// Position: +2 at new moon (hidden), -11 at full moon (centered)
-const translateY = -4.5 + 6.5 * Math.cos(phase * 2 * Math.PI);
+// Rotation: 90° offset ensures full moon shows maximum visibility
+// Phase 0 (new moon) = 90° rotation (moons at sides, minimal in aperture)
+// Phase 0.5 (full moon) = 270° rotation (moons passing through center height)
+const rotation = (phase * 360) + 90;
+moonDisc.setAttribute('transform', `rotate(${rotation}, 16, 16)`);
 ```
 
 ## Custom Settings (package.json)
