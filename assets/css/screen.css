@@ -486,7 +486,7 @@ body.tag-space .subnav-space {
         opacity: 1 !important;
         position: relative;
         z-index: 50;
-        background: #ffcccc; /* DEBUG: pink background to see if element renders */
+        background: var(--color-bg);
         border-bottom: 1px solid var(--color-border);
         overflow-x: auto;
         overflow-y: visible;
@@ -567,6 +567,22 @@ body.tag-space .subnav-space {
     /* Hide desktop chapter sidebar on mobile */
     .chapter-sidebar {
         display: none;
+    }
+}
+
+/* At narrow mobile (<=768px), header becomes fixed - chapter nav must also be fixed */
+@media (max-width: 768px) {
+    .mobile-chapter-nav {
+        position: fixed;
+        top: 117px; /* Below fixed header (69px) + book-subnav (~48px) */
+        left: 0;
+        right: 0;
+        z-index: 999;
+    }
+
+    /* Add extra padding to main content on chapter pages to account for fixed chapter nav */
+    .chapter-page {
+        padding-top: 72px; /* Height of mobile-chapter-nav */
     }
 }
 
