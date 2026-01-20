@@ -520,7 +520,7 @@ body.tag-space .subnav-space {
         color: var(--color-text);
         font-family: var(--font-sans);
         font-size: var(--text-sm);
-        font-weight: 600;
+        font-weight: 400; /* Roman/regular weight */
         border-radius: 8px;
         white-space: nowrap;
         transition: all var(--transition-fast);
@@ -528,6 +528,35 @@ body.tag-space .subnav-space {
 
     .chapter-btn:hover {
         background: #D5D5D5;
+    }
+
+    /* Section-specific hover colors */
+    .chapter-btn-start-end:hover {
+        color: #222222;
+    }
+
+    .chapter-btn-foundations:hover {
+        color: #ff3252;
+    }
+
+    .chapter-btn-structuring:hover {
+        color: #e9306b;
+    }
+
+    .chapter-btn-direction:hover {
+        color: #d83586;
+    }
+
+    .chapter-btn-learning:hover {
+        color: #9f36ce;
+    }
+
+    .chapter-btn-practice:hover {
+        color: #bd31bf;
+    }
+
+    .chapter-btn-space:hover {
+        color: #8438f2;
     }
 
     /* Active chapter button - highlighted with section color */
