@@ -42,10 +42,12 @@ The archive templates (tag-essays.hbs, tag-radar.hbs, tag-five-things.hbs) use e
 - `index.hbs` - Homepage with hero banner, book section, essays/radar feeds
 - `tag-essays.hbs`, `tag-radar.hbs`, `tag-five-things.hbs` - Archive pages
 - `tag-{section}.hbs` - Book section pages (simplified, no sidebar - top nav handles sections)
-- `page.hbs` - Book chapter template with collapsible chapter nav on mobile
+- `page.hbs` - Default page template, detects chapter pages by tag
+- `custom-chapter.hbs` - **Primary chapter template** (selected via Ghost page settings "Template: chapter")
 - `post.hbs` - Blog post template
-- `partials/header.hbs` - Nav with conditional book subnav, mobile menu
+- `partials/header.hbs` - Nav with conditional book subnav, mobile menu, moonphase
 - `partials/book-subnav.hbs` - Section navigation for book area
+- `partials/mobile-chapter-nav.hbs` - Horizontal scrollable chapter buttons for mobile
 - `routes.yaml` - Must be uploaded separately to Ghost Admin
 - `redirects.yaml` - For URL redirects (upload to Ghost Admin → Labs → Redirects)
 
@@ -56,6 +58,15 @@ The archive templates (tag-essays.hbs, tag-radar.hbs, tag-five-things.hbs) use e
 - Accent: `#FF3252` (coral red)
 - Radar neon green: `#00ff88`
 - Radar dark background: `#222222`
+
+### Section Colors (for chapter nav buttons)
+- Start & End: `#222222`
+- Foundations: `#ff3252`
+- Structuring: `#e9306b`
+- Direction: `#d83586`
+- Practice: `#bd31bf`
+- Learning: `#9f36ce`
+- Space: `#8438f2`
 
 ### Typography
 - Body: Freight Text Pro (serif)
@@ -88,16 +99,25 @@ The radar section header has an animated green dot that sweeps across with rando
 - Simplified layout - just shows chapter list
 - No sidebar (section switching handled by book-subnav in top nav)
 
-### Chapter Pages (page.hbs)
-- Collapsible chapter nav on mobile/tablet (≤1024px)
-- Toggle button says "Chapters in [Section Name]"
-- Always visible on desktop as sidebar
+### Chapter Pages (custom-chapter.hbs)
+- **Desktop**: Sidebar with chapter list (always visible)
+- **Mobile/Tablet (≤1024px)**: Horizontal scrollable chapter buttons
+- **Narrow Mobile (≤768px)**: Chapter nav becomes `position: fixed` below the fixed header
+
+### Mobile Chapter Nav (partials/mobile-chapter-nav.hbs)
+- Horizontal scrollable row of numbered buttons
+- Extracts chapter numbers from URLs (e.g., `/13-network-of-teams/` → "13")
+- Start & End section uses labels: "Intro", "Patterns", "Goal Index" instead of numbers
+- Current chapter highlighted with section-specific color
+- Hover states show section-specific text color
+- Auto-scrolls to center the current chapter button on load
 
 ### Chapter Detection
 Uses `{{#foreach tags}}` with `{{#match slug "section-name"}}` to detect which section a chapter belongs to. This is necessary because `{{#has tag="..."}}` only checks the primary tag.
 
 ### Current Chapter Highlighting
-JavaScript in `initCurrentChapter()` adds `.is-current` class to the current chapter link by comparing URLs.
+- Desktop: `initCurrentChapter()` in main.js adds `.is-current` class to sidebar links
+- Mobile: `initMobileChapterNav()` adds `.is-current` class to chapter buttons
 
 ## Moonphase Implementation
 
@@ -150,9 +170,16 @@ Configurable in Ghost Admin → Design:
 Use `redirects.yaml` for redirecting old URLs. Upload to Ghost Admin → Labs → Redirects.
 Note: Can't use catch-all redirects because pages also use root-level URLs.
 
+## Mobile Responsive Breakpoints
+
+- **≤1024px**: Mobile chapter nav appears, desktop sidebar hides
+- **≤768px**: Header becomes `position: fixed`, mobile chapter nav also becomes fixed at `top: 117px`
+- Body gets `padding-top: 69px` at ≤768px to account for fixed header
+- Chapter pages get additional `padding-top: 72px` for fixed chapter nav
+
 ## Known Issues / TODO
 
-- **Collapsible chapter nav**: Toggle button implemented in page.hbs but may not be rendering on live site. Check that theme zip is fully uploaded and Ghost cache is cleared.
+None currently.
 
 ## GitHub
 
