@@ -28,13 +28,6 @@
                     {{!-- Featured essay (first post) --}}
                     {{#foreach posts from="1" to="1"}}
                         <article class="post-card post-card-featured">
-                            {{#if feature_image}}
-                                <div class="post-card-image">
-                                    <a href="{{url}}">
-                                        <img src="{{feature_image}}" alt="{{title}}">
-                                    </a>
-                                </div>
-                            {{/if}}
                             <div class="post-card-content">
                                 <div class="post-card-tag-wrapper">
                                     {{#foreach tags}}

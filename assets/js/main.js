@@ -18,6 +18,7 @@
         initCurrentChapter();
         initRadarScan();
         initMobileChapterNav();
+        initChapterTitleStyling();
     });
 
     /**
@@ -81,6 +82,29 @@
                 }, 100);
             }
         });
+    }
+
+    /**
+     * Chapter Title Styling
+     * Wraps leading chapter numbers in a span so they can be styled differently
+     * (e.g., roman/upright while the rest of the title is italic)
+     */
+    function initChapterTitleStyling() {
+        const chapterPage = document.querySelector('.chapter-page');
+        if (!chapterPage) return;
+
+        const postTitle = chapterPage.querySelector('.post-title');
+        if (!postTitle) return;
+
+        const titleText = postTitle.textContent;
+        // Match leading number with optional period/colon and space (e.g., "13. ", "13 ", "13: ")
+        const match = titleText.match(/^(\d+[.\s:]*\s*)/);
+
+        if (match) {
+            const numberPart = match[1];
+            const restOfTitle = titleText.slice(numberPart.length);
+            postTitle.innerHTML = '<span class="chapter-num">' + numberPart + '</span>' + restOfTitle;
+        }
     }
 
     /**
