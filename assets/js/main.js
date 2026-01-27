@@ -327,8 +327,9 @@
          * 0 = New Moon, 0.25 = First Quarter, 0.5 = Full Moon, 0.75 = Last Quarter
          */
         function getMoonPhase(date) {
-            // Known new moon: January 6, 2000 at 18:14 UTC
-            const knownNewMoon = new Date(Date.UTC(2000, 0, 6, 18, 14, 0));
+            // Recent known new moon: January 18, 2026 at 19:52 UTC
+            // Using a recent reference minimizes accumulated calculation error
+            const knownNewMoon = new Date(Date.UTC(2026, 0, 18, 19, 52, 0));
             const synodicMonth = 29.53058867; // Average lunar cycle in days
 
             const daysSinceKnown = (date.getTime() - knownNewMoon.getTime()) / (1000 * 60 * 60 * 24);
@@ -340,29 +341,20 @@
 
         /**
          * Rotate the moon disc based on current phase
-         * Disc rotates to show the correct phase through the circular aperture.
-         * Phase 0 (new moon) = minimal moon visible
-         * Phase 0.5 (full moon) = maximum moon visible
-         *
-         * The disc has two moons at cy=4 and cy=28, positioned at orbital radius 12
-         * from the center (16, 16). One full rotation (360°) = one lunar cycle.
-         *
-         * A 90° offset is applied so that:
-         * - At phase 0 (new moon), moons are at top/bottom edges of aperture (minimal visibility)
-         * - At phase 0.5 (full moon), moons are at left/right passing through center height
-         *   for maximum visibility through the circular aperture
+         * Simple Hodinkee-style: disc image rotates behind mask image
+         * Phase 0 = new moon, Phase 0.5 = full moon
+         * One full rotation (360°) = one lunar cycle
          */
         function updateMoonPhase(phase) {
-            // Convert phase (0-1) to rotation degrees with 90° offset
-            // The offset ensures full moon (phase 0.5) shows maximum moon visibility
-            // and new moon (phase 0) shows minimal visibility
-            const rotation = (phase * 360) + 90;
+            // Convert phase (0-1) to rotation degrees
+            // +44° offset calibrates disc position to match visual moon position
+            const rotation = (phase * 360) + 44;
 
             if (moonDisc) {
-                moonDisc.setAttribute('transform', `rotate(${rotation}, 16, 16)`);
+                moonDisc.style.transform = `rotate(${rotation}deg)`;
             }
             if (mobileMoonDisc) {
-                mobileMoonDisc.setAttribute('transform', `rotate(${rotation}, 16, 16)`);
+                mobileMoonDisc.style.transform = `rotate(${rotation}deg)`;
             }
 
             // Update title with phase name

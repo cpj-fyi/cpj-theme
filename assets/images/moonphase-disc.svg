@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <title>Moonphase Copy 2</title>
+    <defs>
+        <radialGradient cx="50%" cy="50%" fx="50%" fy="50%" r="50%" gradientTransform="translate(0.500000,0.500000),scale(0.998885,1.000000),rotate(-90.000000),translate(-0.500000,-0.500000)" id="radialGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#E9E9E9" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="MASTER-MOONPHASE" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-161.000000, -446.000000)">
+            <g id="Moonphase-Copy-2" transform="translate(161.000000, 445.000000)">
+                <g id="Rotate" transform="translate(0.000000, 0.373333)">
+                    <g id="moonphase-copy-3" transform="translate(0.362637, 0.000000)">
+                        <g id="rotate" transform="translate(14.074237, 14.201758) rotate(-90.000000) translate(-14.074237, -14.201758) translate(0.074237, 0.201758)">
+                            <rect id="Rectangle" fill="#0D4971" x="0" y="0" width="27.1400097" height="27.1097436" rx="13.5548718"></rect>
+                            <ellipse id="Oval" fill="url(#radialGradient-1)" cx="21.4211712" cy="13.5644021" rx="4.11120903" ry="4.10662427"></ellipse>
+                        </g>
+                    </g>
+                    <g id="moonphase-copy-3" transform="translate(13.172161, 22.260000) rotate(-180.000000) translate(-13.172161, -22.260000) translate(8.172161, 16.760000)" fill="url(#radialGradient-1)">
+                        <g id="rotate" transform="translate(4.570525, 5.346520) rotate(-90.000000) translate(-4.570525, -5.346520) translate(-0.429475, 0.846520)">
+                            <ellipse id="Oval" cx="5.05853388" cy="4.10662427" rx="4.11120903" ry="4.10662427"></ellipse>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

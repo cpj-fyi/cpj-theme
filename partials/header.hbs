@@ -51,27 +51,12 @@
                                 <span class="mobile-time"></span>
                             </div>
                             <div class="mobile-moonphase">
-                                <svg class="moonphase-svg" viewBox="0 0 32 32" aria-hidden="true">
-                                    <defs>
-                                        <mask id="moonApertureMobile">
-                                            <rect width="32" height="32" fill="black"/>
-                                            <circle cx="16" cy="16" r="12" fill="white"/>
-                                        </mask>
-                                        <radialGradient id="moonGlowMobile" cx="35%" cy="35%" r="55%">
-                                            <stop offset="0%" stop-color="#FFFEF5"/>
-                                            <stop offset="70%" stop-color="#E8E4D0"/>
-                                            <stop offset="100%" stop-color="#D0C8B0"/>
-                                        </radialGradient>
-                                    </defs>
-                                    <circle cx="16" cy="16" r="12" fill="#0A3A5C"/>
-                                    <g class="moonphase-disc-mobile" mask="url(#moonApertureMobile)">
-                                        <rect x="-16" y="-16" width="64" height="64" fill="#0A3A5C"/>
-                                        <!-- Two moons at orbital radius 12 from center (16,16) -->
-                                        <circle cx="16" cy="4" r="9" fill="url(#moonGlowMobile)"/>
-                                        <circle cx="16" cy="28" r="9" fill="url(#moonGlowMobile)"/>
-                                    </g>
-                                    <circle cx="16" cy="16" r="12" fill="none" stroke="var(--color-border)" stroke-width="1"/>
-                                </svg>
+                                <div class="moonphase">
+                                    <div class="moonphase-disc moonphase-disc-mobile">
+                                        <img src="{{asset 'images/moonphase-disc.svg'}}" alt="">
+                                    </div>
+                                    <img class="moonphase-mask" src="{{asset 'images/moonphase-mask.svg'}}" alt="">
+                                </div>
                             </div>
                         </div>
 
@@ -93,35 +78,11 @@
                         <span class="header-time"></span>
                     </div>
                     <div class="header-moonphase" id="header-moonphase" title="Current moon phase">
-                        <div class="moonphase-watch">
-                            <svg class="moonphase-svg" viewBox="0 0 32 32" aria-hidden="true">
-                                <defs>
-                                    <!-- Circular aperture mask - shows only a circle -->
-                                    <mask id="moonAperture">
-                                        <rect width="32" height="32" fill="black"/>
-                                        <circle cx="16" cy="16" r="12" fill="white"/>
-                                    </mask>
-                                    <!-- Moon gradient for 3D effect -->
-                                    <radialGradient id="moonGlow" cx="35%" cy="35%" r="55%">
-                                        <stop offset="0%" stop-color="#FFFEF5"/>
-                                        <stop offset="70%" stop-color="#E8E4D0"/>
-                                        <stop offset="100%" stop-color="#D0C8B0"/>
-                                    </radialGradient>
-                                </defs>
-                                <!-- Night sky background -->
-                                <circle cx="16" cy="16" r="12" fill="#0A3A5C"/>
-                                <!-- Rotating disc with two moons -->
-                                <g id="moonphase-disc" mask="url(#moonAperture)">
-                                    <rect x="-16" y="-16" width="64" height="64" fill="#0A3A5C"/>
-                                    <!-- Two moons at orbital radius 12 from center (16,16) -->
-                                    <!-- At 0° rotation: moons at top/bottom edges of aperture -->
-                                    <!-- At 90° rotation: moons pass through center height for max visibility -->
-                                    <circle cx="16" cy="4" r="9" fill="url(#moonGlow)"/>
-                                    <circle cx="16" cy="28" r="9" fill="url(#moonGlow)"/>
-                                </g>
-                                <!-- Border ring -->
-                                <circle cx="16" cy="16" r="12" fill="none" stroke="var(--color-border)" stroke-width="1"/>
-                            </svg>
+                        <div class="moonphase">
+                            <div class="moonphase-disc" id="moonphase-disc">
+                                <img src="{{asset 'images/moonphase-disc.svg'}}" alt="">
+                            </div>
+                            <img class="moonphase-mask" src="{{asset 'images/moonphase-mask.svg'}}" alt="">
                         </div>
                     </div>
 

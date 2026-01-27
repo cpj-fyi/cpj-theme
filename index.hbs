@@ -74,56 +74,61 @@
             </div>
         </div>
 
-        {{!-- Right column: Latest content --}}
-        <div class="home-content">
-            {{!-- Essays section --}}
-            <section class="home-essays">
-                <div class="section-header">
-                    <h2 class="section-title">Essays</h2>
-                    <a href="{{@site.url}}/essays/" class="section-link">View all</a>
-                </div>
+        {{!-- Middle column: Essays --}}
+        <section class="home-essays">
+            <h2 class="section-title section-title-essays">Essays</h2>
 
-                {{#get "posts" filter="tag:essays" limit="5" include="tags,authors"}}
-                    {{#if posts}}
-                        {{!-- Featured essay (first post) --}}
-                        {{#foreach posts from="1" to="1"}}
-                            <article class="post-card post-card-featured">
-                                <div class="post-card-content">
-                                    <div class="post-card-tag-wrapper">
-                                        {{#foreach tags}}
-                                            {{#match slug "essays"}}
-                                            {{else match slug "radar"}}
-                                            {{else match slug "five-things"}}
-                                            {{else}}
-                                                <span class="post-card-tag">{{name}}</span>
-                                            {{/match}}
-                                        {{/foreach}}
-                                    </div>
-                                    <h3 class="post-card-title">
-                                        <a href="{{url}}">{{title}}</a>
-                                    </h3>
-                                    <p class="post-card-excerpt">{{excerpt}}</p>
-                                    <div class="post-card-meta">
-                                        <span>{{date format="MMM D, YYYY"}}</span>
-                                        {{#if reading_time}}
-                                            <span>{{reading_time}}</span>
-                                        {{/if}}
-                                    </div>
+            {{#get "posts" filter="tag:essays" limit="4" include="tags"}}
+                {{#if posts}}
+                    <div class="essays-feed">
+                        {{#foreach posts}}
+                            <article class="essay-card">
+                                <h3 class="essay-card-title">
+                                    <a href="{{url}}">{{title}}</a>
+                                </h3>
+                                <p class="essay-card-excerpt">{{excerpt}}</p>
+                                <div class="essay-card-meta">
+                                    {{#foreach tags}}
+                                        {{#match slug "essays"}}
+                                        {{else match slug "radar"}}
+                                        {{else match slug "five-things"}}
+                                        {{else}}
+                                            {{#if @first}}
+                                                <a href="{{url}}" class="essay-meta-tag">{{name}}</a>
+                                            {{/if}}
+                                        {{/match}}
+                                    {{/foreach}}
+                                    <span class="essay-meta-date">{{date format="MM DD YY"}}</span>
+                                    {{#if reading_time}}
+                                        <span class="essay-meta-time">{{reading_time}}</span>
+                                    {{/if}}
                                 </div>
                             </article>
                         {{/foreach}}
+                    </div>
+                {{/if}}
+            {{/get}}
+        </section>
 
-                        {{!-- More essays grid --}}
-                        <div class="essays-grid">
-                            {{#foreach posts from="2" to="5"}}
-                                {{> "post-card-essay"}}
-                            {{/foreach}}
-                        </div>
-                    {{/if}}
-                {{/get}}
-            </section>
+        {{!-- Right column: Five Things --}}
+        <section class="home-five-things">
+            <h2 class="section-title section-title-five-things">Five Things</h2>
 
-        </div>
+            {{#get "posts" filter="tag:five-things" limit="5" include="tags"}}
+                {{#if posts}}
+                    <div class="five-things-feed">
+                        {{#foreach posts}}
+                            <article class="five-things-card">
+                                <h3 class="five-things-card-title">
+                                    <a href="{{url}}">{{title}}</a>
+                                </h3>
+                                <p class="five-things-card-excerpt">{{excerpt}}</p>
+                            </article>
+                        {{/foreach}}
+                    </div>
+                {{/if}}
+            {{/get}}
+        </section>
     </div>
 </div>
 

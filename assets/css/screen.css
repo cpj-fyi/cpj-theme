@@ -354,33 +354,40 @@ hr {
     align-items: center;
 }
 
-.moonphase-watch {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+.moonphase {
+    position: relative;
+    width: 30px;
+    height: 30px;
     overflow: hidden;
+    border-radius: 50%;
 }
 
-.moonphase-svg {
+.moonphase-disc {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.moonphase-disc img {
     width: 100%;
     height: 100%;
     display: block;
 }
 
-#moonphase-disc,
-.moonphase-disc-mobile {
-    transform-origin: 16px 16px;
-    transition: transform 1s ease-out;
+.moonphase-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
 }
 
 .mobile-moonphase {
-    width: 32px;
-    height: 32px;
-}
-
-.mobile-moonphase .moonphase-svg {
-    width: 100%;
-    height: 100%;
+    width: 30px;
+    height: 30px;
 }
 
 /* Active nav states based on body class */
@@ -863,16 +870,8 @@ body.tag-space .subnav-space {
     }
 
     .mobile-moonphase {
-        width: 32px;
-        height: 32px;
-        overflow: hidden;
-        border-radius: 50%;
-    }
-
-    .mobile-moonphase .moonphase-svg {
-        width: 100%;
-        height: 100%;
-        display: block;
+        width: 30px;
+        height: 30px;
     }
 
     /* Mobile menu actions */
@@ -1060,12 +1059,18 @@ body.tag-space .subnav-space {
 
 .home-layout {
     display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: var(--space-12);
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
     padding: var(--space-12) 0;
 }
 
 @media (max-width: 1024px) {
+    .home-layout {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
     .home-layout {
         grid-template-columns: 1fr;
     }
@@ -1195,6 +1200,158 @@ body.tag-space .subnav-space {
 
 .section-link:hover {
     color: var(--color-accent);
+}
+
+/* ==========================================================================
+   Homepage Essays Section
+   ========================================================================== */
+
+.home-essays {
+    padding: 0 var(--space-8);
+}
+
+.section-title-essays {
+    color: #222222;
+    margin-bottom: var(--space-6);
+}
+
+.essays-feed {
+    display: flex;
+    flex-direction: column;
+}
+
+.essay-card {
+    padding-bottom: var(--space-6);
+    margin-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.essay-card:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.essay-card-title {
+    font-size: var(--text-2xl);
+    line-height: 1.3;
+    margin: 0 0 var(--space-3);
+}
+
+.essay-card-title a {
+    color: var(--color-text);
+}
+
+.essay-card-title a:hover {
+    color: var(--color-accent);
+}
+
+.essay-card-excerpt {
+    font-size: var(--text-base);
+    line-height: 1.6;
+    color: var(--color-text);
+    margin: 0 0 var(--space-4);
+}
+
+.essay-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.essay-meta-tag,
+.essay-meta-date,
+.essay-meta-time {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: var(--space-1) var(--space-2);
+    border: 1px solid #222222;
+    color: #222222;
+    margin-right: -1px;
+}
+
+.essay-meta-tag:hover {
+    background: #222222;
+    color: #ffffff;
+}
+
+@media (max-width: 1024px) {
+    .home-essays {
+        padding: var(--space-8) 0;
+        border-top: 1px solid var(--color-border);
+    }
+}
+
+@media (max-width: 768px) {
+    .home-essays {
+        padding: var(--space-8) 0;
+    }
+}
+
+/* ==========================================================================
+   Homepage Five Things Section
+   ========================================================================== */
+
+.home-five-things {
+    background: #ff3252;
+    padding: var(--space-6);
+}
+
+.section-title-five-things {
+    color: #ffffff;
+    margin-bottom: var(--space-6);
+}
+
+.five-things-feed {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+}
+
+.five-things-card {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: var(--space-6);
+}
+
+.five-things-card:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.five-things-card-title {
+    font-size: var(--text-xl);
+    line-height: 1.3;
+    margin: 0 0 var(--space-3);
+}
+
+.five-things-card-title a {
+    color: #ffffff;
+}
+
+.five-things-card-title a:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.five-things-card-excerpt {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+@media (max-width: 1024px) {
+    .home-five-things {
+        margin-top: var(--space-8);
+    }
+}
+
+@media (max-width: 768px) {
+    .home-five-things {
+        margin: var(--space-8) calc(-1 * var(--space-6));
+        padding: var(--space-6);
+    }
 }
 
 /* ==========================================================================
@@ -1689,6 +1846,35 @@ body.tag-space .subnav-space {
     .essays-grid .post-card-meta span:last-child::after {
         content: none;
     }
+}
+
+/* Essays archive page layout (reuses essay-card styles from homepage) */
+.essays-archive-layout {
+    display: grid;
+    grid-template-columns: 1fr var(--sidebar-width);
+    gap: var(--space-12);
+    padding: var(--space-12) 0;
+}
+
+@media (max-width: 1024px) {
+    .essays-archive-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.essays-archive-feed {
+    display: flex;
+    flex-direction: column;
+}
+
+.essays-archive-feed .essay-card {
+    padding-bottom: var(--space-8);
+    margin-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.essays-archive-feed .essay-card:last-child {
+    border-bottom: none;
 }
 
 /* ==========================================================================
