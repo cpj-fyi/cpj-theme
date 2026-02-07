@@ -1,12 +1,12 @@
 <article class="post-card post-card-essay {{post_class}}">
     <div class="post-card-content">
-        <div class="post-card-tag-wrapper">
+        <div class="ds-meta-tag-wrapper">
             {{#foreach tags}}
                 {{#match slug "essays"}}
                 {{else match slug "radar"}}
                 {{else match slug "five-things"}}
                 {{else}}
-                    <span class="post-card-tag">{{name}}</span>
+                    <span class="ds-meta-item">{{name}}</span>
                 {{/match}}
             {{/foreach}}
         </div>
@@ -17,10 +17,10 @@
 
         <p class="post-card-excerpt">{{excerpt}}</p>
 
-        <div class="post-card-meta">
-            <span>{{date format="MMM D, YYYY"}}</span>
+        <div class="ds-meta">
+            <span class="ds-meta-item">{{date format="MMM D, YYYY"}}</span>
             {{#if reading_time}}
-                <span>{{reading_time}}</span>
+                <span class="ds-meta-item">{{reading_time}}</span>
             {{/if}}
         </div>
     </div>

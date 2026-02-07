@@ -1,0 +1,25 @@
+{{!< default}}
+
+{{!--
+    Tags index template
+    Lists all tags with post counts
+--}}
+
+<header class="archive-header">
+    <div class="container">
+        <h1 class="archive-title">Tags</h1>
+    </div>
+</header>
+
+<div class="container">
+    <div class="tags-index">
+        {{#get "tags" limit="all" include="count.posts" order="name ASC"}}
+            {{#foreach tags}}
+                <a href="{{url}}" class="tags-index-item">
+                    <span class="tags-index-name">{{name}}</span>
+                    <span class="tags-index-count">{{count.posts}}</span>
+                </a>
+            {{/foreach}}
+        {{/get}}
+    </div>
+</div>

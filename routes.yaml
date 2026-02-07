@@ -4,6 +4,7 @@
 routes:
   /: index
   /everything/: everything
+  /tags/: tags
 
 collections:
   /essays/:

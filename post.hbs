@@ -18,13 +18,13 @@
             <p class="post-excerpt">{{custom_excerpt}}</p>
         {{/if}}
 
-        <div class="post-meta">
+        <div class="post-meta ds-meta">
             {{#foreach authors}}
-                <span>{{name}}</span>
+                <span class="ds-meta-item">{{name}}</span>
             {{/foreach}}
-            <span>{{date format="MMMM D, YYYY"}}</span>
+            <span class="ds-meta-item">{{date format="MMMM D, YYYY"}}</span>
             {{#if reading_time}}
-                <span>{{reading_time}}</span>
+                <span class="ds-meta-item">{{reading_time}}</span>
             {{/if}}
         </div>
     </header>
@@ -57,9 +57,9 @@
 
         {{!-- Tags --}}
         {{#if tags}}
-            <div class="post-tags">
+            <div class="post-tags ds-meta">
                 {{#foreach tags}}
-                    <a href="{{url}}" class="post-tag-link">{{name}}</a>
+                    <a href="{{url}}" class="ds-meta-item">{{name}}</a>
                 {{/foreach}}
             </div>
         {{/if}}
@@ -76,13 +76,13 @@
                     <div class="related-posts-grid">
                         {{#foreach posts}}
                             <article class="post-card post-card-text-only">
-                                <div class="post-card-tag-wrapper">
+                                <div class="ds-meta-tag-wrapper">
                                     {{#foreach tags}}
                                         {{#match slug "essays"}}
                                         {{else match slug "radar"}}
                                         {{else match slug "five-things"}}
                                         {{else}}
-                                            <span class="post-card-tag">{{name}}</span>
+                                            <span class="ds-meta-item">{{name}}</span>
                                         {{/match}}
                                     {{/foreach}}
                                 </div>
@@ -90,10 +90,10 @@
                                     <a href="{{url}}">{{title}}</a>
                                 </h3>
                                 <p class="post-card-excerpt">{{excerpt}}</p>
-                                <div class="post-card-meta">
-                                    <span>{{date format="MMM D, YYYY"}}</span>
+                                <div class="ds-meta">
+                                    <span class="ds-meta-item">{{date format="MMM D, YYYY"}}</span>
                                     {{#if reading_time}}
-                                        <span>{{reading_time}}</span>
+                                        <span class="ds-meta-item">{{reading_time}}</span>
                                     {{/if}}
                                 </div>
                             </article>

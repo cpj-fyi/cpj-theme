@@ -87,20 +87,20 @@
                                     <a href="{{url}}">{{title}}</a>
                                 </h3>
                                 <p class="essay-card-excerpt">{{excerpt}}</p>
-                                <div class="essay-card-meta">
+                                <div class="ds-meta">
                                     {{#foreach tags}}
                                         {{#match slug "essays"}}
                                         {{else match slug "radar"}}
                                         {{else match slug "five-things"}}
                                         {{else}}
                                             {{#if @first}}
-                                                <a href="{{url}}" class="essay-meta-tag">{{name}}</a>
+                                                <a href="{{url}}" class="ds-meta-item">{{name}}</a>
                                             {{/if}}
                                         {{/match}}
                                     {{/foreach}}
-                                    <span class="essay-meta-date">{{date format="MM DD YY"}}</span>
+                                    <span class="ds-meta-item">{{date format="MM DD YY"}}</span>
                                     {{#if reading_time}}
-                                        <span class="essay-meta-time">{{reading_time}}</span>
+                                        <span class="ds-meta-item">{{reading_time}}</span>
                                     {{/if}}
                                 </div>
                             </article>
@@ -149,13 +149,13 @@
                 <div class="related-posts-grid">
                     {{#foreach posts}}
                         <article class="post-card post-card-text-only">
-                            <div class="post-card-tag-wrapper">
+                            <div class="ds-meta-tag-wrapper">
                                 {{#foreach tags}}
                                     {{#match slug "essays"}}
                                     {{else match slug "radar"}}
                                     {{else match slug "five-things"}}
                                     {{else}}
-                                        <span class="post-card-tag">{{name}}</span>
+                                        <span class="ds-meta-item">{{name}}</span>
                                     {{/match}}
                                 {{/foreach}}
                             </div>
@@ -163,10 +163,10 @@
                                 <a href="{{url}}">{{title}}</a>
                             </h3>
                             <p class="post-card-excerpt">{{excerpt}}</p>
-                            <div class="post-card-meta">
-                                <span>{{date format="MMM D, YYYY"}}</span>
+                            <div class="ds-meta">
+                                <span class="ds-meta-item">{{date format="MMM D, YYYY"}}</span>
                                 {{#if reading_time}}
-                                    <span>{{reading_time}}</span>
+                                    <span class="ds-meta-item">{{reading_time}}</span>
                                 {{/if}}
                             </div>
                         </article>

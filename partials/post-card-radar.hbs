@@ -7,10 +7,10 @@
         <p class="post-card-excerpt">{{excerpt}}</p>
     {{/if}}
 
-    <div class="post-card-meta">
-        <span>{{date format="MMM D, YYYY"}}</span>
+    <div class="ds-meta">
+        <span class="ds-meta-item">{{date format="MMM D, YYYY"}}</span>
         {{#if reading_time}}
-            <span>{{reading_time}}</span>
+            <span class="ds-meta-item">{{reading_time}}</span>
         {{/if}}
     </div>
 </article>

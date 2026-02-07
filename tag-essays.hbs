@@ -2,7 +2,7 @@
 
 {{!--
     Essays archive template
-    Uses consistent essay card styling with bordered metadata
+    Uses consistent layout matching five-things and radar feeds
 --}}
 
 <header class="archive-header">
@@ -20,34 +20,15 @@
 </header>
 
 <div class="container">
-    <div class="essays-archive-layout">
-        <div class="essays-archive-feed">
+    <div class="essays-layout">
+        <div class="essays-main">
             {{#get "posts" filter="tag:essays" limit="100" include="tags,authors"}}
                 {{#if posts}}
-                    {{#foreach posts}}
-                        <article class="essay-card">
-                            <h2 class="essay-card-title">
-                                <a href="{{url}}">{{title}}</a>
-                            </h2>
-                            <p class="essay-card-excerpt">{{excerpt}}</p>
-                            <div class="essay-card-meta">
-                                {{#foreach tags}}
-                                    {{#match slug "essays"}}
-                                    {{else match slug "radar"}}
-                                    {{else match slug "five-things"}}
-                                    {{else}}
-                                        {{#if @first}}
-                                            <a href="{{url}}" class="essay-meta-tag">{{name}}</a>
-                                        {{/if}}
-                                    {{/match}}
-                                {{/foreach}}
-                                <span class="essay-meta-date">{{date format="MM DD YY"}}</span>
-                                {{#if reading_time}}
-                                    <span class="essay-meta-time">{{reading_time}}</span>
-                                {{/if}}
-                            </div>
-                        </article>
-                    {{/foreach}}
+                    <div class="essays-grid">
+                        {{#foreach posts}}
+                            {{> "post-card-essay"}}
+                        {{/foreach}}
+                    </div>
                 {{else}}
                     <p>No essays published yet.</p>
                 {{/if}}
