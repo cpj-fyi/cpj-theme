@@ -424,7 +424,8 @@ body.tag-direction .book-subnav,
 body.tag-learning .book-subnav,
 body.tag-practice .book-subnav,
 body.tag-space .book-subnav,
-body.tag-start-end .book-subnav {
+body.tag-start-end .book-subnav,
+body.page-template-custom-buy .book-subnav {
     display: block;
 }
 
@@ -485,6 +486,27 @@ body.tag-learning .subnav-learning,
 body.tag-space .subnav-space {
     color: var(--color-text);
     border-bottom-color: var(--color-text);
+}
+
+/* Buy page: active states for subnav and main nav */
+body.page-template-custom-buy .book-subnav-buy {
+    color: var(--color-accent);
+    border-bottom-color: var(--color-accent);
+}
+
+body.page-template-custom-buy .nav-book {
+    color: var(--color-text);
+    border-bottom-color: var(--color-text);
+}
+
+/* Buy page: dark background to prevent flash before hero paints */
+body.page-template-custom-buy {
+    background: #191919;
+}
+
+/* Buy page: remove spacing interference from site-main */
+body.page-template-custom-buy .site-main {
+    padding: 0;
 }
 
 /* ==========================================================================
@@ -3066,6 +3088,30 @@ body.tag-five-things:not(.post-template) .footer-bottom a:hover {
 /* ==========================================================================
    Content Gating (fade effect for non-members)
    ========================================================================== */
+
+/* Chapter page content gating:
+   Ghost's {{#has visibility}} helper is unreliable, so we use CSS :has() to
+   detect Ghost's .gh-post-upgrade-cta element — Ghost only injects it for
+   non-authorized users on gated content. This drives all visibility logic. */
+
+/* Hide Ghost Portal's auto-injected red paywall CTA on chapter pages */
+.chapter-page .gh-post-upgrade-cta {
+    display: none;
+}
+
+/* Hide body text after the pull quote when content is gated */
+.chapter-page .content:has(.gh-post-upgrade-cta) > .kg-blockquote-alt ~ * {
+    display: none;
+}
+
+/* Only show the sign-in CTA when content is gated */
+.chapter-page .membership-cta {
+    display: none;
+}
+
+.chapter-page .content-wrapper:has(.gh-post-upgrade-cta) > .membership-cta {
+    display: block;
+}
 
 .content-wrapper {
     position: relative;

@@ -135,18 +135,18 @@
                 {{/if}}
 
                 <div class="post-body">
-                    <div class="content-wrapper{{#unless @member}}{{#has visibility="paid,members"}} content-gated{{/has}}{{/unless}}">
+                    <div class="content-wrapper">
                         <div class="content">
                             {{content}}
                         </div>
 
                         {{#unless @member}}
-                            {{#has visibility="paid"}}
-                                {{> "membership-cta"}}
-                            {{/has}}
-                            {{#has visibility="members"}}
-                                {{> "membership-cta"}}
-                            {{/has}}
+                            <div class="membership-cta">
+                                <p>Send me a receipt showing that you pre-ordered the book, and then sign in. You'll get a magic link and then all these chapters are yours to read.</p>
+                                <div class="membership-cta-buttons">
+                                    <a href="#/portal/signin" class="btn btn-secondary">Sign in</a>
+                                </div>
+                            </div>
                         {{/unless}}
                     </div>
                 </div>

@@ -1,0 +1,443 @@
+{{!--
+    Custom template for the Buy page
+    Uses: custom-buy.hbs (select "buy" template in Ghost page settings)
+--}}
+
+{{!< default}}
+
+<div class="buy-page">
+
+  {{!-- HERO --}}
+  <section id="bp-hero">
+    <canvas id="bp-hero-canvas" aria-hidden="true"></canvas>
+    <div class="bp-hero-vignette"></div>
+
+    <div class="bp-hero-inner">
+      <div class="bp-hero-text">
+        <h1 class="bp-hero-title">Why do smart teams keep getting stuck?</h1>
+        <p class="bp-hero-subtitle">Most &ldquo;people problems&rdquo; are org design problems. This book shows you how to fix those problems for good.</p>
+        <p class="bp-hero-author">Clay Parker Jones</p>
+        <div class="bp-hero-actions">
+          <a href="#bp-order" class="bp-btn bp-btn--primary bp-btn--large">Order Now</a>
+          <a href="#bp-inside" class="bp-btn bp-btn--outline bp-btn--large">See What's Inside</a>
+        </div>
+      </div>
+      <div class="bp-hero-cover-wrap">
+        <div class="bp-hero-cover-glow"></div>
+        <img src="{{asset "images/hidden-patterns-cover.png"}}"
+             alt="Hidden Patterns book cover — white background with scattered geometric shapes in magenta and black"
+             class="bp-hero-cover"
+             loading="eager">
+      </div>
+    </div>
+  </section>
+
+  {{!-- INSIDE THE BOOK --}}
+  <section id="bp-inside">
+    <div class="bp-container">
+      <div class="bp-reveal">
+        <p class="bp-section-label">Inside the Book</p>
+        <h2 class="bp-section-heading">75 patterns. Use only what you need.</h2>
+        <p class="bp-inside-intro">You could read this cover-to-cover, but it&rsquo;s better thought of as a cookbook for organizations&mdash;75 specific moves for people who run teams and systems. Redesign a team, rewrite a role, rethink a decision path, strip out pointless work. Keep it on your desk, open it when something&rsquo;s stuck, and use the pattern that fits.</p>
+      </div>
+
+      <div class="bp-sections-rail-wrap bp-reveal">
+        <div class="bp-sections-rail">
+
+          {{!-- Foundations --}}
+          <div class="bp-section-card">
+            <div class="bp-section-card-icon">
+              <svg viewBox="0 0 55 55" xmlns="http://www.w3.org/2000/svg"><circle cx="27.5" cy="27.5" r="26"/></svg>
+            </div>
+            <div class="bp-section-card-name">Foundations</div>
+            <div class="bp-section-card-range">Patterns 1 — 12</div>
+            <p class="bp-section-card-desc">Bedrock principles upon which effective organizations are built. Shared purpose, transparency, trust, safety, and the distribution of power. Patterns to build up to, and to build upon, with links to the places to start.</p>
+          </div>
+
+          {{!-- Structuring --}}
+          <div class="bp-section-card">
+            <div class="bp-section-card-icon">
+              <svg viewBox="0 0 59 52" xmlns="http://www.w3.org/2000/svg"><path d="M33.15 49.25C31.42 52.25 27.09 52.25 25.36 49.25L1.11 7.25C-0.62 4.25 1.54 0.5 5.01 0.5L53.5 0.5C56.97 0.5 59.13 4.25 57.4 7.25L33.15 49.25Z"/></svg>
+            </div>
+            <div class="bp-section-card-name">Structuring</div>
+            <div class="bp-section-card-range">Patterns 13 — 25</div>
+            <p class="bp-section-card-desc">How to shape teams, departments, and entire organizations. Autonomous groups designed for agility, interconnected units that support resilience, networks, guilds, and incentives that actually drive collaboration.</p>
+          </div>
+
+          {{!-- Direction --}}
+          <div class="bp-section-card">
+            <div class="bp-section-card-icon">
+              <svg viewBox="0 0 72 51" xmlns="http://www.w3.org/2000/svg"><path d="M28 0.5H67C70.35 0.5 72.52 4.2 70.83 7.2L47.76 48.2C46.96 49.6 45.46 50.5 43.84 50.5H5C1.57 50.5-0.6 46.8 1.08 43.8L24.15 2.8C24.95 1.38 26.45 0.5 28 0.5Z"/></svg>
+            </div>
+            <div class="bp-section-card-name">Direction</div>
+            <div class="bp-section-card-range">Patterns 26 — 43</div>
+            <p class="bp-section-card-desc">Goal-setting, decision-making, conflict, strategy, and performance. Frameworks that favor clarity and consent, and yes, sometimes consensus. How might a large organization maintain direction <em>hourly</em>? With these patterns.</p>
+          </div>
+
+          {{!-- Practice --}}
+          <div class="bp-section-card">
+            <div class="bp-section-card-icon">
+              <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="50" height="50" rx="4.5"/></svg>
+            </div>
+            <div class="bp-section-card-name">Practice</div>
+            <div class="bp-section-card-range">Patterns 44 — 56</div>
+            <p class="bp-section-card-desc">We're not talking about process! Deep practices, instead. Retrospectives that promote continuous improvement, communication habits that build trust, and lightweight documentation that enables rapid learning and adaptation.</p>
+          </div>
+
+          {{!-- Learning --}}
+          <div class="bp-section-card">
+            <div class="bp-section-card-icon">
+              <svg viewBox="0 0 61 61" xmlns="http://www.w3.org/2000/svg"><path d="M26.2 3.3C27.76-0.43 33.01-0.43 34.54 3.3L35.97 6.73C37.13 9.55 40.35 10.88 43.16 9.71L46.6 8.28C50.31 6.74 54.03 10.46 52.49 14.16L51.06 17.6C49.89 20.42 51.22 23.64 54.04 24.8L57.49 26.22C61.2 27.76 61.2 33.01 57.49 34.54L54.04 35.97C51.22 37.13 49.89 40.35 51.06 43.16L52.49 46.6C54.03 50.31 50.31 54.03 46.6 52.49L43.16 51.06C40.35 49.89 37.13 51.22 35.97 54.04L34.54 57.49C33.01 61.2 27.76 61.2 26.22 57.49L24.8 54.04C23.64 51.22 20.42 49.89 17.6 51.06L14.16 52.49C10.46 54.03 6.74 50.31 8.28 46.6L9.71 43.16C10.88 40.35 9.55 37.13 6.73 35.97L3.28 34.54C-0.43 33.01-0.43 27.76 3.28 26.22L6.73 24.8C9.55 23.64 10.88 20.42 9.71 17.6L8.28 14.16C6.74 10.46 10.46 6.74 14.16 8.28L17.6 9.71C20.42 10.88 23.64 9.55 24.8 6.73L26.2 3.3Z"/></svg>
+            </div>
+            <div class="bp-section-card-name">Learning</div>
+            <div class="bp-section-card-range">Patterns 57 — 67</div>
+            <p class="bp-section-card-desc">Continuous feedback, safe-to-fail experimentation, and proactive knowledge sharing across boundaries. How to build cultures that naturally evolve, grow, and thrive through collective learning.</p>
+          </div>
+
+          {{!-- Space --}}
+          <div class="bp-section-card">
+            <div class="bp-section-card-icon">
+              <svg viewBox="0 0 58 55" xmlns="http://www.w3.org/2000/svg"><path d="M25.96 1.36C27.54 0.21 29.67 0.21 31.25 1.36L54.86 18.51C56.43 19.66 57.09 21.69 56.49 23.54L47.47 51.29C46.87 53.14 45.14 54.4 43.19 54.4H14.02C12.07 54.4 10.34 53.14 9.74 51.29L0.72 23.54C0.12 21.69 0.78 19.66 2.36 18.51L25.96 1.36Z"/></svg>
+            </div>
+            <div class="bp-section-card-name">Space</div>
+            <div class="bp-section-card-range">Patterns 68 — 75</div>
+            <p class="bp-section-card-desc">The physical and virtual environments that shape daily interactions. How spaces can nurture creativity or quietly hinder it&mdash;and what to do about desks, walls, and whiteboards.</p>
+          </div>
+
+        </div>
+        <div class="bp-scroll-hint">
+          <span class="bp-scroll-hint-line"></span>
+          Scroll to explore
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {{!-- DUAL PATTERN TICKER --}}
+  <div id="bp-ticker">
+    {{!-- Row 1: forward --}}
+    <div class="bp-ticker-row bp-ticker-row--1" aria-label="All 75 patterns">
+      <span class="bp-ticker-item"><span class="bp-ticker-number">01</span> True Purpose</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">02</span> Rule of Law</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">03</span> Structural &amp; Psychological Safety</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">04</span> Expanded Available Power</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">05</span> Curiosity</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">06</span> Do No Harm</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">07</span> Wholeness</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">08</span> Role-Soul Distinction</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">09</span> Dissolvability</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">10</span> Consent &amp; Consensus</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">11</span> Pace Layers</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">12</span> Cooperation</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">13</span> Network of Teams</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">14</span> Distributed Management</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">15</span> Elections</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">16</span> Purpose, Customer, Platform</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">17</span> Platform Teams</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">18</span> Self-Managed Teams</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">19</span> Lean Teams</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">20</span> Talent Marketplace</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">21</span> Guilds</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">22</span> Chapters</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">23</span> Domains, Assets &amp; Standards</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">24</span> Upward Representation</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">25</span> Team Incentives</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">26</span> Do the Right Thing</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">27</span> Active Steering</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">28</span> Objectives &amp; Key Results</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">29</span> Strategy Heuristic</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">30</span> Structured Decision-Making</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">31</span> Advice</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">32</span> Transparency</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">33</span> Relative Targets</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">34</span> Pull Updates</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">35</span> Demos</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">36</span> Metrics Review</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">37</span> Backlog Management</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">38</span> Conflict as a Resource</span>
+      {{!-- duplicate for seamless loop --}}
+      <span class="bp-ticker-item"><span class="bp-ticker-number">01</span> True Purpose</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">02</span> Rule of Law</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">03</span> Structural &amp; Psychological Safety</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">04</span> Expanded Available Power</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">05</span> Curiosity</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">06</span> Do No Harm</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">07</span> Wholeness</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">08</span> Role-Soul Distinction</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">09</span> Dissolvability</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">10</span> Consent &amp; Consensus</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">11</span> Pace Layers</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">12</span> Cooperation</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">13</span> Network of Teams</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">14</span> Distributed Management</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">15</span> Elections</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">16</span> Purpose, Customer, Platform</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">17</span> Platform Teams</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">18</span> Self-Managed Teams</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">19</span> Lean Teams</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">20</span> Talent Marketplace</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">21</span> Guilds</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">22</span> Chapters</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">23</span> Domains, Assets &amp; Standards</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">24</span> Upward Representation</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">25</span> Team Incentives</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">26</span> Do the Right Thing</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">27</span> Active Steering</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">28</span> Objectives &amp; Key Results</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">29</span> Strategy Heuristic</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">30</span> Structured Decision-Making</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">31</span> Advice</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">32</span> Transparency</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">33</span> Relative Targets</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">34</span> Pull Updates</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">35</span> Demos</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">36</span> Metrics Review</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">37</span> Backlog Management</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">38</span> Conflict as a Resource</span>
+    </div>
+
+    {{!-- Row 2: reverse, picking up from 39 --}}
+    <div class="bp-ticker-row bp-ticker-row--2">
+      <span class="bp-ticker-item"><span class="bp-ticker-number">39</span> Conflict Resolution</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">40</span> Colleague Letter of Understanding</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">41</span> Open Space Technology</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">42</span> Future Backward</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">43</span> Team Charter</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">44</span> Check In &amp; Out</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">45</span> Only Important Notes</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">46</span> Iterative Shipping</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">47</span> Action Meeting</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">48</span> Rounds</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">49</span> Adaptive Agenda</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">50</span> Work in Public</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">51</span> Meeting Roles</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">52</span> Triage</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">53</span> Have One Conversation</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">54</span> Pairing</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">55</span> Kanban</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">56</span> Facilitation</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">57</span> Logbook</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">58</span> Emergent Leadership</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">59</span> Health Check</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">60</span> Hack Day</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">61</span> Flow State Work</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">62</span> Experimentation</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">63</span> Team Process as Product</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">64</span> Length Limit</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">65</span> Cadence</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">66</span> Retrospectives</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">67</span> Boundary Management</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">68</span> Process on the Wall</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">69</span> Fail Wall</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">70</span> No Leadership Offices</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">71</span> No Assigned Desks</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">72</span> Space for Work</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">73</span> Hiding Places</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">74</span> Whiteboards at Intersections</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">75</span> Movable Everything</span>
+      {{!-- duplicate for seamless loop --}}
+      <span class="bp-ticker-item"><span class="bp-ticker-number">39</span> Conflict Resolution</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">40</span> Colleague Letter of Understanding</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">41</span> Open Space Technology</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">42</span> Future Backward</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">43</span> Team Charter</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">44</span> Check In &amp; Out</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">45</span> Only Important Notes</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">46</span> Iterative Shipping</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">47</span> Action Meeting</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">48</span> Rounds</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">49</span> Adaptive Agenda</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">50</span> Work in Public</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">51</span> Meeting Roles</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">52</span> Triage</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">53</span> Have One Conversation</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">54</span> Pairing</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">55</span> Kanban</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">56</span> Facilitation</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">57</span> Logbook</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">58</span> Emergent Leadership</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">59</span> Health Check</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">60</span> Hack Day</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">61</span> Flow State Work</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">62</span> Experimentation</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">63</span> Team Process as Product</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">64</span> Length Limit</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">65</span> Cadence</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">66</span> Retrospectives</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">67</span> Boundary Management</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">68</span> Process on the Wall</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">69</span> Fail Wall</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">70</span> No Leadership Offices</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">71</span> No Assigned Desks</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">72</span> Space for Work</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">73</span> Hiding Places</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">74</span> Whiteboards at Intersections</span>
+      <span class="bp-ticker-item"><span class="bp-ticker-number">75</span> Movable Everything</span>
+    </div>
+  </div>
+
+  {{!-- QUOTE --}}
+  <section id="bp-quote">
+    <div class="bp-quote-inner bp-reveal">
+      <div class="bp-quote-mark" aria-hidden="true">&ldquo;</div>
+      <blockquote class="bp-quote-text">A pattern, in these pages, is a proven response to a recurrent problem in modern work. It is not a silver bullet, a full operating system, or a promise of enlightenment. Think of it more like a chess opening or a mirepoix: humble, repeatable, waiting for you to adapt it to local taste.</blockquote>
+      <p class="bp-quote-attribution">&mdash; from the Introduction</p>
+    </div>
+  </section>
+
+  {{!-- AUDIENCES --}}
+  <section id="bp-audiences">
+    <div class="bp-container">
+      <div class="bp-reveal">
+        <p class="bp-section-label bp-section-label--dark">Who It's For</p>
+        <h2 class="bp-section-heading bp-section-heading--dark">We can get <em>more</em> from work.</h2>
+      </div>
+      <div class="bp-audiences-grid bp-reveal-stagger">
+        <div class="bp-audience-card">
+          <p class="bp-audience-card-label">Product &amp; Tech</p>
+          <h3 class="bp-audience-card-title">Org design is infrastructure</h3>
+          <p class="bp-audience-card-text">If the structure is wrong, no amount of product strategy or AI magic will bail you out. Product and technology leaders should see org debt with the same clarity they see tech debt.</p>
+        </div>
+        <div class="bp-audience-card">
+          <p class="bp-audience-card-label">Executive Leadership</p>
+          <h3 class="bp-audience-card-title">Building codes for organizations</h3>
+          <p class="bp-audience-card-text">We&rsquo;re building the future, today. Do so with structural standards for authority, feedback, teams, and decisions, and watch as teams deliver more than they ever thought possible.</p>
+        </div>
+        <div class="bp-audience-card">
+          <p class="bp-audience-card-label">Design &amp; Creativity</p>
+          <h3 class="bp-audience-card-title">Institutions deserve design craft</h3>
+          <p class="bp-audience-card-text">The same level of care that designers and artists put into their work should <em>also</em> go into the systems where people spend their working lives. This book offers a way into that conversation.</p>
+        </div>
+        <div class="bp-audience-card">
+          <p class="bp-audience-card-label">HR &amp; People</p>
+          <h3 class="bp-audience-card-title">From program shop to architecture office</h3>
+          <p class="bp-audience-card-text">HR holds the keys to so much goodness, but is often trapped in compliance theater, or asked to leave when the conversation becomes strategic. Why not prioritize design even over control?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {{!-- ENDORSEMENTS --}}
+  <section id="bp-endorsements">
+    <div class="bp-container">
+      <div class="bp-reveal">
+        <p class="bp-section-label bp-section-label--dark">Praise</p>
+        <h2 class="bp-section-heading bp-section-heading--dark bp-section-heading--h2">What people are saying</h2>
+      </div>
+      <div class="bp-endorsements-grid bp-reveal">
+        <blockquote class="bp-endorsement">
+          <p class="bp-endorsement-text">&ldquo;Reading <em>Hidden Patterns</em> is pure joy. It&rsquo;s the most Clay thing ever (in the best possible way).&rdquo;</p>
+          <footer class="bp-endorsement-footer">
+            <cite class="bp-endorsement-name">Erica Seldin</cite>
+            <span class="bp-endorsement-title">Co-Founder, August Public</span>
+          </footer>
+        </blockquote>
+        <blockquote class="bp-endorsement">
+          <p class="bp-endorsement-text">&ldquo;If <em>A Pattern Language</em> was for buildings, <em>Hidden Patterns</em> is for the invisible architecture of work. It&rsquo;s radical, useful, and long overdue.&rdquo;</p>
+          <footer class="bp-endorsement-footer">
+            <cite class="bp-endorsement-name">Mick McConnell</cite>
+            <span class="bp-endorsement-title">Head of Space, Airbnb</span>
+          </footer>
+        </blockquote>
+        <blockquote class="bp-endorsement">
+          <p class="bp-endorsement-text">&ldquo;Most management books offer theory; <em>Hidden Patterns</em> offers transformation. It empowers anyone to make practical, concrete changes that yield tangible results and elevate every dimension of work&mdash;from revenue and profit to meaning and satisfaction. Leaders can&rsquo;t change everything at once: instead, Clay helps leaders pick their first step and then recommends potential next steps to guide the reinvention of their organization.&rdquo;</p>
+          <footer class="bp-endorsement-footer">
+            <cite class="bp-endorsement-name">Jordan Husney</cite>
+            <span class="bp-endorsement-title">CEO, Parabol</span>
+          </footer>
+        </blockquote>
+        <blockquote class="bp-endorsement">
+          <p class="bp-endorsement-text">&ldquo;<em>Hidden Patterns</em> is the rare book that actually changes how large organizations work. Clay&rsquo;s ideas helped my teams cut through complexity, build trust, and deliver results that last.&rdquo;</p>
+          <footer class="bp-endorsement-footer">
+            <cite class="bp-endorsement-name">Marissa Jarratt</cite>
+            <span class="bp-endorsement-title">CMO, 7-Eleven</span>
+          </footer>
+        </blockquote>
+        <blockquote class="bp-endorsement">
+          <p class="bp-endorsement-text">&ldquo;Tech companies settled on &lsquo;agile&rsquo; and the squad model 15 years ago. At the time, we were the ones changing how big businesses organized to get shit done. But we stopped innovating, and it&rsquo;s not good enough. <em>Hidden Patterns</em> offers a framework that lets you continue to iterate on the way you organize.&rdquo;</p>
+          <footer class="bp-endorsement-footer">
+            <cite class="bp-endorsement-name">Cullen MacDonald</cite>
+            <span class="bp-endorsement-title">Director of Engineering, Justworks</span>
+          </footer>
+        </blockquote>
+        <blockquote class="bp-endorsement">
+          <p class="bp-endorsement-text">&ldquo;<em>Hidden Patterns</em> outlines powerful building blocks to enable teams to work, think, and create more effectively together, which can be used individually or connected to create holistic organizational systems. This book is perfect for leaders seeking ways to create clear direction or organizational development professionals geeking out on practical tools that actually work. Keep this one within arm&rsquo;s reach&mdash;you&rsquo;ll return to it again and again.&rdquo;</p>
+          <footer class="bp-endorsement-footer">
+            <cite class="bp-endorsement-name">Julie Clow</cite>
+            <span class="bp-endorsement-title">Former Head of People, Chanel</span>
+          </footer>
+        </blockquote>
+        <blockquote class="bp-endorsement">
+          <p class="bp-endorsement-text">&ldquo;Modern work is here. The companies that will thrive are the ones that keep customers at the center and create environments where great people can do their best work together. Leading transformation isn&rsquo;t easy. Clay&rsquo;s proven approach, laid out clearly in <em>Hidden Patterns</em>, gives you the tools and systems to lead meaningful change and help your team do their best work.&rdquo;</p>
+          <footer class="bp-endorsement-footer">
+            <cite class="bp-endorsement-name">Ryan Barry</cite>
+            <span class="bp-endorsement-title">CEO, Appcues</span>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  {{!-- PATTERN PULSE — GLOBAL STUDY --}}
+  <section id="bp-study">
+    <div class="bp-container">
+      <div class="bp-study-inner bp-reveal">
+        <div class="bp-study-text">
+          <p class="bp-section-label">Pattern Pulse &mdash; The Global Study</p>
+          <h2 class="bp-section-heading">Not many business books are measurable. This one is.</h2>
+          <p class="bp-study-desc">A global research initiative tracking which organizational patterns correlate with performance&mdash;measured annually. Five minutes of your time helps build the picture for everyone.</p>
+          <div class="bp-study-cta">
+            <a href="https://survey.hd-pt.com" target="_blank" rel="noopener" class="bp-btn bp-btn--primary bp-btn--large">Take the Survey &rarr;</a>
+          </div>
+          <p class="bp-study-footnote">survey.hd-pt.com &middot; Anonymous &middot; ~5 min</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {{!-- ABOUT --}}
+  <section id="bp-about">
+    <div class="bp-container">
+      <div class="bp-about-grid bp-reveal">
+        <div class="bp-about-photo-wrap">
+          <img src="{{asset "images/clay-parker-jones-headshot.png"}}"
+               alt="Clay Parker Jones"
+               class="bp-about-photo"
+               loading="lazy">
+        </div>
+        <div>
+          <p class="bp-about-label">About the Author</p>
+          <h2 class="bp-about-name">Clay Parker Jones</h2>
+          <p class="bp-about-bio">Fifteen years redesigning organizations from the inside out. Co-founder of August, an organization design consultancy. Current Head of Org Design at Airbnb. Track record doing real structural work for tech-powered, creativity-driven companies. Lives in Boerum Hill, Brooklyn.</p>
+          <a href="https://cpj.fyi" class="bp-about-link" target="_blank" rel="noopener">
+            cpj.fyi
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5.5 2.5H2.5V11.5H11.5V8.5M8 2.5H11.5M11.5 2.5V6M11.5 2.5L6 8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {{!-- ORDER --}}
+  <section id="bp-order">
+    <div class="bp-container bp-reveal">
+      <img src="{{asset "images/hidden-patterns-cover.png"}}"
+           alt="Hidden Patterns"
+           class="bp-order-cover"
+           loading="lazy">
+      <h2 class="bp-order-heading">Get the Book</h2>
+      <p class="bp-order-sub">Available wherever books are sold.</p>
+      <div class="bp-order-buttons">
+        <a href="https://www.amazon.com/exec/obidos/ASIN/1637748582" target="_blank" rel="noopener" class="bp-btn bp-btn--dark bp-btn--large">Amazon</a>
+        <a href="https://www.barnesandnoble.com/w/hidden-patterns-clay-parker-jones/1147564985" target="_blank" rel="noopener" class="bp-btn bp-btn--dark-outline bp-btn--large">Barnes &amp; Noble</a>
+        <a href="https://bookshop.org/p/books/hidden-patterns-a-playbook-for-more-human-workplaces-clay-parker-jones/5adb8020ad414a2c" target="_blank" rel="noopener" class="bp-btn bp-btn--dark-outline bp-btn--large">Bookshop.org</a>
+        <a href="https://www.booksamillion.com/p/9781637748589" target="_blank" rel="noopener" class="bp-btn bp-btn--dark-outline bp-btn--large">Books-A-Million</a>
+        <a href="https://hudsonbooksellers.com/book/9781637748589" target="_blank" rel="noopener" class="bp-btn bp-btn--dark-outline bp-btn--large">Hudson</a>
+        <a href="https://www.walmart.com/ip/Hidden-Patterns-A-Playbook-for-More-Human-Workplaces-Hardcover-9781637748589/16892105800" target="_blank" rel="noopener" class="bp-btn bp-btn--dark-outline bp-btn--large">Walmart</a>
+      </div>
+    </div>
+  </section>
+
+</div>
