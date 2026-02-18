@@ -2116,7 +2116,33 @@ body.tag-radar .kg-callout-card {
 }
 
 body.tag-radar .kg-callout-emoji {
-    background: rgba(255, 255, 255, 0.1);
+    background: transparent;
+}
+
+body.tag-radar .kg-callout-card code {
+    background: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+body.tag-radar .kg-file-card-container {
+    background: rgba(255, 255, 255, 0.08);
+    color: #222222;
+}
+
+body.tag-radar .kg-file-card-container:hover {
+    color: #222222;
+}
+
+body.tag-radar .kg-file-card-title,
+body.tag-radar .kg-file-card-filename,
+body.tag-radar .kg-file-card-filesize {
+    color: #222222;
+}
+
+body.tag-radar .kg-file-card-container:hover .kg-file-card-title,
+body.tag-radar .kg-file-card-container:hover .kg-file-card-filename,
+body.tag-radar .kg-file-card-container:hover .kg-file-card-filesize {
+    color: #222222;
 }
 
 /* Also apply to homepage radar section */
