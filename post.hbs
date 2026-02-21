@@ -68,6 +68,8 @@
         {{/if}}
     </div>
 
+    {{> "comments"}}
+
     {{!-- Related posts --}}
     {{#get "posts" filter="id:-{{id}}+tag:{{primary_tag.slug}}" limit="3" include="tags,authors"}}
         {{#if posts}}
