@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+    <title>{{@site.title}}</title>
+    <description>{{@site.description}}</description>
+    <link>{{@site.url}}</link>
+    <atom:link href="{{@site.url}}/rss/" rel="self" type="application/rss+xml"/>
+    <language>{{@site.locale}}</language>
+    <lastBuildDate>{{date format="ddd, DD MMM YYYY HH:mm:ss ZZ"}}</lastBuildDate>
+    {{#get "posts" limit="50" include="tags,authors"}}
+        {{#foreach posts}}
+    <item>
+        <title><![CDATA[{{title}}]]></title>
+        <description><![CDATA[{{excerpt}}]]></description>
+        <link>{{url absolute="true"}}</link>
+        <guid isPermaLink="true">{{url absolute="true"}}</guid>
+        <dc:creator><![CDATA[{{primary_author.name}}]]></dc:creator>
+        <pubDate>{{date format="ddd, DD MMM YYYY HH:mm:ss ZZ"}}</pubDate>
+        {{#if primary_tag}}<category><![CDATA[{{primary_tag.name}}]]></category>{{/if}}
+        <content:encoded><![CDATA[{{content}}]]></content:encoded>
+    </item>
+        {{/foreach}}
+    {{/get}}
+</channel>
+</rss>

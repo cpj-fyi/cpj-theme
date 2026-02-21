@@ -19,6 +19,7 @@
         initRadarScan();
         initMobileChapterNav();
         initChapterTitleStyling();
+        initCommentCounts();
     });
 
     /**
@@ -410,5 +411,19 @@
         }
     `;
     document.head.appendChild(progressStyles);
+
+    /**
+     * Comment Counts
+     * Strips "comment"/"comments" text from comment_count output,
+     * leaving just the number next to the SVG bubble icon.
+     */
+    function initCommentCounts() {
+        document.querySelectorAll('.ds-meta-comments-text').forEach(function(el) {
+            var match = el.textContent.match(/\d+/);
+            if (match) {
+                el.textContent = match[0];
+            }
+        });
+    }
 
 })();

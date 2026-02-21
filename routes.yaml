@@ -5,6 +5,9 @@ routes:
   /: index
   /everything/: everything
   /tags/: tags
+  /rss/:
+    template: rss
+    content_type: text/xml
 
 collections:
   /essays/:
