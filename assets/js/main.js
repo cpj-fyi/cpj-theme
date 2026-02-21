@@ -20,6 +20,7 @@
         initMobileChapterNav();
         initChapterTitleStyling();
         initCommentCounts();
+        initRetailerTracking();
     });
 
     /**
@@ -411,6 +412,59 @@
         }
     `;
     document.head.appendChild(progressStyles);
+
+    /**
+     * Retailer Click Tracking
+     * Sends outbound retailer link clicks to cpj-worker for Slack notifications.
+     * Uses navigator.sendBeacon() which fires reliably even when navigating away.
+     */
+    function initRetailerTracking() {
+        // TODO: replace with actual deployed worker URL
+        var WORKER_URL = 'https://cpj-worker.clay-893.workers.dev/click';
+
+        var RETAILERS = {
+            'amazon.com':            'Amazon',
+            'barnesandnoble.com':    'Barnes & Noble',
+            'bookshop.org':          'Bookshop.org',
+            'booksamillion.com':     'Books-A-Million',
+            'hudsonbooksellers.com': 'Hudson',
+            'walmart.com':           'Walmart'
+        };
+
+        function getRetailerName(href) {
+            try {
+                var hostname = new URL(href).hostname.replace('www.', '');
+                for (var domain in RETAILERS) {
+                    if (hostname === domain || hostname.endsWith('.' + domain)) {
+                        return RETAILERS[domain];
+                    }
+                }
+            } catch (e) {}
+            return null;
+        }
+
+        var links = [];
+        var orderButtons = document.querySelectorAll('#bp-order .bp-order-buttons a[target="_blank"]');
+        var bookButtons = document.querySelectorAll('.book-buttons a[target="_blank"]');
+        for (var i = 0; i < orderButtons.length; i++) links.push(orderButtons[i]);
+        for (var j = 0; j < bookButtons.length; j++) links.push(bookButtons[j]);
+
+        if (!links.length) return;
+
+        links.forEach(function(link) {
+            var retailer = getRetailerName(link.href);
+            if (!retailer) return;
+
+            link.addEventListener('click', function() {
+                if (!navigator.sendBeacon) return;
+                navigator.sendBeacon(WORKER_URL, JSON.stringify({
+                    retailer: retailer,
+                    url: link.href,
+                    page: window.location.pathname
+                }));
+            });
+        });
+    }
 
     /**
      * Comment Counts
