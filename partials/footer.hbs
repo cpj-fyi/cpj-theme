@@ -10,7 +10,7 @@
             </div>
 
             <div class="footer-column">
-                <h4>Sections</h4>
+                <h4>Book Sections</h4>
                 <ul>
                     <li><a href="{{@site.url}}/tag/start-end/">Start & End</a></li>
                     <li><a href="{{@site.url}}/tag/foundations/">Foundations</a></li>
@@ -23,7 +23,7 @@
             </div>
 
             <div class="footer-column">
-                <h4>Content</h4>
+                <h4>Site Content</h4>
                 <ul>
                     <li><a href="{{@site.url}}/essays/">Essays</a></li>
                     <li><a href="{{@site.url}}/five-things/">Five Things</a></li>
@@ -32,7 +32,8 @@
             </div>
 
             {{#if @site.navigation}}
-            <div class="footer-column footer-column-nav">
+            <div class="footer-column">
+                <h4>About</h4>
                 <ul>
                     {{#foreach @site.navigation}}
                         <li><a href="{{this.url}}">{{this.label}}</a></li>
@@ -42,7 +43,8 @@
             {{/if}}
 
             {{#if @site.secondary_navigation}}
-            <div class="footer-column footer-column-nav">
+            <div class="footer-column">
+                <h4>Elsewhere</h4>
                 <ul>
                     {{#foreach @site.secondary_navigation}}
                         <li><a href="{{this.url}}">{{this.label}}</a></li>

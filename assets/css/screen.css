@@ -1375,7 +1375,7 @@ body.page-template-custom-buy .site-main {
 
 @media (max-width: 768px) {
     .home-five-things {
-        margin: var(--space-8) calc(-1 * var(--space-6));
+        margin: var(--space-8) calc(-1 * var(--space-6)) 0;
         padding: var(--space-6);
     }
 }
@@ -2914,11 +2914,6 @@ body.tag-five-things:not(.post-template) .footer-bottom a:hover {
     }
 }
 
-/* Nav columns without headers */
-.footer-column-nav ul {
-    margin-top: 0;
-}
-
 /* Footer book section */
 .footer-book {
     padding-right: var(--space-8);
@@ -3215,6 +3210,7 @@ body.tag-five-things:not(.post-template) .footer-bottom a:hover {
 .footer-copyright-text {
     line-height: 1;
     padding-bottom: 2px;
+    text-wrap: pretty;
 }
 
 @media (max-width: 640px) {
