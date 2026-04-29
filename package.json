@@ -42,16 +42,6 @@
         "default": "A book about patterns that shape how we work and live.",
         "description": "Short description for the book (used in footer and homepage)"
       },
-      "book_cta_text": {
-        "type": "text",
-        "default": "Start Reading",
-        "description": "Call-to-action button text for the book"
-      },
-      "book_cta_url": {
-        "type": "text",
-        "default": "/foundations/",
-        "description": "URL for the book CTA button (first chapter or section)"
-      },
       "sidebar_featured_slug": {
         "type": "text",
         "default": "",

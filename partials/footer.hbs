@@ -6,7 +6,7 @@
                 <h3 class="footer-book-title">{{@custom.book_title}}</h3>
                 <div class="footer-book-author">by {{@custom.book_author}}</div>
                 <p class="footer-book-description">{{@custom.book_description}}</p>
-                <a href="{{@custom.book_cta_url}}" class="btn btn-primary">{{@custom.book_cta_text}}</a>
+                <a href="https://cpj.fyi/buy" class="btn btn-primary">Get the Book</a>
             </div>
 
             <div class="footer-column">
@@ -51,18 +51,47 @@
             </div>
             {{/if}}
         </div>
+    </div>
 
-        <div class="footer-newsletter">
-            <div class="footer-newsletter-inner">
-                <div class="footer-newsletter-text">
-                    <h4>{{@custom.sidebar_newsletter_heading}}</h4>
-                    <p>{{@custom.sidebar_newsletter_text}}</p>
-                </div>
-                <form class="footer-newsletter-form" data-members-form>
-                    <input type="email" name="email" placeholder="Your email address" required>
-                    <button type="submit" class="btn btn-primary">Subscribe</button>
-                </form>
+    <div class="footer-gradient">
+        <div class="container">
+
+        <div class="footer-readby">
+            <div class="footer-readby-head">
+                <span class="footer-readby-eyebrow">Read by</span>
+                <span class="footer-readby-rule" aria-hidden="true"></span>
+                <span class="footer-readby-count">
+                    <span class="footer-readby-count-num">1,000+</span>
+                    <span class="footer-readby-count-label">subscribers &amp; counting</span>
+                </span>
             </div>
+            <ul class="footer-readby-logos">
+                <li><img src="{{asset "images/logos/airbnb.svg"}}" alt="Airbnb"></li>
+                <li><img src="{{asset "images/logos/apple.svg"}}" alt="Apple"></li>
+                <li><img src="{{asset "images/logos/google.svg"}}" alt="Google"></li>
+                <li><img src="{{asset "images/logos/anthropic.svg"}}" alt="Anthropic"></li>
+                <li><img src="{{asset "images/logos/atlassian.svg"}}" alt="Atlassian"></li>
+                <li><img src="{{asset "images/logos/miro.svg"}}" alt="Miro"></li>
+                <li><img src="{{asset "images/logos/etsy.svg"}}" alt="Etsy"></li>
+                <li><img src="{{asset "images/logos/ideo.svg"}}" alt="IDEO"></li>
+                <li><img src="{{asset "images/logos/wieden-kennedy.svg"}}" alt="Wieden+Kennedy"></li>
+                <li><img src="{{asset "images/logos/marriott.svg"}}" alt="Marriott"></li>
+                <li><img src="{{asset "images/logos/pepsico.svg"}}" alt="PepsiCo"></li>
+                <li><img src="{{asset "images/logos/bayer.svg"}}" alt="Bayer"></li>
+                <li><img src="{{asset "images/logos/boeing.svg"}}" alt="Boeing"></li>
+                <li><img src="{{asset "images/logos/new-school.svg"}}" alt="The New School"></li>
+                <li><img src="{{asset "images/logos/sandia.svg"}}" alt="Sandia National Labs"></li>
+                <li><img src="{{asset "images/logos/nhs.svg"}}" alt="NHS"></li>
+            </ul>
+        </div>
+
+        <div class="footer-actions">
+            {{#if @member}}
+                <a href="#/portal/account" class="btn btn-primary">Account Settings</a>
+            {{else}}
+                <a href="#/portal/signup" class="btn btn-primary">Subscribe</a>
+            {{/if}}
+            <a href="/contact/" class="btn btn-contact">Contact</a>
         </div>
 
         <div class="footer-bottom">
@@ -88,6 +117,8 @@
             <div class="footer-powered">
                 <a href="https://ghost.org" target="_blank" rel="noopener">Powered by Ghost</a>
             </div>
+        </div>
+
         </div>
     </div>
 </footer>

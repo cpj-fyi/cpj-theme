@@ -11,7 +11,6 @@
         initRadarMode();
         initMobileMenu();
         initSmoothScroll();
-        initNewsletterForms();
         initChapterProgress();
         initNumberedLinks();
         initDateTimeMoonphase();
@@ -215,22 +214,6 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
-                }
-            });
-        });
-    }
-
-    /**
-     * Newsletter Form Handling
-     * Ghost handles the actual submission, this just adds UX feedback
-     */
-    function initNewsletterForms() {
-        document.querySelectorAll('[data-members-form]').forEach(function(form) {
-            form.addEventListener('submit', function() {
-                const button = form.querySelector('button[type="submit"]');
-                if (button) {
-                    button.textContent = 'Subscribing...';
-                    button.disabled = true;
                 }
             });
         });
