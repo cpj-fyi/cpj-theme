@@ -20,7 +20,161 @@
         initChapterTitleStyling();
         initCommentCounts();
         initRetailerTracking();
+        initSidenotes();
     });
+
+    /**
+     * Sidenotes — Medium-style margin notes (issue #9)
+     *
+     * Author convention: drop <aside class="sidenote">…</aside> after a
+     * paragraph in a Ghost HTML card. This finds them, numbers them,
+     * inserts an inline [N] superscript marker at the end of the
+     * preceding text element, and (on desktop ≥1200px) positions each
+     * aside in the right margin top-aligned with its marker.
+     */
+    function initSidenotes() {
+        var body = document.querySelector('.post-body');
+        if (!body) return;
+
+        var sidenotes = body.querySelectorAll('aside.sidenote');
+        if (!sidenotes.length) return;
+
+        var isDesktop = function() { return window.matchMedia('(min-width: 1200px)').matches; };
+
+        sidenotes.forEach(function(note, i) {
+            var num = i + 1;
+            note.id = 'sn-' + num;
+            note.setAttribute('role', 'note');
+
+            // Number prefix inside the first paragraph (or aside if flat).
+            var numEl = document.createElement('span');
+            numEl.className = 'sidenote-num';
+            numEl.textContent = num;
+            var firstP = note.querySelector('p');
+            if (firstP) {
+                firstP.insertBefore(numEl, firstP.firstChild);
+            } else {
+                note.insertBefore(numEl, note.firstChild);
+            }
+
+            // Close button — appended after content so SR reads note before encountering it,
+            // positioned absolute top-right via CSS.
+            var closeBtn = document.createElement('button');
+            closeBtn.type = 'button';
+            closeBtn.className = 'sidenote-close';
+            closeBtn.setAttribute('aria-label', 'Close footnote');
+            closeBtn.innerHTML = '<span aria-hidden="true">&times;</span>';
+            closeBtn.addEventListener('click', function() {
+                note.classList.remove('is-open');
+                var refLink = document.querySelector('#snref-' + num + ' a');
+                if (refLink) refLink.focus();
+            });
+            note.appendChild(closeBtn);
+
+            // Inline marker in the preceding text element.
+            var target = findRefTarget(note);
+            if (!target) return;
+
+            var ref = document.createElement('sup');
+            ref.className = 'sidenote-ref';
+            ref.id = 'snref-' + num;
+
+            var link = document.createElement('a');
+            link.href = '#sn-' + num;
+            link.textContent = num;
+            link.setAttribute('aria-label', 'Footnote ' + num);
+            link.addEventListener('click', function(e) {
+                if (isDesktop()) return; // desktop: regular anchor (sidenote already visible)
+                e.preventDefault();
+                sidenotes.forEach(function(n) {
+                    if (n !== note) n.classList.remove('is-open');
+                });
+                note.classList.toggle('is-open');
+                if (note.classList.contains('is-open')) {
+                    closeBtn.focus();
+                }
+            });
+            ref.appendChild(link);
+            target.appendChild(ref);
+        });
+
+        // Dismiss popover on tap outside or Escape (mobile only).
+        document.addEventListener('click', function(e) {
+            if (isDesktop()) return;
+            var open = document.querySelector('aside.sidenote.is-open');
+            if (!open) return;
+            if (e.target.closest('aside.sidenote, .sidenote-ref')) return;
+            open.classList.remove('is-open');
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key !== 'Escape') return;
+            document.querySelectorAll('aside.sidenote.is-open').forEach(function(n) {
+                n.classList.remove('is-open');
+            });
+        });
+
+        positionSidenotes();
+
+        var raf;
+        var rerun = function() {
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(positionSidenotes);
+        };
+        window.addEventListener('resize', rerun);
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(rerun);
+        }
+    }
+
+    function findRefTarget(sidenote) {
+        var prev = sidenote.previousElementSibling;
+        var TEXT_TAGS = /^(P|UL|OL|BLOCKQUOTE|H[1-6]|FIGCAPTION|DL|DD|PRE)$/;
+        while (prev) {
+            if (prev.matches('aside.sidenote')) {
+                prev = prev.previousElementSibling;
+                continue;
+            }
+            if (TEXT_TAGS.test(prev.tagName)) return prev;
+            // Wrapped card — look inside for a trailing text element.
+            var inner = prev.querySelector('p:last-of-type, li:last-of-type, h1, h2, h3, h4, h5, h6');
+            if (inner) return inner;
+            prev = prev.previousElementSibling;
+        }
+        return null;
+    }
+
+    function positionSidenotes() {
+        var body = document.querySelector('.post-body');
+        if (!body) return;
+
+        var isDesktop = window.matchMedia('(min-width: 1200px)').matches;
+        var sidenotes = body.querySelectorAll('aside.sidenote');
+
+        if (!isDesktop) {
+            sidenotes.forEach(function(n) { n.style.top = ''; });
+            body.style.minHeight = '';
+            return;
+        }
+
+        var bodyTop = body.getBoundingClientRect().top + window.scrollY;
+        var lastBottom = 0;
+        var minGap = 16;
+
+        sidenotes.forEach(function(note) {
+            var num = note.id.replace('sn-', '');
+            var ref = document.getElementById('snref-' + num);
+            if (!ref) return;
+
+            var desiredTop = ref.getBoundingClientRect().top + window.scrollY - bodyTop;
+            var top = Math.max(desiredTop, lastBottom + minGap);
+            note.style.top = top + 'px';
+            lastBottom = top + note.offsetHeight;
+        });
+
+        // Prevent trailing sidenotes from visually overlapping comments below.
+        body.style.minHeight = lastBottom > 0 ? lastBottom + 32 + 'px' : '';
+    }
 
     /**
      * Current Chapter Highlighting
