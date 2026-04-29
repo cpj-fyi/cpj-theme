@@ -1,0 +1,248 @@
+{{!--
+    Custom template for the Colophon page.
+    Reader-facing piece + working sample sheet.
+    Select via Ghost page settings → Template → Colophon.
+--}}
+
+{{!< default}}
+
+<article class="cl-page">
+    <header class="cl-hero">
+        <h1 class="cl-title">Colophon</h1>
+        <p class="cl-lede">This is the type, the color, the section arc, and a few details that exist mostly because I wanted them. I also use this page to check my work.</p>
+    </header>
+
+    {{!-- ───────────────────────── Typography ───────────────────────── --}}
+    <section class="cl-section">
+        <header class="cl-section-head">
+            <span class="cl-section-num">01</span>
+            <h2 class="cl-section-title">Type</h2>
+        </header>
+
+        <div class="cl-prose">
+            <p>The body is set in <strong>Freight Text Pro</strong>, a serif from <a href="https://fontsofjoshuadarden.com" rel="noopener">Joshua Darden Studio</a>. The italics have personality, the figures are old-style — numbers that read like letters rather than glyphs — and it stays legible at body sizes without going generic at display sizes.</p>
+            <p>UI elements — eyebrows, meta, button labels — drop into <strong>SF Pro</strong>. Code is set in <strong>SF Mono</strong>.</p>
+        </div>
+
+        <div class="cl-specimen cl-type-specimen">
+            <div class="cl-type-row">
+                <span class="cl-type-meta">Body — Freight Text Pro · 17px / 1.71</span>
+                <p class="cl-type-sample">Most "people problems" are really problems of how work is grouped, how authority moves, and whether the team actually exists in any structural sense or is just a recurring calendar invite.</p>
+            </div>
+
+            <div class="cl-type-row">
+                <span class="cl-type-meta">Display — Freight Text Pro · 60px / 1</span>
+                <p class="cl-type-display">Hidden Patterns</p>
+            </div>
+
+            <div class="cl-type-row">
+                <span class="cl-type-meta">UI — SF Pro · 14px small caps</span>
+                <p class="cl-type-eyebrow">FIVE THINGS · APR 6, 2026 · 7 MIN READ</p>
+            </div>
+
+            <div class="cl-type-row">
+                <span class="cl-type-meta">Numerals — old-style figures</span>
+                <p class="cl-type-display">2006 · 2026 · 1,022</p>
+            </div>
+        </div>
+    </section>
+
+    {{!-- ───────────────────────── Color ───────────────────────── --}}
+    <section class="cl-section">
+        <header class="cl-section-head">
+            <span class="cl-section-num">02</span>
+            <h2 class="cl-section-title">Color</h2>
+        </header>
+
+        <div class="cl-prose">
+            <p>The accent is a coral red, <code>#FF3252</code>. The coral is pretty close to the original Undercurrent pink, which I loved.</p>
+            <p>Radar runs in dark mode with a neon green, <code>#00ff88</code>, that only shows up there.</p>
+        </div>
+
+        <div class="cl-specimen cl-swatches cl-swatches-base">
+            <div class="cl-swatch" style="--s: #FF3252; --t: #ffffff;">
+                <span class="cl-swatch-name">Accent</span>
+                <span class="cl-swatch-hex">#FF3252</span>
+            </div>
+            <div class="cl-swatch" style="--s: #00ff88; --t: #1A1A1A;">
+                <span class="cl-swatch-name">Radar</span>
+                <span class="cl-swatch-hex">#00FF88</span>
+            </div>
+            <div class="cl-swatch" style="--s: #1A1A1A; --t: #ffffff;">
+                <span class="cl-swatch-name">Text</span>
+                <span class="cl-swatch-hex">#1A1A1A</span>
+            </div>
+            <div class="cl-swatch" style="--s: #666666; --t: #ffffff;">
+                <span class="cl-swatch-name">Secondary</span>
+                <span class="cl-swatch-hex">#666666</span>
+            </div>
+            <div class="cl-swatch" style="--s: #999999; --t: #ffffff;">
+                <span class="cl-swatch-name">Muted</span>
+                <span class="cl-swatch-hex">#999999</span>
+            </div>
+            <div class="cl-swatch cl-swatch-bordered" style="--s: #F8F8F8; --t: #1A1A1A;">
+                <span class="cl-swatch-name">Background</span>
+                <span class="cl-swatch-hex">#F8F8F8</span>
+            </div>
+        </div>
+    </section>
+
+    {{!-- ───────────────────────── Section colors ───────────────────────── --}}
+    <section class="cl-section">
+        <header class="cl-section-head">
+            <span class="cl-section-num">03</span>
+            <h2 class="cl-section-title">The book&apos;s color arc</h2>
+        </header>
+
+        <div class="cl-prose">
+            <p>Seven sections, seven colors. The arc starts near-black for <em>Start &amp; End</em>, runs through the coral of <em>Foundations</em>, and resolves at violet for <em>Space</em>. The same arc shows up in the footer gradient. When you visit a chapter, the section&apos;s color appears in the chapter buttons and the section nav.</p>
+        </div>
+
+        <div class="cl-specimen cl-swatches cl-swatches-arc">
+            <div class="cl-arc-swatch" style="--s: #222222; --t: #ffffff;">
+                <span class="cl-arc-name">Start &amp; End</span>
+                <span class="cl-arc-hex">#222222</span>
+            </div>
+            <div class="cl-arc-swatch" style="--s: #FF3252; --t: #ffffff;">
+                <span class="cl-arc-name">Foundations</span>
+                <span class="cl-arc-hex">#FF3252</span>
+            </div>
+            <div class="cl-arc-swatch" style="--s: #E9306B; --t: #ffffff;">
+                <span class="cl-arc-name">Structuring</span>
+                <span class="cl-arc-hex">#E9306B</span>
+            </div>
+            <div class="cl-arc-swatch" style="--s: #D83586; --t: #ffffff;">
+                <span class="cl-arc-name">Direction</span>
+                <span class="cl-arc-hex">#D83586</span>
+            </div>
+            <div class="cl-arc-swatch" style="--s: #BD31BF; --t: #ffffff;">
+                <span class="cl-arc-name">Practice</span>
+                <span class="cl-arc-hex">#BD31BF</span>
+            </div>
+            <div class="cl-arc-swatch" style="--s: #9F36CE; --t: #ffffff;">
+                <span class="cl-arc-name">Learning</span>
+                <span class="cl-arc-hex">#9F36CE</span>
+            </div>
+            <div class="cl-arc-swatch" style="--s: #8438F2; --t: #ffffff;">
+                <span class="cl-arc-name">Space</span>
+                <span class="cl-arc-hex">#8438F2</span>
+            </div>
+        </div>
+
+        <div class="cl-specimen cl-arc-gradient" aria-hidden="true">
+            <span class="cl-arc-gradient-label">The same arc, as the footer gradient</span>
+        </div>
+    </section>
+
+    {{!-- ───────────────────────── Components ───────────────────────── --}}
+    <section class="cl-section">
+        <header class="cl-section-head">
+            <span class="cl-section-num">04</span>
+            <h2 class="cl-section-title">Components</h2>
+        </header>
+
+        <div class="cl-specimen-grid">
+            <figure class="cl-spec">
+                <figcaption class="cl-spec-label">Buttons</figcaption>
+                <div class="cl-spec-stage">
+                    <a href="#" class="btn btn-primary">Primary</a>
+                    <a href="#" class="btn btn-secondary">Secondary</a>
+                    <a href="#" class="btn btn-ghost">Ghost</a>
+                </div>
+            </figure>
+
+            <figure class="cl-spec">
+                <figcaption class="cl-spec-label">Eyebrow / metadata</figcaption>
+                <div class="cl-spec-stage">
+                    <div class="ds-meta">
+                        <span class="ds-meta-item">ESSAYS</span>
+                        <span class="ds-meta-item">APR 6, 2026</span>
+                        <span class="ds-meta-item">7 MIN READ</span>
+                    </div>
+                </div>
+            </figure>
+
+            <figure class="cl-spec">
+                <figcaption class="cl-spec-label">Tag (archive style)</figcaption>
+                <div class="cl-spec-stage">
+                    <a href="#" class="archive-tag">SPEAKING</a>
+                </div>
+            </figure>
+
+            <figure class="cl-spec">
+                <figcaption class="cl-spec-label">Sidenote marker</figcaption>
+                <div class="cl-spec-stage">
+                    <p class="cl-spec-prose">…and the team actually exists in a structural sense.<sup class="sidenote-ref"><a href="#cl-sn-1">1</a></sup></p>
+                </div>
+            </figure>
+        </div>
+    </section>
+
+    {{!-- ───────────────────────── Small details (live) ───────────────────────── --}}
+    <section class="cl-section">
+        <header class="cl-section-head">
+            <span class="cl-section-num">05</span>
+            <h2 class="cl-section-title">Small details</h2>
+        </header>
+
+        <div class="cl-detail-grid">
+            <figure class="cl-detail">
+                <div class="cl-detail-specimen cl-detail-specimen-moon">
+                    <div class="cl-moonphase">
+                        <div class="moonphase">
+                            <div class="moonphase-disc">
+                                <img src="{{asset 'images/moonphase-disc.svg'}}" alt="">
+                            </div>
+                            <img class="moonphase-mask" src="{{asset 'images/moonphase-mask.svg'}}" alt="">
+                        </div>
+                    </div>
+                </div>
+                <figcaption class="cl-detail-caption">
+                    <h3 class="cl-detail-title">Moonphase</h3>
+                    <p>A Hodinkee-style complication in the top-right of the header. Two layered SVGs — a blue disc with two moons that rotates based on the day of the lunar cycle, and a white frame with a curved cutout that masks the disc. It updates on page load. The one above is live.</p>
+                </figcaption>
+            </figure>
+
+            <figure class="cl-detail">
+                <div class="cl-detail-specimen cl-detail-specimen-cyclist">
+                    {{> "cyclist-svg" class="cl-cyclist-svg"}}
+                </div>
+                <figcaption class="cl-detail-caption">
+                    <h3 class="cl-detail-title">Cyclist</h3>
+                    <p>That&apos;s me. The drawing&apos;s been with me for a long time.</p>
+                </figcaption>
+            </figure>
+
+            <figure class="cl-detail">
+                <div class="cl-detail-specimen cl-detail-specimen-radar">
+                    <div class="section-header section-header-radar">
+                        <div class="section-header-content">
+                            <h3 class="section-title section-title-radar cl-radar-title">Radar</h3>
+                            <p class="section-subtitle cl-radar-subtitle">Daily observations on organization design.</p>
+                        </div>
+                        <div class="radar-dot"></div>
+                    </div>
+                </div>
+                <figcaption class="cl-detail-caption">
+                    <h3 class="cl-detail-title">Radar</h3>
+                    <p>Posts in <a href="{{@site.url}}/radar/">Radar</a> run in dark mode — black background, white text, neon green accents. The header has an animated green dot that sweeps across with occasional &ldquo;blip&rdquo; effects. A small gimmick, but I like it.</p>
+                </figcaption>
+            </figure>
+        </div>
+    </section>
+
+    {{!-- ───────────────────────── Built with ───────────────────────── --}}
+    <section class="cl-section cl-section-credits">
+        <header class="cl-section-head">
+            <span class="cl-section-num">06</span>
+            <h2 class="cl-section-title">Built with</h2>
+        </header>
+
+        <div class="cl-prose">
+            <p><strong>Ghost 6.x</strong> with a custom theme. Source on <a href="https://github.com/cpj-fyi/cpj-theme" rel="noopener">GitHub</a>.</p>
+            <p>Cloudflare Workers handle webhooks, the contact form, and retailer-link tracking. Comments via Ghost&apos;s native comments. Hosting on Ghost(Pro).</p>
+            <p>Type from <a href="https://fontsofjoshuadarden.com" rel="noopener">Joshua Darden Studio</a> via Adobe Fonts.</p>
+            <p>If something on this page is broken, it&apos;s probably my fault — <a href="{{@site.url}}/contact/">tell me</a>.</p>
+        </div>
+    </section>
+</article>

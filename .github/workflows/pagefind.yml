@@ -1,0 +1,77 @@
+name: Build Pagefind index
+
+# Crawls cpj.fyi, runs Pagefind against the downloaded HTML, and publishes
+# the resulting _pagefind/ directory to the gh-pages branch. The theme
+# loads pagefind.js from https://cpj-fyi.github.io/cpj-theme/_pagefind/.
+#
+# Triggered by:
+#   - workflow_dispatch (manual via Actions tab)
+#   - schedule: daily at 06:00 UTC
+#   - repository_dispatch event "publish" (sent by cpj-worker on Ghost
+#     post.published webhook — wired up in a follow-up commit)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *'
+  repository_dispatch:
+    types: [publish]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout (for actions cache)
+        uses: actions/checkout@v4
+
+      - name: Crawl cpj.fyi
+        run: |
+          mkdir -p site
+          # --recursive: follow links
+          # --level=10: depth limit
+          # --convert-links + --adjust-extension: rewrite URLs and add .html so pagefind can read
+          # --reject: skip binary assets pagefind doesn't index
+          # --reject-regex: skip Ghost portal/admin URLs and member-only paths
+          # --wait + --random-wait: be nice to Ghost(Pro)
+          wget --recursive --level=10 \
+               --convert-links --adjust-extension \
+               --page-requisites --no-host-directories \
+               --no-parent \
+               --reject="*.pdf,*.zip,*.jpg,*.jpeg,*.png,*.gif,*.webp,*.svg,*.css,*.js,*.xml,*.ico,*.woff,*.woff2" \
+               --reject-regex="(/portal/|/members/|/ghost/|#)" \
+               -e robots=off \
+               --wait=0.5 --random-wait \
+               --user-agent="cpj-theme-pagefind-bot/1.0" \
+               --directory-prefix=site \
+               https://www.cpj.fyi/ || true
+
+      - name: Show crawl summary
+        run: |
+          echo "HTML files crawled: $(find site -name '*.html' | wc -l)"
+          du -sh site
+
+      - name: Install Pagefind
+        run: npm install -g pagefind
+
+      - name: Build index
+        run: |
+          mkdir -p public
+          pagefind --site site --output-path public/_pagefind
+
+      - name: Show index summary
+        run: |
+          echo "Index files:"
+          ls -la public/_pagefind | head -20
+          echo "Total index size:"
+          du -sh public/_pagefind
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          keep_files: true
+          commit_message: "build: refresh pagefind index"

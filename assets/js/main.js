@@ -22,7 +22,173 @@
         initRetailerTracking();
         initSidenotes();
         initEverything();
+        initSearch();
     });
+
+    /**
+     * Search — Cmd+K modal (issue #3)
+     * Pagefind-powered. Index is hosted at PAGEFIND_BASE; pagefind.js is
+     * dynamically imported on first open so the page doesn't pay the cost
+     * of loading the search runtime up front.
+     */
+    function initSearch() {
+        var modal = document.getElementById('search-modal');
+        var trigger = document.getElementById('search-trigger');
+        var input = document.getElementById('search-input');
+        var results = document.getElementById('search-results');
+        if (!modal || !input || !results) return;
+
+        var PAGEFIND_BASE = 'https://cpj-fyi.github.io/cpj-theme/_pagefind/';
+        var pagefind = null;
+        var pagefindPromise = null;
+        var currentResults = [];
+        var activeIndex = -1;
+        var debounce = null;
+        var lastQuery = '';
+
+        function loadPagefind() {
+            if (pagefindPromise) return pagefindPromise;
+            pagefindPromise = import(PAGEFIND_BASE + 'pagefind.js')
+                .then(function(mod) {
+                    pagefind = mod;
+                    if (typeof mod.options === 'function') {
+                        mod.options({ excerptLength: 30 });
+                    }
+                    return mod;
+                })
+                .catch(function(err) {
+                    console.warn('Pagefind failed to load:', err);
+                    pagefindPromise = null;
+                    return null;
+                });
+            return pagefindPromise;
+        }
+
+        function escapeHtml(s) {
+            return String(s).replace(/[&<>"']/g, function(c) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+            });
+        }
+
+        function renderEmpty() {
+            results.innerHTML = '<p class="search-modal-empty">Type to search posts, essays, and chapters.</p>';
+            currentResults = [];
+            activeIndex = -1;
+        }
+
+        function renderLoading() {
+            results.innerHTML = '<p class="search-modal-loading">Searching…</p>';
+        }
+
+        function renderNoResults(q) {
+            results.innerHTML = '<p class="search-modal-no-results">No matches for &ldquo;' + escapeHtml(q) + '&rdquo;.</p>';
+            currentResults = [];
+            activeIndex = -1;
+        }
+
+        function renderUnavailable() {
+            results.innerHTML = '<p class="search-modal-no-results">Search is loading the index for the first time, or the index isn&rsquo;t deployed yet. <a href="/everything/">Browse all posts</a>.</p>';
+            currentResults = [];
+            activeIndex = -1;
+        }
+
+        function renderResults(items) {
+            if (!items.length) return renderNoResults(input.value.trim());
+            var html = items.map(function(item, i) {
+                var title = (item.meta && item.meta.title) ? item.meta.title : 'Untitled';
+                return '<a href="' + escapeHtml(item.url) + '" class="search-result' + (i === 0 ? ' is-active' : '') + '" data-result-index="' + i + '">' +
+                    '<h3 class="search-result-title">' + escapeHtml(title) + '</h3>' +
+                    '<p class="search-result-excerpt">' + (item.excerpt || '') + '</p>' +
+                '</a>';
+            }).join('');
+            results.innerHTML = html;
+            currentResults = items;
+            activeIndex = 0;
+        }
+
+        function setActive(index) {
+            if (!currentResults.length) return;
+            var wrapped = (index + currentResults.length) % currentResults.length;
+            activeIndex = wrapped;
+            var els = results.querySelectorAll('.search-result');
+            els.forEach(function(el, i) {
+                el.classList.toggle('is-active', i === wrapped);
+                if (i === wrapped) el.scrollIntoView({ block: 'nearest' });
+            });
+        }
+
+        function performSearch(query) {
+            lastQuery = query;
+            if (!query) return renderEmpty();
+            renderLoading();
+            loadPagefind().then(function(pf) {
+                if (!pf) return renderUnavailable();
+                pf.search(query).then(function(search) {
+                    if (input.value.trim() !== query) return; // stale
+                    Promise.all(search.results.slice(0, 8).map(function(r) {
+                        return r.data();
+                    })).then(renderResults);
+                });
+            });
+        }
+
+        function openModal() {
+            modal.removeAttribute('hidden');
+            document.body.style.overflow = 'hidden';
+            loadPagefind();
+            setTimeout(function() { input.focus(); input.select(); }, 0);
+        }
+
+        function closeModal() {
+            modal.setAttribute('hidden', '');
+            document.body.style.overflow = '';
+            input.value = '';
+            renderEmpty();
+        }
+
+        if (trigger) {
+            trigger.addEventListener('click', openModal);
+        }
+
+        document.addEventListener('keydown', function(e) {
+            var isCmd = e.metaKey || e.ctrlKey;
+            if (isCmd && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                if (modal.hasAttribute('hidden')) openModal(); else closeModal();
+                return;
+            }
+            if (modal.hasAttribute('hidden')) return;
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closeModal();
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                setActive(activeIndex + 1);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                setActive(activeIndex - 1);
+            } else if (e.key === 'Enter') {
+                var active = results.querySelector('.search-result.is-active');
+                if (active) {
+                    e.preventDefault();
+                    window.location = active.getAttribute('href');
+                }
+            }
+        });
+
+        modal.addEventListener('click', function(e) {
+            if (e.target.closest('[data-search-close]')) {
+                closeModal();
+            }
+        });
+
+        input.addEventListener('input', function() {
+            clearTimeout(debounce);
+            var q = input.value.trim();
+            if (!q) return renderEmpty();
+            debounce = setTimeout(function() { performSearch(q); }, 150);
+        });
+    }
 
     /**
      * Everything archive
@@ -535,8 +701,7 @@
         const timeEl = document.querySelector('.header-time');
         const mobileDateEl = document.querySelector('.mobile-date');
         const mobileTimeEl = document.querySelector('.mobile-time');
-        const moonDisc = document.getElementById('moonphase-disc');
-        const mobileMoonDisc = document.querySelector('.moonphase-disc-mobile');
+        const moonDiscs = document.querySelectorAll('.moonphase-disc');
         const moonphaseEl = document.getElementById('header-moonphase');
 
         if (!dateEl || !timeEl) return;
@@ -586,12 +751,9 @@
             // +44° offset calibrates disc position to match visual moon position
             const rotation = (phase * 360) + 44;
 
-            if (moonDisc) {
-                moonDisc.style.transform = `rotate(${rotation}deg)`;
-            }
-            if (mobileMoonDisc) {
-                mobileMoonDisc.style.transform = `rotate(${rotation}deg)`;
-            }
+            moonDiscs.forEach(function(disc) {
+                disc.style.transform = `rotate(${rotation}deg)`;
+            });
 
             // Update title with phase name
             if (moonphaseEl) {
