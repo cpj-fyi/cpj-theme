@@ -39,6 +39,7 @@
         if (!modal || !input || !results) return;
 
         var PAGEFIND_BASE = 'https://cpj-fyi.github.io/cpj-theme/_pagefind/';
+        var SITE_ORIGIN = 'https://www.cpj.fyi';
         var pagefind = null;
         var pagefindPromise = null;
         var currentResults = [];
@@ -52,7 +53,10 @@
                 .then(function(mod) {
                     pagefind = mod;
                     if (typeof mod.options === 'function') {
-                        mod.options({ excerptLength: 30 });
+                        return Promise.resolve(mod.options({
+                            excerptLength: 30,
+                            baseUrl: SITE_ORIGIN + '/'
+                        })).then(function() { return mod; });
                     }
                     return mod;
                 })
@@ -62,6 +66,22 @@
                     return null;
                 });
             return pagefindPromise;
+        }
+
+        // Pagefind auto-detects its hosted subdirectory (/cpj-theme/) and
+        // can prepend it to URLs. Strip that and force the cpj.fyi origin.
+        function rewriteUrl(url) {
+            if (!url) return '#';
+            // Absolute URL pointing at the index host — re-origin to cpj.fyi
+            url = url.replace(/^https?:\/\/cpj-fyi\.github\.io(\/cpj-theme)?/, '');
+            // Drop any lingering /cpj-theme prefix
+            url = url.replace(/^\/cpj-theme/, '');
+            // If still a path, prefix with site origin
+            if (url.indexOf('://') === -1) {
+                if (!url.startsWith('/')) url = '/' + url;
+                url = SITE_ORIGIN + url;
+            }
+            return url;
         }
 
         function escapeHtml(s) {
@@ -96,7 +116,7 @@
             if (!items.length) return renderNoResults(input.value.trim());
             var html = items.map(function(item, i) {
                 var title = (item.meta && item.meta.title) ? item.meta.title : 'Untitled';
-                return '<a href="' + escapeHtml(item.url) + '" class="search-result' + (i === 0 ? ' is-active' : '') + '" data-result-index="' + i + '">' +
+                return '<a href="' + escapeHtml(rewriteUrl(item.url)) + '" class="search-result' + (i === 0 ? ' is-active' : '') + '" data-result-index="' + i + '">' +
                     '<h3 class="search-result-title">' + escapeHtml(title) + '</h3>' +
                     '<p class="search-result-excerpt">' + (item.excerpt || '') + '</p>' +
                 '</a>';
