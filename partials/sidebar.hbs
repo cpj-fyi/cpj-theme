@@ -34,10 +34,11 @@
 <div class="sidebar-widget sidebar-newsletter">
     <h3 class="sidebar-widget-title">{{@custom.sidebar_newsletter_heading}}</h3>
     <p class="newsletter-text">{{@custom.sidebar_newsletter_text}}</p>
-    <form class="newsletter-form" data-members-form>
-        <input type="email" name="email" class="newsletter-input" placeholder="Your email address" required>
-        <button type="submit" class="btn btn-primary">Subscribe</button>
-    </form>
+    {{#if @member}}
+        <a href="#/portal/account" class="btn btn-primary">Account Settings</a>
+    {{else}}
+        <a href="#/portal/signup" class="btn btn-primary">Subscribe</a>
+    {{/if}}
 </div>
 
 {{!-- Custom HTML widget --}}

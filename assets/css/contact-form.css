@@ -1,0 +1,169 @@
+/* Contact Form — classes prefixed cf- */
+/* Uses :where() for element resets to avoid specificity conflicts with screen.css */
+
+:where(.contact-page) h1,
+:where(.contact-page) p,
+:where(.contact-page) label {
+  margin: 0;
+  padding: 0;
+}
+
+.cf-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 80px 20px;
+}
+
+.cf-heading {
+  font-family: 'freight-text-pro', Georgia, serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+.cf-subheading {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.cf-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cf-label {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #222;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cf-hint {
+  font-size: 0.85rem;
+  color: #888;
+  font-style: italic;
+}
+
+.cf-input,
+.cf-textarea {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1rem;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  color: #222;
+  transition: border-color 0.2s;
+}
+
+.cf-input:focus,
+.cf-textarea:focus {
+  outline: none;
+  border-color: #222;
+}
+
+.cf-textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+/* Honeypot — visually hidden */
+.cf-hp {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+.cf-submit {
+  align-self: flex-start;
+}
+
+.cf-submit .btn {
+  min-width: 160px;
+}
+
+.cf-submit .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cf-error {
+  color: #d63333;
+  font-size: 0.9rem;
+  margin-top: 4px;
+  display: none;
+}
+
+.cf-error.is-visible {
+  display: block;
+}
+
+/* Success state */
+.cf-success {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.cf-success-heading {
+  font-family: 'freight-text-pro', Georgia, serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 12px;
+}
+
+.cf-success-text {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+/* Footer contact button */
+.btn-contact {
+  background: #fff;
+  color: #222;
+  border: none;
+}
+
+.btn-contact:hover {
+  background: #f0f0f0;
+  color: #222;
+}
+
+/* Footer button group */
+.footer-newsletter-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .footer-newsletter-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .cf-wrapper {
+    padding: 40px 16px;
+  }
+
+  .cf-heading {
+    font-size: 1.8rem;
+  }
+}
