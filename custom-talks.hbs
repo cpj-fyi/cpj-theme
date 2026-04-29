@@ -1,0 +1,70 @@
+{{!< default}}
+
+{{!--
+    Custom template for the Talks page (page slug: talks).
+    Renders the page body content first, then a feed of all posts
+    tagged "speaking" using the same post-card-essay layout as the
+    Essays archive.
+    Select via Ghost page settings → Template → Talks.
+--}}
+
+{{#post}}
+<article class="page page-talks {{post_class}}">
+    {{#if @page.show_title_and_feature_image}}
+        <header class="post-header">
+            <h1 class="post-title">{{title}}</h1>
+            {{#if custom_excerpt}}
+                <p class="post-excerpt">{{custom_excerpt}}</p>
+            {{/if}}
+        </header>
+
+        {{#if feature_image}}
+            <figure class="post-feature-image">
+                <img src="{{feature_image}}" alt="{{title}}">
+                {{#if feature_image_caption}}
+                    <figcaption>{{feature_image_caption}}</figcaption>
+                {{/if}}
+            </figure>
+        {{/if}}
+    {{/if}}
+
+    <div class="post-body">
+        <div class="content">
+            {{content}}
+        </div>
+    </div>
+</article>
+{{/post}}
+
+{{!-- Booking form --}}
+<section class="talks-contact">
+    <div class="container contact-page">
+        {{> "contact-form" heading="Book a Session" subheading="Tell me about your audience and your event."}}
+    </div>
+</section>
+
+{{!-- Talks feed: posts tagged "speaking" --}}
+<section class="talks-feed">
+    <header class="archive-header">
+        <div class="container">
+            <h2 class="archive-title">Recent Talks</h2>
+            {{#get "posts" filter="tag:speaking" limit="100"}}
+                <div class="archive-count">{{plural posts.length empty="No talks" singular="% talk" plural="% talks"}}</div>
+            {{/get}}
+        </div>
+    </header>
+
+    <div class="container talks-feed-container">
+        {{#get "posts" filter="tag:speaking" limit="100" include="tags,authors" order="published_at desc"}}
+            {{#if posts}}
+                <div class="essays-grid">
+                    {{#foreach posts}}
+                        {{> "post-card-essay"}}
+                    {{/foreach}}
+                </div>
+            {{else}}
+                <p>No talks published yet.</p>
+            {{/if}}
+        {{/get}}
+    </div>
+</section>

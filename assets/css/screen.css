@@ -1802,6 +1802,16 @@ body.page-template-custom-buy .site-main {
     padding: var(--space-12) 0;
 }
 
+.talks-feed-container {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-16);
+}
+
+/* Booking form section — full-width darker stripe between page body and talks feed */
+.talks-contact {
+    background: var(--color-bg-alt);
+}
+
 @media (max-width: 1024px) {
     .essays-layout {
         grid-template-columns: 1fr;

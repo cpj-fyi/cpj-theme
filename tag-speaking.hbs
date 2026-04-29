@@ -1,0 +1,42 @@
+{{!< default}}
+
+{{!--
+    Speaking tag archive — /tag/speaking/
+    Mirrors the essays archive layout for consistency with /talks/.
+--}}
+
+<header class="archive-header">
+    <div class="container">
+        <h1 class="archive-title">Talks</h1>
+        {{#if tag.description}}
+            <p class="archive-description">{{tag.description}}</p>
+        {{else}}
+            <p class="archive-description">Speaking engagements and conference talks.</p>
+        {{/if}}
+        {{#get "posts" filter="tag:speaking" limit="100"}}
+            <div class="archive-count">{{plural posts.length empty="No talks" singular="% talk" plural="% talks"}}</div>
+        {{/get}}
+    </div>
+</header>
+
+<div class="container">
+    <div class="essays-layout">
+        <div class="essays-main">
+            {{#get "posts" filter="tag:speaking" limit="100" include="tags,authors" order="published_at desc"}}
+                {{#if posts}}
+                    <div class="essays-grid">
+                        {{#foreach posts}}
+                            {{> "post-card-essay"}}
+                        {{/foreach}}
+                    </div>
+                {{else}}
+                    <p>No talks published yet.</p>
+                {{/if}}
+            {{/get}}
+        </div>
+
+        <aside class="sidebar">
+            {{> "sidebar"}}
+        </aside>
+    </div>
+</div>
