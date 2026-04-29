@@ -1,0 +1,18 @@
+<article class="archive-item" data-date="{{date format="YYYY-MM-DD"}}" data-year="{{date format="YYYY"}}">
+    <div class="archive-item-aside">
+        <time class="archive-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MMM D, YYYY"}}</time>
+    </div>
+    <div class="archive-item-main">
+        {{#if primary_tag}}
+            <a href="{{primary_tag.url}}" class="archive-tag">{{primary_tag.name}}</a>
+        {{/if}}
+        <h2 class="archive-item-title">
+            <a href="{{url}}">{{title}}</a>
+        </h2>
+        {{#if custom_excerpt}}
+            <p class="archive-item-excerpt">{{custom_excerpt}}</p>
+        {{else}}
+            <p class="archive-item-excerpt">{{excerpt words="35"}}</p>
+        {{/if}}
+    </div>
+</article>

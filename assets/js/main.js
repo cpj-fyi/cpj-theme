@@ -21,7 +21,104 @@
         initCommentCounts();
         initRetailerTracking();
         initSidenotes();
+        initEverything();
     });
+
+    /**
+     * Everything archive
+     * Sorts items by data-date desc, injects year H2 headings, builds the
+     * year-jump nav at the top.
+     */
+    function initEverything() {
+        var list = document.getElementById('archive-list');
+        if (!list) return;
+
+        var items = Array.prototype.slice.call(list.querySelectorAll('.archive-item'));
+        if (!items.length) return;
+
+        // Dedupe (paginated {{#get}} blocks may overlap if Ghost returns
+        // fewer than expected per page).
+        var seen = {};
+        items = items.filter(function(item) {
+            var key = item.dataset.date + '|' + (item.querySelector('.archive-item-title a') || {}).href;
+            if (seen[key]) {
+                item.remove();
+                return false;
+            }
+            seen[key] = true;
+            return true;
+        });
+
+        // Count items per year.
+        var countsByYear = {};
+        items.forEach(function(item) {
+            var y = item.dataset.year;
+            countsByYear[y] = (countsByYear[y] || 0) + 1;
+        });
+
+        // Sort by data-date desc.
+        items.sort(function(a, b) {
+            return b.dataset.date.localeCompare(a.dataset.date);
+        });
+
+        var fragment = document.createDocumentFragment();
+        var years = [];
+        var currentYear = null;
+
+        items.forEach(function(item) {
+            var year = item.dataset.year;
+            if (year !== currentYear) {
+                currentYear = year;
+                years.push(year);
+
+                var heading = document.createElement('h2');
+                heading.className = 'archive-year-heading';
+                heading.id = 'year-' + year;
+
+                var titleEl = document.createElement('span');
+                titleEl.className = 'archive-year-heading-text';
+                titleEl.textContent = year;
+                heading.appendChild(titleEl);
+
+                var countEl = document.createElement('span');
+                countEl.className = 'archive-year-heading-count';
+                var n = countsByYear[year];
+                countEl.textContent = n + (n === 1 ? ' Post' : ' Posts');
+                heading.appendChild(countEl);
+
+                fragment.appendChild(heading);
+            }
+            fragment.appendChild(item);
+        });
+
+        list.innerHTML = '';
+        list.appendChild(fragment);
+
+        var nav = document.getElementById('archive-year-nav');
+        if (!nav || !years.length) return;
+
+        years.forEach(function(year, i) {
+            var link = document.createElement('a');
+            link.href = '#year-' + year;
+            link.textContent = year;
+            link.className = 'archive-year-nav-link';
+            link.addEventListener('click', function(e) {
+                var target = document.getElementById('year-' + year);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+            nav.appendChild(link);
+            if (i < years.length - 1) {
+                var sep = document.createElement('span');
+                sep.className = 'archive-year-nav-sep';
+                sep.setAttribute('aria-hidden', 'true');
+                sep.textContent = '|';
+                nav.appendChild(sep);
+            }
+        });
+    }
 
     /**
      * Sidenotes — Medium-style margin notes (issue #9)

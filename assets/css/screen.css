@@ -2669,6 +2669,68 @@ body.tag-five-things:not(.post-template) .footer-bottom a:hover {
     border-top: 1px solid var(--color-border);
 }
 
+/* Year-jump nav (Everything page) */
+.archive-year-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2) var(--space-3);
+    padding-bottom: var(--space-8);
+    margin-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.archive-year-nav-link {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.archive-year-nav-link:hover,
+.archive-year-nav-link:focus {
+    color: var(--color-accent);
+}
+
+.archive-year-nav-sep {
+    color: var(--color-text-muted);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    user-select: none;
+}
+
+/* Year section heading (Everything page) — year + post count, stacked */
+.archive-year-heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font-weight: 500;
+    color: var(--color-text);
+    margin: var(--space-12) 0 var(--space-6);
+    scroll-margin-top: 80px;
+}
+
+.archive-year-heading:first-child {
+    margin-top: var(--space-4);
+}
+
+.archive-year-heading-text {
+    font-family: var(--font-serif);
+    font-size: var(--text-4xl);
+    line-height: 1;
+}
+
+.archive-year-heading-count {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+}
+
 .archive-list {
     display: flex;
     flex-direction: column;
@@ -2676,37 +2738,54 @@ body.tag-five-things:not(.post-template) .footer-bottom a:hover {
 
 .archive-item {
     display: grid;
-    grid-template-columns: 120px 1fr;
+    grid-template-columns: 140px 1fr;
     gap: var(--space-6);
-    padding: var(--space-5) 0;
+    padding: var(--space-6) 0;
     border-bottom: 1px solid var(--color-border-light);
+    align-items: start;
 }
 
-.archive-date {
-    font-family: var(--font-sans);
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-}
-
-.archive-item-content {
+.archive-item-aside {
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
 }
 
+.archive-item-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 0;
+}
+
+.archive-date {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text);
+}
+
 .archive-tag {
     font-family: var(--font-sans);
     font-size: var(--text-xs);
-    font-weight: 500;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     color: var(--color-accent);
+    text-decoration: none;
+}
+
+.archive-tag:hover {
+    color: var(--color-accent-hover);
 }
 
 .archive-item-title {
-    font-size: var(--text-lg);
+    font-size: var(--text-2xl);
     font-weight: 500;
-    margin: 0;
+    line-height: 1.2;
+    margin: var(--space-1) 0;
 }
 
 .archive-item-title a {
@@ -2718,15 +2797,23 @@ body.tag-five-things:not(.post-template) .footer-bottom a:hover {
 }
 
 .archive-item-excerpt {
-    font-size: var(--text-sm);
+    font-family: var(--font-serif);
+    font-size: var(--text-base);
+    line-height: 1.55;
     color: var(--color-text-secondary);
-    margin: 0;
+    margin: var(--space-1) 0 0;
 }
 
 @media (max-width: 768px) {
     .archive-item {
         grid-template-columns: 1fr;
         gap: var(--space-2);
+    }
+    .archive-year-heading {
+        font-size: var(--text-3xl);
+    }
+    .archive-item-title {
+        font-size: var(--text-xl);
     }
 }
 
