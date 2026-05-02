@@ -13,7 +13,7 @@
         <div class="post-card-overlay post-card-overlay-top ds-meta">
             <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
             {{#if reading_time}}<span class="ds-meta-item">{{reading_time}}</span>{{/if}}
-            <span class="ds-meta-item ds-meta-comments" aria-label="{{comment_count}} comments">
+            <span class="ds-meta-item ds-meta-comments" aria-label="Comments">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                 <span class="ds-meta-comments-text">{{comment_count}}</span>
             </span>
@@ -21,7 +21,7 @@
         <div class="post-card-overlay post-card-overlay-bottom ds-meta ds-meta-tag-wrapper">
             {{#foreach tags}}
                 {{#match slug "essays"}}{{else match slug "radar"}}{{else match slug "five-things"}}{{else match slug "hidden-patterns"}}
-                {{else match slug @../skip_tag}}
+                {{else match slug ../skip_tag}}
                 {{else}}
                     <span class="ds-meta-item">{{name}}</span>
                 {{/match}}
