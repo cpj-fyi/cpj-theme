@@ -99,9 +99,6 @@
                                         {{/match}}
                                     {{/foreach}}
                                     <span class="ds-meta-item">{{date format="MM DD YY"}}</span>
-                                    {{#if reading_time}}
-                                        <span class="ds-meta-item">{{reading_time}}</span>
-                                    {{/if}}
                                 </div>
                             </article>
                         {{/foreach}}
@@ -164,10 +161,7 @@
                             </h3>
                             <p class="post-card-excerpt">{{excerpt}}</p>
                             <div class="ds-meta">
-                                <span class="ds-meta-item">{{date format="MMM D, YYYY"}}</span>
-                                {{#if reading_time}}
-                                    <span class="ds-meta-item">{{reading_time}}</span>
-                                {{/if}}
+                                <span class="ds-meta-item">{{date format="MM DD YY"}}</span>
                             </div>
                         </article>
                     {{/foreach}}
