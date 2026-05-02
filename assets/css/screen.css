@@ -4653,6 +4653,21 @@ body.tag-radar .post-card-overlay .ds-meta-item:hover,
     display: none !important;
 }
 
+/* Same first-only behavior for inline topical tag pills in homepage feeds */
+.ds-meta .topical-tag-pill ~ .topical-tag-pill {
+    display: none !important;
+}
+
+/* Align section eyebrows across the three home columns */
+.home-feature-essay .essay-feature-label,
+.home-essays .section-title,
+.home-five-things .section-title {
+    margin-top: 0;
+}
+.home-feature-essay {
+    padding-top: 0;
+}
+
 
 /* === home-page latest-essay feature (replaces the book promo) === */
 .home-feature-essay {

@@ -51,17 +51,13 @@
                                 </h3>
                                 <p class="essay-card-excerpt">{{excerpt}}</p>
                                 <div class="ds-meta">
+                                    <span class="ds-meta-item">{{date format="MM DD YY"}}</span>
                                     {{#foreach tags}}
-                                        {{#match slug "essays"}}
-                                        {{else match slug "radar"}}
-                                        {{else match slug "five-things"}}
+                                        {{#match slug "essays"}}{{else match slug "radar"}}{{else match slug "five-things"}}{{else match slug "hidden-patterns"}}
                                         {{else}}
-                                            {{#if @first}}
-                                                <a href="{{url}}" class="ds-meta-item">{{name}}</a>
-                                            {{/if}}
+                                            <a href="{{url}}" class="ds-meta-item topical-tag-pill">{{name}}</a>
                                         {{/match}}
                                     {{/foreach}}
-                                    <span class="ds-meta-item">{{date format="MM DD YY"}}</span>
                                 </div>
                             </article>
                         {{/foreach}}
@@ -109,22 +105,18 @@
                 <div class="related-posts-grid">
                     {{#foreach posts}}
                         <article class="post-card post-card-text-only">
-                            <div class="ds-meta-tag-wrapper">
-                                {{#foreach tags}}
-                                    {{#match slug "essays"}}
-                                    {{else match slug "radar"}}
-                                    {{else match slug "five-things"}}
-                                    {{else}}
-                                        <span class="ds-meta-item">{{name}}</span>
-                                    {{/match}}
-                                {{/foreach}}
-                            </div>
                             <h3 class="post-card-title">
                                 <a href="{{url}}">{{title}}</a>
                             </h3>
                             <p class="post-card-excerpt">{{excerpt}}</p>
                             <div class="ds-meta">
                                 <span class="ds-meta-item">{{date format="MM DD YY"}}</span>
+                                {{#foreach tags}}
+                                    {{#match slug "essays"}}{{else match slug "radar"}}{{else match slug "five-things"}}{{else match slug "hidden-patterns"}}
+                                    {{else}}
+                                        <a href="{{url}}" class="ds-meta-item topical-tag-pill">{{name}}</a>
+                                    {{/match}}
+                                {{/foreach}}
                             </div>
                         </article>
                     {{/foreach}}
