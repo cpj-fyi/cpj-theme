@@ -18,6 +18,9 @@
                 {{#if posts}}
                     {{#foreach posts}}
                         <div class="essay-feature-label">Latest Essay</div>
+                        <a href="{{url}}" class="essay-feature-image-link" aria-hidden="true" tabindex="-1">
+                            <img class="essay-feature-image" src="{{#if feature_image}}{{feature_image}}{{else}}{{@custom.art_url}}/{{slug}}.svg{{/if}}" alt="" loading="eager" width="1200" height="630">
+                        </a>
                         <h1 class="essay-feature-title">
                             <a href="{{url}}">{{title}}</a>
                         </h1>
@@ -25,7 +28,7 @@
                             <p class="essay-feature-excerpt">{{custom_excerpt}}</p>
                         {{/if}}
                         <div class="essay-feature-preview">
-                            {{excerpt words="120"}}…
+                            {{content words="60"}}
                         </div>
                         <a href="{{url}}" class="essay-feature-link btn btn-primary btn-large">Keep reading →</a>
                     {{/foreach}}
@@ -37,10 +40,11 @@
         <section class="home-essays">
             <h2 class="section-title section-title-essays">Essays</h2>
 
-            {{#get "posts" filter="tag:essays" limit="4" include="tags"}}
+            {{!-- limit=5 + foreach from="2" so we skip the featured essay (latest) and show the next 4 --}}
+            {{#get "posts" filter="tag:essays" limit="5" include="tags"}}
                 {{#if posts}}
                     <div class="essays-feed">
-                        {{#foreach posts}}
+                        {{#foreach posts from="2"}}
                             <article class="essay-card">
                                 <h3 class="essay-card-title">
                                     <a href="{{url}}">{{title}}</a>
