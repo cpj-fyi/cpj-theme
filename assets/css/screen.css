@@ -4562,3 +4562,21 @@ body.tag-five-things:not(.post-template) .footer-bottom a:hover {
         color: var(--color-text-secondary);
     }
 }
+
+/* === monafor/art card thumbnails === */
+.post-card-image-link {
+    display: block;
+    overflow: hidden;
+    background: #F6EFDD;  /* matches the SVG bg so SVG load isn't visible */
+}
+.post-card-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1200 / 630;
+    object-fit: cover;
+}
+.tag-radar .post-card-image-link,
+body.tag-radar .post-card-image-link {
+    background: #1A1A1A;  /* radar dark bg */
+}

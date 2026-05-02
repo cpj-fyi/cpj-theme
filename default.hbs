@@ -11,6 +11,13 @@
     <link rel="stylesheet" href="{{asset "css/contact-form.css"}}">
 
     {{ghost_head}}
+    {{!-- monafor/art OG image fallback for posts without a feature_image --}}
+    {{#is "post"}}
+        {{#unless feature_image}}
+            <meta property="og:image" content="{{@custom.art_url}}/{{slug}}.svg">
+            <meta name="twitter:image" content="{{@custom.art_url}}/{{slug}}.svg">
+        {{/unless}}
+    {{/is}}
 </head>
 <body class="{{body_class}}">
     <div class="site-wrapper">

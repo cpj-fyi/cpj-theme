@@ -66,6 +66,11 @@
         "type": "text",
         "default": "Exploring the hidden patterns that shape how we work.",
         "description": "Tagline displayed in the footer"
+      },
+      "art_url": {
+        "type": "text",
+        "default": "https://monafor.clay-893.workers.dev",
+        "description": "Base URL of the monafor/art Worker (no trailing slash)."
       }
     }
   }
