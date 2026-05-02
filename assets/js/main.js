@@ -23,6 +23,7 @@
         initSidenotes();
         initEverything();
         initSearch();
+        initPostArt();
     });
 
     /**
@@ -894,6 +895,46 @@
                 el.textContent = match[0];
             }
         });
+    }
+
+    /**
+     * Post Art Strip
+     * 50px peek of the generative SVG on posts without a feature_image.
+     * Click expands to full reveal; click again collapses.
+     * Fetches /<slug>.json from the art worker to render parameter-driven microcopy.
+     */
+    function initPostArt() {
+        // Click toggles strip expansion
+        document.querySelectorAll('.post-art').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var expanded = btn.getAttribute('aria-expanded') === 'true';
+                btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+            });
+        });
+
+        // Fetch parameter-driven microcopy
+        document.querySelectorAll('.post-art-caption[data-art-slug]').forEach(async function(cap) {
+            var slug = cap.dataset.artSlug;
+            var baseUrl = cap.dataset.artUrl;
+            if (!slug || !baseUrl) return;
+            try {
+                var r = await fetch(baseUrl + '/' + encodeURIComponent(slug) + '.json');
+                if (!r.ok) return;
+                var data = await r.json();
+                cap.textContent = formatPostArtMicrocopy(data);
+            } catch (e) {
+                // leave the fallback caption in place
+            }
+        });
+    }
+
+    function formatPostArtMicrocopy(data) {
+        if (!data || !Array.isArray(data.panels) || data.panels.length === 0) {
+            return 'Generative';
+        }
+        var strategies = data.panels.map(function(p) { return p.strategy; })
+            .filter(function(s, i, arr) { return arr.indexOf(s) === i; });
+        return data.panels.length + ' panels · ' + strategies.join(' · ');
     }
 
 })();

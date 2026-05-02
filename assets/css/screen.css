@@ -4580,3 +4580,40 @@ body.tag-five-things:not(.post-template) .footer-bottom a:hover {
 body.tag-radar .post-card-image-link {
     background: #1A1A1A;  /* radar dark bg */
 }
+
+/* === post-art (monafor/art generative strip on posts without feature_image) === */
+.post-art-wrap {
+    margin: 0 0 32px;
+}
+.post-art {
+    display: block;
+    width: 100%;
+    max-height: 50px;
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.post-art:focus-visible {
+    outline: 2px solid #FF3252;
+    outline-offset: 4px;
+}
+.post-art[aria-expanded="true"] {
+    max-height: 80vh;
+}
+.post-art-image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.post-art-caption {
+    margin: 8px 0 0;
+    font-family: "SF Mono", ui-monospace, Menlo, Monaco, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #888;
+}
