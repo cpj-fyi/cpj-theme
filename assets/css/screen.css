@@ -4620,6 +4620,11 @@ body.tag-five-things:not(.post-template) .footer-bottom a:hover {
 }
 .post-card-overlay-bottom {
     bottom: 12px;
+    /* Hard cap: even if a stale browser misses the :not(:first-child) hide rule
+       and a second tag pill renders, the overlay can never grow past one row
+       and push the first pill up the image. */
+    max-height: 32px;
+    overflow: hidden;
 }
 /* Pills sit on the image — give them a solid bg so border/text remain readable */
 /* Overlay pills always use the default ds-meta-item appearance regardless of
