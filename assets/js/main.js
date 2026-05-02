@@ -930,11 +930,19 @@
 
     function formatPostArtMicrocopy(data) {
         if (!data || !Array.isArray(data.panels) || data.panels.length === 0) {
-            return 'Generative';
+            return data && data.seed ? '0x' + data.seed : 'Generative';
         }
-        var strategies = data.panels.map(function(p) { return p.strategy; })
-            .filter(function(s, i, arr) { return arr.indexOf(s) === i; });
-        return data.panels.length + ' panels · ' + strategies.join(' · ');
+        var seen = {};
+        var strategies = [];
+        for (var i = 0; i < data.panels.length; i++) {
+            var s = data.panels[i].strategy;
+            if (!seen[s]) { seen[s] = true; strategies.push(s); }
+        }
+        var parts = [];
+        if (data.seed) parts.push('0x' + data.seed);
+        parts.push(data.panels.length + ' panels');
+        parts.push(strategies.join(' · '));
+        return parts.join(' · ');
     }
 
 })();

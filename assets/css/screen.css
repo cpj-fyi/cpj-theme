@@ -2835,7 +2835,7 @@ body.tag-five-things:not(.post-template) .footer-bottom a:hover {
     max-width: var(--max-width-content);
     margin: 0 auto;
     padding: var(--space-12) var(--space-6);
-    text-align: center;
+    text-align: left;
 }
 
 .post-tag {
@@ -2862,7 +2862,7 @@ body.tag-five-things:not(.post-template) .footer-bottom a:hover {
 
 .post-meta {
     margin-top: var(--space-6);
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 /* Feature image */
@@ -4583,7 +4583,11 @@ body.tag-radar .post-card-image-link {
 
 /* === post-art (monafor/art generative strip on posts without feature_image) === */
 .post-art-wrap {
-    margin: 0 0 32px;
+    /* Match the post body column: same max-width and horizontal padding so
+       the strip's left edge aligns with the post body's left edge. */
+    max-width: var(--max-width-content);
+    margin: 0 auto 32px;
+    padding: 0 var(--space-6);
 }
 .post-art {
     display: block;
@@ -4610,10 +4614,10 @@ body.tag-radar .post-card-image-link {
     height: auto;
 }
 .post-art-caption {
-    margin: 8px 0 0;
+    margin: 6px 0 0;
     font-family: "SF Mono", ui-monospace, Menlo, Monaco, monospace;
-    font-size: 11px;
+    font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     color: #888;
 }

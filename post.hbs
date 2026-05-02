@@ -6,6 +6,17 @@
 --}}
 
 {{#post}}
+{{#unless feature_image}}
+    <div class="post-art-wrap">
+        <button class="post-art" type="button" aria-expanded="false" aria-label="Reveal full generative artwork">
+            <img class="post-art-image" src="{{@custom.art_url}}/{{slug}}.svg" alt="" loading="eager" width="1200" height="630">
+        </button>
+        <p class="post-art-caption" data-art-slug="{{slug}}" data-art-url="{{@custom.art_url}}">
+            <span class="post-art-caption-fallback">Generative · loading…</span>
+        </p>
+    </div>
+{{/unless}}
+
 <article class="post {{post_class}}">
     <header class="post-header">
         {{#if primary_tag}}
@@ -37,15 +48,6 @@
                 <figcaption>{{feature_image_caption}}</figcaption>
             {{/if}}
         </figure>
-    {{else}}
-        <div class="post-art-wrap">
-            <button class="post-art" type="button" aria-expanded="false" aria-label="Reveal full generative artwork">
-                <img class="post-art-image" src="{{@custom.art_url}}/{{slug}}.svg" alt="" loading="eager" width="1200" height="630">
-            </button>
-            <p class="post-art-caption" data-art-slug="{{slug}}" data-art-url="{{@custom.art_url}}">
-                <span class="post-art-caption-fallback">Generative · click to reveal</span>
-            </p>
-        </div>
     {{/if}}
 
     <div class="post-body">
