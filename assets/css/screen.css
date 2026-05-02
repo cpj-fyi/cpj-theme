@@ -4622,11 +4622,33 @@ body.tag-radar .post-card-image-link {
     bottom: 12px;
 }
 /* Pills sit on the image — give them a solid bg so border/text remain readable */
-.post-card-overlay .ds-meta-item {
-    background: #ffffff;
-}
+/* Overlay pills always use the default ds-meta-item appearance regardless of
+   parent radar/dark context — they sit on top of the image so they need to read
+   consistently across all card variants (essays, radar, etc.). */
+.post-card-overlay .ds-meta-item,
 .tag-radar .post-card-overlay .ds-meta-item,
-body.tag-radar .post-card-overlay .ds-meta-item {
-    /* radar's existing ds-meta styling already inverts; keep bg dark to read against the dark image */
-    background: #1A1A1A;
+body.tag-radar .post-card-overlay .ds-meta-item,
+.home-radar-section .post-card-overlay .ds-meta-item,
+.radar-dark .post-card-overlay .ds-meta-item,
+.post-card-radar .post-card-overlay .ds-meta-item {
+    background: #ffffff;
+    color: #222222;
+    border-color: #222222;
+}
+.post-card-overlay .ds-meta-item:hover,
+.tag-radar .post-card-overlay .ds-meta-item:hover,
+body.tag-radar .post-card-overlay .ds-meta-item:hover,
+.home-radar-section .post-card-overlay .ds-meta-item:hover,
+.radar-dark .post-card-overlay .ds-meta-item:hover,
+.post-card-radar .post-card-overlay .ds-meta-item:hover {
+    background: #222222;
+    color: #ffffff;
+    border-color: #222222;
+}
+
+/* Belt-and-suspenders: ensure only the FIRST tag pill in the bottom overlay
+   ever shows. The .ds-meta-tag-wrapper :not(:first-child) rule should cover
+   this but a multi-tag emit was floating the overlay up the image. */
+.post-card-overlay-bottom .ds-meta-item ~ .ds-meta-item {
+    display: none !important;
 }
