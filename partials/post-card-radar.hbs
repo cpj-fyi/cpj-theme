@@ -1,14 +1,33 @@
 <article class="post-card post-card-radar {{post_class}}">
-    <a href="{{url}}" class="post-card-image-link" aria-hidden="true" tabindex="-1">
-        <img
-            class="post-card-image"
-            src="{{#if feature_image}}{{feature_image}}{{else}}{{@custom.art_url}}/{{slug}}.svg{{/if}}"
-            alt=""
-            loading="lazy"
-            width="1200"
-            height="630"
-        >
-    </a>
+    <div class="post-card-image-wrap">
+        <a href="{{url}}" class="post-card-image-link" aria-hidden="true" tabindex="-1">
+            <img
+                class="post-card-image"
+                src="{{#if feature_image}}{{feature_image}}{{else}}{{@custom.art_url}}/{{slug}}.svg{{/if}}"
+                alt=""
+                loading="lazy"
+                width="1200"
+                height="630"
+            >
+        </a>
+        <div class="post-card-overlay post-card-overlay-top">
+            <time class="post-card-pill">{{date format="MM DD YY"}}</time>
+            {{#if reading_time}}<span class="post-card-pill">{{reading_time}}</span>{{/if}}
+            <span class="post-card-pill post-card-pill-icon" aria-label="{{comment_count}} comments">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span class="post-card-comments-text">{{comment_count}}</span>
+            </span>
+        </div>
+        <div class="post-card-overlay post-card-overlay-bottom">
+            {{#foreach tags}}
+                {{#match slug "essays"}}{{else match slug "radar"}}{{else match slug "five-things"}}{{else match slug "hidden-patterns"}}
+                {{else match slug @../skip_tag}}
+                {{else}}
+                    <span class="post-card-overlay-tag post-card-pill">{{name}}</span>
+                {{/match}}
+            {{/foreach}}
+        </div>
+    </div>
     <h3 class="post-card-title">
         <a href="{{url}}">{{title}}</a>
     </h3>
@@ -16,12 +35,4 @@
     {{#if excerpt}}
         <p class="post-card-excerpt">{{excerpt}}</p>
     {{/if}}
-
-    <div class="ds-meta">
-        <span class="ds-meta-item">{{date format="MMM D, YYYY"}}</span>
-        {{#if reading_time}}
-            <span class="ds-meta-item">{{reading_time}}</span>
-        {{/if}}
-        <span class="ds-meta-item ds-meta-comments"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> <span class="ds-meta-comments-text">{{comment_count}}</span></span>
-    </div>
 </article>

@@ -21,7 +21,7 @@
             {{#if posts}}
                 <div class="essays-grid">
                     {{#foreach posts}}
-                        {{> "post-card"}}
+                        {{> "post-card" skip_tag=tag.slug}}
                     {{/foreach}}
                 </div>
             {{else}}

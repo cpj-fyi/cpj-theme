@@ -4605,3 +4605,64 @@ body.tag-radar .post-card-image-link {
     letter-spacing: 0.06em;
     color: #888;
 }
+
+/* === post-card overlays (date / reading / comments / tag on image) === */
+.post-card-image-wrap {
+    position: relative;
+}
+.post-card-overlay {
+    position: absolute;
+    left: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    z-index: 2;
+    pointer-events: none;
+}
+.post-card-overlay-top {
+    top: 12px;
+}
+.post-card-overlay-bottom {
+    bottom: 12px;
+}
+.post-card-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #ffffff;
+    border: 1px solid #1A1A1A;
+    color: #1A1A1A;
+    font-family: "SF Mono", ui-monospace, Menlo, Monaco, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 4px 8px;
+    border-radius: 3px;
+    line-height: 1;
+    pointer-events: auto;
+}
+.post-card-pill-icon svg {
+    width: 12px;
+    height: 12px;
+}
+.post-card-overlay-tag {
+    /* same .post-card-pill styling — class chained for future divergence */
+}
+/* Hide all but the first emitted tag pill (the foreach loop emits 0..N spans; we want at most one) */
+.post-card-overlay-bottom .post-card-overlay-tag ~ .post-card-overlay-tag {
+    display: none;
+}
+
+/* Radar cards: invert the pills against the dark image bg */
+.tag-radar .post-card-pill,
+body.tag-radar .post-card-pill {
+    background: #1A1A1A;
+    border-color: #00FF88;
+    color: #FFFFFF;
+}
+.tag-radar .post-card-overlay-tag,
+body.tag-radar .post-card-overlay-tag {
+    color: #00FF88;
+    border-color: #00FF88;
+}
