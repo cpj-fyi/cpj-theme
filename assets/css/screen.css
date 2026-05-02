@@ -4662,6 +4662,23 @@ body.tag-radar .post-card-overlay .ds-meta-item:hover,
     /* keeps the .home-book grid slot, but overrides book-specific spacing */
     padding: var(--space-2) 0;
 }
+.essay-feature-image-link {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1200 / 630;
+    overflow: hidden;
+    background: #F6EFDD;
+    margin-bottom: var(--space-4);
+}
+.essay-feature-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.essay-feature-preview p {
+    margin: 0 0 var(--space-3);
+}
 .essay-feature-label {
     font-family: var(--font-sans);
     font-size: var(--text-xs);
