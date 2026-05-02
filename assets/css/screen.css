@@ -4560,10 +4560,10 @@ body.tag-five-things:not(.post-template) .footer-bottom a:hover {
 .post-card:hover .post-card-image-link {
     transform: scale(1.02);
 }
-.tag-radar .post-card-image-link,
-body.tag-radar .post-card-image-link {
-    background: #1A1A1A;
-}
+/* Note: removed .tag-radar dark link bg — caused a 1-2px dark frame around
+   cream SVGs due to aspect-ratio fractional rounding. SVGs always paint their
+   own bg at the canvas edge, so the link's bg only matters during lazy-load,
+   which is brief enough to accept a cream flash for radar posts. */
 
 /* === post-art (monafor/art generative strip on posts without feature_image) === */
 .post-art-wrap {
