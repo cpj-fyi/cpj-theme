@@ -4618,13 +4618,11 @@ body.tag-five-things:not(.post-template) .footer-bottom a:hover {
 .post-card-overlay-top {
     top: 12px;
 }
+/* (post-card-overlay-bottom is no longer used — the tag pill moved into the
+   top overlay alongside date and comments. Rule kept as no-op in case partials
+   still reference the class.) */
 .post-card-overlay-bottom {
-    bottom: 12px;
-    /* Hard cap: even if a stale browser misses the :not(:first-child) hide rule
-       and a second tag pill renders, the overlay can never grow past one row
-       and push the first pill up the image. */
-    max-height: 32px;
-    overflow: hidden;
+    display: none;
 }
 /* Pills sit on the image — give them a solid bg so border/text remain readable */
 /* Overlay pills always use the default ds-meta-item appearance regardless of
@@ -4651,9 +4649,9 @@ body.tag-radar .post-card-overlay .ds-meta-item:hover,
     border-color: #222222;
 }
 
-/* Belt-and-suspenders: ensure only the FIRST tag pill in the bottom overlay
-   ever shows. The .ds-meta-tag-wrapper :not(:first-child) rule should cover
-   this but a multi-tag emit was floating the overlay up the image. */
-.post-card-overlay-bottom .ds-meta-item ~ .ds-meta-item {
+/* Tag pills in the top overlay: only the first one ever shows. We use a
+   dedicated class on the tag <span> so this rule doesn't accidentally hide
+   the comments span (which is also a ds-meta-item but comes earlier). */
+.post-card-overlay-top .post-card-tag-pill ~ .post-card-tag-pill {
     display: none !important;
 }
