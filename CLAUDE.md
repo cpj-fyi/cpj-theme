@@ -175,6 +175,14 @@ Note: Can't use catch-all redirects because pages also use root-level URLs.
 - Body gets `padding-top: 69px` at ≤768px to account for fixed header
 - Chapter pages get additional `padding-top: 72px` for fixed chapter nav
 
+## Reading time exclusions
+
+Reading time on post pages is **recomputed client-side** to exclude embedded tiles, charts, and other non-text content. The post-card overlays (tag pages, feeds) do not show reading time at all.
+
+To exclude an element from the reading-time count, wrap it in `<div class="cpj-no-count">...</div>`. The cpj-data-tiles skill should always emit tiles inside this wrapper. For older essays with heavy embeds (e.g., the "Reimagining the Marketing Organization in the Age of Generative AI" piece), retrofit by editing the HTML card and adding the wrapper.
+
+Implementation: `initReadingTimeRecalc()` in `assets/js/main.js`. Targets any element with `data-reading-time` attribute. The post template's reading-time span has this attribute; the JS finds the post body, clones it, removes `.cpj-no-count` descendants, recounts words at 275 wpm, and replaces the span text.
+
 ## Known Issues / TODO
 
 None currently.

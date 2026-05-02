@@ -24,6 +24,7 @@
         initEverything();
         initSearch();
         initPostArt();
+        initReadingTimeRecalc();
     });
 
     /**
@@ -943,6 +944,29 @@
         parts.push(data.panels.length + ' panels');
         parts.push(strategies.join(' · '));
         return parts.join(' · ');
+    }
+
+    /**
+     * Reading Time Recalculation
+     * Recomputes reading time client-side, excluding .cpj-no-count elements
+     * (embedded tiles, charts, and other non-prose content).
+     * Targets the [data-reading-time] span in the post meta header.
+     */
+    function initReadingTimeRecalc() {
+        var target = document.querySelector('[data-reading-time]');
+        if (!target) return;
+
+        var body = document.querySelector('.post-body, .gh-content, article .post-content');
+        if (!body) return;
+
+        var clone = body.cloneNode(true);
+        clone.querySelectorAll('.cpj-no-count').forEach(function (el) { el.remove(); });
+
+        var text = (clone.textContent || '').trim();
+        if (!text) return;
+        var words = text.split(/\s+/).filter(Boolean).length;
+        var minutes = Math.max(1, Math.round(words / 275));
+        target.textContent = minutes + ' min read';
     }
 
 })();
