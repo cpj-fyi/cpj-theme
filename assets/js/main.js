@@ -543,7 +543,7 @@
             link.textContent = num;
             link.setAttribute('aria-label', 'Footnote ' + num);
             link.addEventListener('click', function(e) {
-                if (isDesktop()) return;
+                if (isDesktop()) return; // desktop: regular anchor (sidenote already visible)
                 e.preventDefault();
                 sidenotes.forEach(function(n) {
                     if (n !== note) n.classList.remove('is-open');
