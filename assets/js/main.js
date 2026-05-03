@@ -327,10 +327,23 @@
      * docs/plans/2026-05-03-math-and-footnotes-design.md for full spec.
      */
     function transformFootnotes(postBody) {
-        // Pass 1: collect definitions  (Task 3)
+        var defs = new Map();
+        var children = Array.prototype.slice.call(postBody.querySelectorAll('p'));
+        var defRe = /^\[\^([^\]]+)\]:\s*/;
+        children.forEach(function(p) {
+            var firstText = p.firstChild;
+            if (!firstText || firstText.nodeType !== Node.TEXT_NODE) return;
+            var m = firstText.nodeValue.match(defRe);
+            if (!m) return;
+            var id = m[1];
+            // Strip the prefix from the first text node.
+            firstText.nodeValue = firstText.nodeValue.slice(m[0].length);
+            // Capture the rest of the paragraph's innerHTML as the definition.
+            defs.set(id, p.innerHTML.trim());
+            p.remove();
+        });
         // Pass 2: insert markers       (Task 4)
         // Pass 3: emit asides          (Task 5)
-        return; // stub
     }
 
     /**
