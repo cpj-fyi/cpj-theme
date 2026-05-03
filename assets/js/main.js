@@ -392,7 +392,47 @@
                 working.nodeValue = beforeText;
             }
         });
-        // Pass 3: emit asides          (Task 5)
+        // Pass 3: for each marker, emit an <aside class="sidenote" data-fnref>
+        // after the marker's nearest block ancestor.
+        var BLOCK = /^(P|LI|BLOCKQUOTE|H[1-6]|FIGURE|FIGCAPTION|DL|DD)$/;
+        var emitted = new Set();
+        var markerEls = postBody.querySelectorAll('[data-fnmarker]');
+        markerEls.forEach(function(span) {
+            var id = span.getAttribute('data-fnmarker');
+            if (emitted.has(id)) {
+                // Duplicate marker — leave as literal text and warn.
+                if (typeof console !== 'undefined') {
+                    console.warn('[footnotes] marker [^' + id + '] referenced more than once');
+                }
+                span.replaceWith(document.createTextNode('[^' + id + ']'));
+                return;
+            }
+            if (!defs.has(id)) {
+                if (typeof console !== 'undefined') {
+                    console.warn('[footnotes] orphan marker [^' + id + ']');
+                }
+                span.replaceWith(document.createTextNode('[^' + id + ']'));
+                return;
+            }
+            emitted.add(id);
+            var aside = document.createElement('aside');
+            aside.className = 'sidenote';
+            aside.setAttribute('data-fnref', id);
+            aside.innerHTML = defs.get(id);
+            // Find the block ancestor.
+            var anchor = span;
+            while (anchor && anchor.parentNode !== postBody) {
+                if (BLOCK.test(anchor.nodeName)) break;
+                anchor = anchor.parentNode;
+            }
+            if (!anchor || anchor === postBody) anchor = span;
+            // For list items, prefer inserting after the parent <ul>/<ol>.
+            if (anchor.nodeName === 'LI' && anchor.parentNode &&
+                /^(UL|OL)$/.test(anchor.parentNode.nodeName)) {
+                anchor = anchor.parentNode;
+            }
+            anchor.parentNode.insertBefore(aside, anchor.nextSibling);
+        });
     }
 
     /**
