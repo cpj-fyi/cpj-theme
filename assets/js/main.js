@@ -342,7 +342,56 @@
             defs.set(id, p.innerHTML.trim());
             p.remove();
         });
-        // Pass 2: insert markers       (Task 4)
+        // Pass 2: walk text nodes (skipping <pre>/<code>/<script>/<style>),
+        // replace [^id] with <span data-fnmarker="id">.
+        var SKIP = { PRE: 1, CODE: 1, SCRIPT: 1, STYLE: 1 };
+        var walker = document.createTreeWalker(
+            postBody,
+            NodeFilter.SHOW_TEXT,
+            {
+                acceptNode: function(node) {
+                    var p = node.parentNode;
+                    while (p && p !== postBody) {
+                        if (SKIP[p.nodeName]) return NodeFilter.FILTER_REJECT;
+                        p = p.parentNode;
+                    }
+                    return NodeFilter.FILTER_ACCEPT;
+                },
+            },
+            false
+        );
+        var textNodes = [];
+        var cursor;
+        while ((cursor = walker.nextNode())) textNodes.push(cursor);
+
+        var markerRe = /\[\^([^\]]+)\]/g;
+        textNodes.forEach(function(textNode) {
+            var text = textNode.nodeValue;
+            if (text.indexOf('[^') === -1) return;
+            var matches = [];
+            var m;
+            markerRe.lastIndex = 0;
+            while ((m = markerRe.exec(text))) {
+                if (defs.has(m[1])) matches.push({ index: m.index, id: m[1], len: m[0].length });
+            }
+            if (!matches.length) return;
+            // Walk matches in reverse so earlier offsets stay valid as we mutate.
+            var parent = textNode.parentNode;
+            var working = textNode;
+            for (var i = matches.length - 1; i >= 0; i--) {
+                var match = matches[i];
+                var afterText = working.nodeValue.slice(match.index + match.len);
+                var beforeText = working.nodeValue.slice(0, match.index);
+                var span = document.createElement('span');
+                span.setAttribute('data-fnmarker', match.id);
+                if (afterText) {
+                    var afterNode = document.createTextNode(afterText);
+                    parent.insertBefore(afterNode, working.nextSibling);
+                }
+                parent.insertBefore(span, working.nextSibling);
+                working.nodeValue = beforeText;
+            }
+        });
         // Pass 3: emit asides          (Task 5)
     }
 
