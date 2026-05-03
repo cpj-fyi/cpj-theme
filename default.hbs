@@ -10,14 +10,23 @@
     <link rel="stylesheet" href="{{asset "css/buy-page.css"}}">
     <link rel="stylesheet" href="{{asset "css/contact-form.css"}}">
 
-    {{ghost_head}}
-    {{!-- monafor/art OG image fallback for posts without a feature_image --}}
-    {{#is "post"}}
+    {{!-- monafor/art OG image fallback for posts without a feature_image.
+         Placed BEFORE {{ghost_head}} so it appears first in source order — most
+         crawlers (Facebook, Twitter, LinkedIn) honor the first og:image they
+         find, beating Ghost's site-default cover. {{#post}} establishes the
+         post context so {{slug}}/{{feature_image}} resolve correctly here in
+         the head. PNG (not SVG) — most platforms reject SVG OG images. --}}
+    {{#post}}
         {{#unless feature_image}}
-            <meta property="og:image" content="{{@custom.art_url}}/{{slug}}.svg">
-            <meta name="twitter:image" content="{{@custom.art_url}}/{{slug}}.svg">
+            <meta property="og:image" content="{{@custom.art_url}}/{{slug}}.png">
+            <meta property="og:image:width" content="1200">
+            <meta property="og:image:height" content="630">
+            <meta name="twitter:image" content="{{@custom.art_url}}/{{slug}}.png">
+            <meta name="twitter:card" content="summary_large_image">
         {{/unless}}
-    {{/is}}
+    {{/post}}
+
+    {{ghost_head}}
 </head>
 <body class="{{body_class}}">
     <div class="site-wrapper">
