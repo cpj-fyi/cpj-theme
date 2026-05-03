@@ -4750,3 +4750,28 @@ body.tag-radar .post-card-overlay .ds-meta-item:hover,
 .essay-feature-link {
     display: inline-block;
 }
+
+/* ==========================================================================
+   KaTeX math — see docs/plans/2026-05-03-math-and-footnotes-design.md
+   KaTeX itself ships heavy default styles; we only override scoped to the
+   post-body to keep margins consistent with surrounding prose.
+   ========================================================================== */
+
+.post-body .katex-display {
+    margin: 1.5em 0;
+    text-align: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.post-body .katex-display > .katex {
+    /* Prevents single-line equations from being clipped on narrow viewports */
+    display: inline-block;
+    text-align: initial;
+}
+
+.post-body .katex {
+    /* KaTeX defaults to 1.21em which often renders too tall in serif body
+       text; nudge inline math down to flow with the paragraph baseline. */
+    font-size: 1em;
+}
