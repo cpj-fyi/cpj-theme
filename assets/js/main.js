@@ -20,12 +20,25 @@
         initChapterTitleStyling();
         initCommentCounts();
         initRetailerTracking();
-        initSidenotes();
+        initPostExtras();   // footnotes + sidenotes + math, in order
         initEverything();
         initSearch();
         initPostArt();
-        initReadingTimeRecalc();
     });
+
+    function initPostExtras() {
+        var postBody = document.querySelector('.post-body');
+        if (!postBody) return;
+
+        transformFootnotes(postBody);
+        initSidenotes();
+        loadAndRenderMath(postBody).then(function(rendered) {
+            if (rendered && typeof positionSidenotes === 'function') {
+                positionSidenotes();
+            }
+            initReadingTimeRecalc();
+        });
+    }
 
     /**
      * Search — Cmd+K modal (issue #3)
@@ -305,6 +318,63 @@
                 sep.textContent = '|';
                 nav.appendChild(sep);
             }
+        });
+    }
+
+    /**
+     * Markdown footnote transform — converts `[^id]` markers and `[^id]: ...`
+     * definitions into the existing <aside class="sidenote"> DOM. See
+     * docs/plans/2026-05-03-math-and-footnotes-design.md for full spec.
+     */
+    function transformFootnotes(postBody) {
+        // Pass 1: collect definitions  (Task 3)
+        // Pass 2: insert markers       (Task 4)
+        // Pass 3: emit asides          (Task 5)
+        return; // stub
+    }
+
+    /**
+     * Math rendering gate + dynamic KaTeX loader. Only loads KaTeX if
+     * the post-body text contains math delimiters.
+     */
+    function postNeedsMath(postBody) {
+        return /\$|\\\(|\\\[/.test(postBody.textContent);
+    }
+
+    function loadScript(src) {
+        return new Promise(function(resolve, reject) {
+            var s = document.createElement('script');
+            s.src = src;
+            s.onload = resolve;
+            s.onerror = reject;
+            document.head.appendChild(s);
+        });
+    }
+
+    function loadKatex() {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/assets/lib/katex/katex.min.css';
+        document.head.appendChild(link);
+        return loadScript('/assets/lib/katex/katex.min.js')
+            .then(function() { return loadScript('/assets/lib/katex/auto-render.min.js'); });
+    }
+
+    function loadAndRenderMath(postBody) {
+        if (!postNeedsMath(postBody)) return Promise.resolve(false);
+        return loadKatex().then(function() {
+            window.renderMathInElement(postBody, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '\\[', right: '\\]', display: true },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '$',  right: '$',  display: false },
+                ],
+                throwOnError: false,
+                strict: false,
+                ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            });
+            return true;
         });
     }
 
