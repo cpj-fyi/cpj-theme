@@ -375,6 +375,11 @@
                 ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
             });
             return true;
+        }).catch(function(err) {
+            // Containing failures here keeps initReadingTimeRecalc running
+            // on the caller's chain even if KaTeX 404s or throws.
+            if (typeof console !== 'undefined') console.warn('[math] load/render failed:', err);
+            return false;
         });
     }
 
