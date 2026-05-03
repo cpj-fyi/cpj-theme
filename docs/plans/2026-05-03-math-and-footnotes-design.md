@@ -14,7 +14,9 @@ Both must coexist: math expressions inside footnotes render correctly.
 
 ## Approach
 
-**Self-hosted KaTeX, conditional client-side load.** All work happens in the theme repo — no Ghost server changes, no Cloudflare Worker involvement. A single `textContent` scan of `.post-body` decides whether to load KaTeX at all, so math-free posts pay zero bytes. Footnotes are transformed entirely with DOM walks and regex against Ghost's already-rendered HTML.
+**Self-hosted KaTeX, conditional client-side load.** All work happens in the theme repo — no Ghost server changes, no Cloudflare Worker involvement. A single `textContent` scan of `.post-body` decides whether to load KaTeX at all, so math-free posts pay zero bytes.
+
+**Footnotes piggyback on Ghost's existing parser.** Ghost's markdown card already includes the `markdown-it-footnote` plugin: `[^1]` and `[^1]: …` are converted to `<sup class="footnote-ref">` markers and a `<section class="footnotes">` definition list before the DOM hits the browser. We consume that output and translate it into the existing sidenote DOM rather than re-parsing the markdown source ourselves.
 
 The existing sidenote system (`assets/js/main.js:initSidenotes()` + `screen.css` `.sidenote*` rules) is extended — not replaced — so existing posts using HTML-card asides keep working unchanged.
 
@@ -42,29 +44,40 @@ KaTeX vendoring weight: ~280 KB total on disk. Browsers fetch only the woff2 fon
 
 ### `transformFootnotes(postBody)` — new in `main.js`
 
-Three-pass DOM transform.
+Single-pass DOM transform that consumes Ghost's already-parsed footnote output.
 
-**Pass 1: collect definitions.**
-- Walk `.post-body`'s direct children.
-- For each `<p>` whose first text node matches `/^\[\^([^\]]+)\]:\s*/`:
-  - Capture the id.
-  - Strip the `[^id]:` prefix.
-  - Store `{id → innerHTML rest of paragraph}` in a Map.
-  - Remove the `<p>` from the DOM.
-- Multi-line definitions: markdown-it collapses them into one `<p>` (with `<br>` between lines or whitespace). Capture the full `innerHTML`.
+**Ghost's input shape** (after `markdown-it-footnote` runs server-side):
 
-**Pass 2: insert marker placeholders.**
-- TreeWalker over `.post-body` text nodes, *skipping subtrees rooted at* `<pre>`, `<code>`, `<script>`, `<style>`.
-- For each text node, scan for `\[\^([^\]]+)\]` matches whose id is in the Map.
-- Split the text node and insert `<span data-fnmarker="ID"></span>` at each match position. The span starts empty — `initSidenotes()` will replace it with a numbered `<sup>`.
+```html
+…The team needs structural integrity.<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>…
 
-**Pass 3: emit asides.**
-- For each entry in the Map (in document order — defined by first marker position), create:
-  ```html
-  <aside class="sidenote" data-fnref="ID">…definition innerHTML…</aside>
-  ```
-- Insert it after the marker's nearest block-level ancestor: `<p>`, `<li>` (in which case insert after the parent `<ul>`/`<ol>`), `<blockquote>`, `<h1>`–`<h6>`.
-- If a marker can't find a sensible block ancestor, insert immediately after the marker's parent.
+<section class="footnotes">
+  <ol class="footnotes-list">
+    <li id="fn1" class="footnote-item">
+      <p>This is the first footnote. <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+    </li>
+    …
+  </ol>
+</section>
+```
+
+**Algorithm:**
+
+1. Look up `<section class="footnotes">`. If none, return — no footnotes on this post.
+2. Walk every `<li class="footnote-item">` inside it. For each:
+   - Strip the `fn` prefix from `id` to get the numeric handle.
+   - Clone the `<li>`, remove every `<a class="footnote-backref">` (and trim trailing whitespace), capture the cleaned `innerHTML` as the definition.
+   - Store `{ numeric id → definition innerHTML }`.
+3. Walk every `<sup class="footnote-ref">` in document order. For each:
+   - Read the `<a>` inside; its `href` is `#fnN` — strip `#fn` to get the id.
+   - Replace the `<sup>` with `<span data-fnmarker="N"></span>`. The span starts empty — `initSidenotes()` will replace it with the numbered `<sup class="sidenote-ref">`.
+   - On the *first* occurrence of each id, also create `<aside class="sidenote" data-fnref="N">` containing the definition `innerHTML`, and insert it after the marker's nearest block-level ancestor: `<p>`, `<li>` (in which case insert after the parent `<ul>`/`<ol>`), `<blockquote>`, `<h1>`–`<h6>`, `<figure>`, `<figcaption>`, `<dl>`, `<dd>`. Subsequent occurrences of the same id get only a placeholder span — no second aside.
+   - If a marker can't find a sensible block ancestor, insert the aside immediately after the placeholder.
+4. Remove `<section class="footnotes">` from the DOM.
+
+**Why simpler than first-pass design:** Originally the design assumed Ghost's markdown card did *not* enable the footnote plugin, requiring a three-pass walker that re-parsed `[^id]` syntax from text nodes. Discovery during deployment showed Ghost ships with the plugin enabled by default, so the parsing problem is already solved upstream — we only need a DOM-shape translation.
+
+**Multi-reference footnotes** (same `[^1]` cited twice) get one aside positioned at the first marker; both markers receive numbered `<sup>`s pointing at the same `#sn-N` anchor.
 
 ### Extended `initSidenotes()` — modified in `main.js`
 
@@ -158,11 +171,11 @@ All four enabled:
 
 | Case | Handling |
 |------|----------|
-| `[^id]` in code block | Skipped (TreeWalker excludes `<pre>`/`<code>` subtrees) |
+| `[^id]` in code block | Ghost's markdown-it-footnote already skips fenced code; no special handling needed in our transform |
 | `$x = 5$` in code block | Skipped (KaTeX `ignoredTags`) |
-| Orphan marker `[^99]` (no definition) | Left as literal text |
-| Definition with no markers | Definition `<p>` removed, no aside emitted, console warning |
-| Marker referenced twice | First aside attaches; second marker rendered as literal text + console warning |
+| Orphan marker `[^99]` (no definition) | Cannot occur — markdown-it-footnote drops orphan markers at parse time |
+| Definition with no markers | Cannot occur — markdown-it-footnote drops orphan definitions at parse time |
+| Marker referenced twice | One aside emitted at the first marker; both markers get numbered `<sup>`s linking to the same `#sn-N` anchor |
 | Multi-line definition | Captured as single innerHTML |
 | Definition with formatting (`<em>`, links, math) | Preserved; KaTeX runs over asides too |
 | Markdown card with `[^1]:` def, marker in HTML card | Works — operate on whole `.post-body` |
