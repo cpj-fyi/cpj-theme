@@ -322,117 +322,88 @@
     }
 
     /**
-     * Markdown footnote transform — converts `[^id]` markers and `[^id]: ...`
-     * definitions into the existing <aside class="sidenote"> DOM. See
-     * docs/plans/2026-05-03-math-and-footnotes-design.md for full spec.
+     * Markdown footnote transform — converts Ghost's pandoc-style footnote
+     * output into the existing <aside class="sidenote"> DOM.
+     *
+     * Ghost's markdown card uses markdown-it-footnote, so [^id] / [^id]: ...
+     * is parsed BEFORE we see the DOM. We consume that output:
+     *
+     *   marker:  <sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>
+     *   defs:    <section class="footnotes"><ol class="footnotes-list">
+     *              <li id="fn1" class="footnote-item">
+     *                <p>…content… <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+     *              </li> …
+     *            </ol></section>
+     *
+     * Each <li.footnote-item> becomes <aside class="sidenote" data-fnref="N">.
+     * Each <sup.footnote-ref> is replaced with a <span data-fnmarker="N">
+     * placeholder; initSidenotes (further down) swaps that for a numbered
+     * <sup class="sidenote-ref">. The footnote section is removed at the end.
      */
     function transformFootnotes(postBody) {
-        var defs = new Map();
-        var children = Array.prototype.slice.call(postBody.querySelectorAll('p'));
-        var defRe = /^\[\^([^\]]+)\]:\s*/;
-        children.forEach(function(p) {
-            var firstText = p.firstChild;
-            if (!firstText || firstText.nodeType !== Node.TEXT_NODE) return;
-            var m = firstText.nodeValue.match(defRe);
-            if (!m) return;
-            var id = m[1];
-            // Strip the prefix from the first text node.
-            firstText.nodeValue = firstText.nodeValue.slice(m[0].length);
-            // Capture the rest of the paragraph's innerHTML as the definition.
-            defs.set(id, p.innerHTML.trim());
-            p.remove();
-        });
-        // Pass 2: walk text nodes (skipping <pre>/<code>/<script>/<style>),
-        // replace [^id] with <span data-fnmarker="id">.
-        var SKIP = { PRE: 1, CODE: 1, SCRIPT: 1, STYLE: 1 };
-        var walker = document.createTreeWalker(
-            postBody,
-            NodeFilter.SHOW_TEXT,
-            {
-                acceptNode: function(node) {
-                    var p = node.parentNode;
-                    while (p && p !== postBody) {
-                        if (SKIP[p.nodeName]) return NodeFilter.FILTER_REJECT;
-                        p = p.parentNode;
-                    }
-                    return NodeFilter.FILTER_ACCEPT;
-                },
-            },
-            false
-        );
-        var textNodes = [];
-        var cursor;
-        while ((cursor = walker.nextNode())) textNodes.push(cursor);
+        var section = postBody.querySelector('section.footnotes');
+        if (!section) return;
 
-        var markerRe = /\[\^([^\]]+)\]/g;
-        textNodes.forEach(function(textNode) {
-            var text = textNode.nodeValue;
-            if (text.indexOf('[^') === -1) return;
-            var matches = [];
-            var m;
-            markerRe.lastIndex = 0;
-            while ((m = markerRe.exec(text))) {
-                if (defs.has(m[1])) matches.push({ index: m.index, id: m[1], len: m[0].length });
-            }
-            if (!matches.length) return;
-            // Walk matches in reverse so earlier offsets stay valid as we mutate.
-            var parent = textNode.parentNode;
-            var working = textNode;
-            for (var i = matches.length - 1; i >= 0; i--) {
-                var match = matches[i];
-                var afterText = working.nodeValue.slice(match.index + match.len);
-                var beforeText = working.nodeValue.slice(0, match.index);
-                var span = document.createElement('span');
-                span.setAttribute('data-fnmarker', match.id);
-                if (afterText) {
-                    var afterNode = document.createTextNode(afterText);
-                    parent.insertBefore(afterNode, working.nextSibling);
+        // Collect definitions keyed by numeric id (Ghost emits id="fn1", "fn2", …).
+        var defs = new Map();
+        section.querySelectorAll('li.footnote-item').forEach(function(li) {
+            var id = (li.id || '').replace(/^fn/, '');
+            if (!id) return;
+            // Clone so stripping the backref doesn't mutate the source list.
+            var clone = li.cloneNode(true);
+            clone.querySelectorAll('a.footnote-backref').forEach(function(a) {
+                // Trim trailing whitespace before the backref so the aside text
+                // doesn't end with a stray space.
+                var prev = a.previousSibling;
+                if (prev && prev.nodeType === Node.TEXT_NODE) {
+                    prev.nodeValue = prev.nodeValue.replace(/\s+$/, '');
                 }
-                parent.insertBefore(span, working.nextSibling);
-                working.nodeValue = beforeText;
-            }
+                a.remove();
+            });
+            defs.set(id, clone.innerHTML.trim());
         });
-        // Pass 3: for each marker, emit an <aside class="sidenote" data-fnref>
+
+        // Replace each marker <sup> with a placeholder span and emit an aside
         // after the marker's nearest block ancestor.
         var BLOCK = /^(P|LI|BLOCKQUOTE|H[1-6]|FIGURE|FIGCAPTION|DL|DD)$/;
         var emitted = new Set();
-        var markerEls = postBody.querySelectorAll('[data-fnmarker]');
-        markerEls.forEach(function(span) {
-            var id = span.getAttribute('data-fnmarker');
-            if (emitted.has(id)) {
-                // Duplicate marker — leave as literal text and warn.
-                if (typeof console !== 'undefined') {
-                    console.warn('[footnotes] marker [^' + id + '] referenced more than once');
-                }
-                span.replaceWith(document.createTextNode('[^' + id + ']'));
-                return;
-            }
-            if (!defs.has(id)) {
-                if (typeof console !== 'undefined') {
-                    console.warn('[footnotes] orphan marker [^' + id + ']');
-                }
-                span.replaceWith(document.createTextNode('[^' + id + ']'));
-                return;
-            }
+        postBody.querySelectorAll('sup.footnote-ref').forEach(function(sup) {
+            // Pull id from the href; markdown-it-footnote always emits #fnN.
+            var anchor = sup.querySelector('a[href^="#fn"]');
+            if (!anchor) return;
+            var id = anchor.getAttribute('href').replace(/^#fn/, '');
+            if (!defs.has(id)) return;
+
+            var placeholder = document.createElement('span');
+            placeholder.setAttribute('data-fnmarker', id);
+            sup.parentNode.replaceChild(placeholder, sup);
+
+            // Multi-reference footnote: only emit one aside (positioned at the
+            // first marker); subsequent markers still get a numbered <sup>.
+            if (emitted.has(id)) return;
             emitted.add(id);
+
             var aside = document.createElement('aside');
             aside.className = 'sidenote';
             aside.setAttribute('data-fnref', id);
             aside.innerHTML = defs.get(id);
-            // Find the block ancestor.
-            var anchor = span;
-            while (anchor && anchor.parentNode !== postBody) {
-                if (BLOCK.test(anchor.nodeName)) break;
-                anchor = anchor.parentNode;
+
+            // Walk up to nearest block ancestor; for LI inside UL/OL, jump to the list.
+            var blockAncestor = placeholder;
+            while (blockAncestor && blockAncestor.parentNode !== postBody) {
+                if (BLOCK.test(blockAncestor.nodeName)) break;
+                blockAncestor = blockAncestor.parentNode;
             }
-            if (!anchor || anchor === postBody) anchor = span;
-            // For list items, prefer inserting after the parent <ul>/<ol>.
-            if (anchor.nodeName === 'LI' && anchor.parentNode &&
-                /^(UL|OL)$/.test(anchor.parentNode.nodeName)) {
-                anchor = anchor.parentNode;
+            if (!blockAncestor || blockAncestor === postBody) blockAncestor = placeholder;
+            if (blockAncestor.nodeName === 'LI' && blockAncestor.parentNode &&
+                /^(UL|OL)$/.test(blockAncestor.parentNode.nodeName)) {
+                blockAncestor = blockAncestor.parentNode;
             }
-            anchor.parentNode.insertBefore(aside, anchor.nextSibling);
+            blockAncestor.parentNode.insertBefore(aside, blockAncestor.nextSibling);
         });
+
+        // Drop Ghost's now-redundant footnote section.
+        section.remove();
     }
 
     /**
