@@ -533,10 +533,7 @@
             });
             note.appendChild(closeBtn);
 
-            // Inline marker in the preceding text element.
-            var target = findRefTarget(note);
-            if (!target) return;
-
+            // Build the inline ref marker.
             var ref = document.createElement('sup');
             ref.className = 'sidenote-ref';
             ref.id = 'snref-' + num;
@@ -546,7 +543,7 @@
             link.textContent = num;
             link.setAttribute('aria-label', 'Footnote ' + num);
             link.addEventListener('click', function(e) {
-                if (isDesktop()) return; // desktop: regular anchor (sidenote already visible)
+                if (isDesktop()) return;
                 e.preventDefault();
                 sidenotes.forEach(function(n) {
                     if (n !== note) n.classList.remove('is-open');
@@ -557,7 +554,26 @@
                 }
             });
             ref.appendChild(link);
-            target.appendChild(ref);
+
+            // Markdown-footnote asides have data-fnref pointing to a
+            // pre-positioned <span data-fnmarker> that we replace with the ref.
+            var fnref = note.getAttribute('data-fnref');
+            if (fnref) {
+                var marker = body.querySelector('span[data-fnmarker="' + CSS.escape(fnref) + '"]');
+                if (marker && marker.parentNode) {
+                    marker.parentNode.replaceChild(ref, marker);
+                } else {
+                    // Marker missing (shouldn't happen if Pass 2/3 ran cleanly) —
+                    // fall back to preceding-element placement.
+                    var fallback = findRefTarget(note);
+                    if (fallback) fallback.appendChild(ref);
+                }
+            } else {
+                // HTML-card aside: existing behavior — append at end of preceding text.
+                var target = findRefTarget(note);
+                if (!target) return;
+                target.appendChild(ref);
+            }
         });
 
         // Dismiss popover on tap outside or Escape (mobile only).
