@@ -399,7 +399,17 @@
                 /^(UL|OL)$/.test(blockAncestor.parentNode.nodeName)) {
                 blockAncestor = blockAncestor.parentNode;
             }
-            blockAncestor.parentNode.insertBefore(aside, blockAncestor.nextSibling);
+            // When multiple markers share a block ancestor, walk past any
+            // sidenotes already emitted for it so document order matches
+            // marker order. (Inserting at nextSibling alone reverses pairs.)
+            var insertionPoint = blockAncestor.nextSibling;
+            while (insertionPoint &&
+                   insertionPoint.nodeType === Node.ELEMENT_NODE &&
+                   insertionPoint.nodeName === 'ASIDE' &&
+                   insertionPoint.classList.contains('sidenote')) {
+                insertionPoint = insertionPoint.nextSibling;
+            }
+            blockAncestor.parentNode.insertBefore(aside, insertionPoint);
         });
 
         // Drop Ghost's now-redundant footnote section.
