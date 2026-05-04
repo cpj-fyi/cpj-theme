@@ -412,7 +412,12 @@
             blockAncestor.parentNode.insertBefore(aside, insertionPoint);
         });
 
-        // Drop Ghost's now-redundant footnote section.
+        // Drop Ghost's now-redundant footnote section and the <hr> separator
+        // markdown-it-footnote emits immediately before it.
+        var sep = section.previousElementSibling;
+        if (sep && sep.nodeName === 'HR' && sep.classList.contains('footnotes-sep')) {
+            sep.remove();
+        }
         section.remove();
     }
 
