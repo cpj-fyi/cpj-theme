@@ -341,84 +341,108 @@
      * <sup class="sidenote-ref">. The footnote section is removed at the end.
      */
     function transformFootnotes(postBody) {
-        var section = postBody.querySelector('section.footnotes');
-        if (!section) return;
+        var sections = postBody.querySelectorAll('section.footnotes');
+        if (!sections.length) return;
 
-        // Collect definitions keyed by numeric id (Ghost emits id="fn1", "fn2", …).
-        var defs = new Map();
-        section.querySelectorAll('li.footnote-item').forEach(function(li) {
-            var id = (li.id || '').replace(/^fn/, '');
-            if (!id) return;
-            // Clone so stripping the backref doesn't mutate the source list.
-            var clone = li.cloneNode(true);
-            clone.querySelectorAll('a.footnote-backref').forEach(function(a) {
-                // Trim trailing whitespace before the backref so the aside text
-                // doesn't end with a stray space.
-                var prev = a.previousSibling;
-                if (prev && prev.nodeType === Node.TEXT_NODE) {
-                    prev.nodeValue = prev.nodeValue.replace(/\s+$/, '');
-                }
-                a.remove();
-            });
-            defs.set(id, clone.innerHTML.trim());
-        });
-
-        // Replace each marker <sup> with a placeholder span and emit an aside
-        // after the marker's nearest block ancestor.
         var BLOCK = /^(P|LI|BLOCKQUOTE|H[1-6]|FIGURE|FIGCAPTION|DL|DD)$/;
-        var emitted = new Set();
-        postBody.querySelectorAll('sup.footnote-ref').forEach(function(sup) {
-            // Pull id from the href; markdown-it-footnote always emits #fnN.
-            var anchor = sup.querySelector('a[href^="#fn"]');
-            if (!anchor) return;
-            var id = anchor.getAttribute('href').replace(/^#fn/, '');
-            if (!defs.has(id)) return;
 
-            var placeholder = document.createElement('span');
-            placeholder.setAttribute('data-fnmarker', id);
-            sup.parentNode.replaceChild(placeholder, sup);
+        // Each markdown card emits its own <section.footnotes> with ids that
+        // restart at fn1, so we process sections in document order, scoping
+        // each section's refs to the range between the previous section
+        // (exclusive) and this section (exclusive). Marker ids are prefixed
+        // with the section index to keep cross-card fn1 collisions distinct.
+        sections.forEach(function(section, sectionIdx) {
+            var prevSection = sectionIdx > 0 ? sections[sectionIdx - 1] : null;
 
-            // Multi-reference footnote: only emit one aside (positioned at the
-            // first marker); subsequent markers still get a numbered <sup>.
-            if (emitted.has(id)) return;
-            emitted.add(id);
+            // Collect definitions keyed by numeric id (Ghost emits id="fn1", "fn2", …).
+            var defs = new Map();
+            section.querySelectorAll('li.footnote-item').forEach(function(li) {
+                var id = (li.id || '').replace(/^fn/, '');
+                if (!id) return;
+                // Clone so stripping the backref doesn't mutate the source list.
+                var clone = li.cloneNode(true);
+                clone.querySelectorAll('a.footnote-backref').forEach(function(a) {
+                    // Trim trailing whitespace before the backref so the aside text
+                    // doesn't end with a stray space.
+                    var prev = a.previousSibling;
+                    if (prev && prev.nodeType === Node.TEXT_NODE) {
+                        prev.nodeValue = prev.nodeValue.replace(/\s+$/, '');
+                    }
+                    a.remove();
+                });
+                defs.set(id, clone.innerHTML.trim());
+            });
 
-            var aside = document.createElement('aside');
-            aside.className = 'sidenote';
-            aside.setAttribute('data-fnref', id);
-            aside.innerHTML = defs.get(id);
+            // Replace each marker <sup> belonging to this section with a placeholder
+            // span and emit an aside after the marker's nearest block ancestor.
+            var emitted = new Set();
+            postBody.querySelectorAll('sup.footnote-ref').forEach(function(sup) {
+                // Restrict to refs in this section's document-range.
+                if (!(section.compareDocumentPosition(sup) & Node.DOCUMENT_POSITION_PRECEDING)) return;
+                if (prevSection && !(prevSection.compareDocumentPosition(sup) & Node.DOCUMENT_POSITION_FOLLOWING)) return;
 
-            // Walk up to nearest block ancestor; for LI inside UL/OL, jump to the list.
-            var blockAncestor = placeholder;
-            while (blockAncestor && blockAncestor.parentNode !== postBody) {
-                if (BLOCK.test(blockAncestor.nodeName)) break;
-                blockAncestor = blockAncestor.parentNode;
-            }
-            if (!blockAncestor || blockAncestor === postBody) blockAncestor = placeholder;
-            if (blockAncestor.nodeName === 'LI' && blockAncestor.parentNode &&
-                /^(UL|OL)$/.test(blockAncestor.parentNode.nodeName)) {
-                blockAncestor = blockAncestor.parentNode;
-            }
-            // When multiple markers share a block ancestor, walk past any
-            // sidenotes already emitted for it so document order matches
-            // marker order. (Inserting at nextSibling alone reverses pairs.)
-            var insertionPoint = blockAncestor.nextSibling;
-            while (insertionPoint &&
-                   insertionPoint.nodeType === Node.ELEMENT_NODE &&
-                   insertionPoint.nodeName === 'ASIDE' &&
-                   insertionPoint.classList.contains('sidenote')) {
-                insertionPoint = insertionPoint.nextSibling;
-            }
-            blockAncestor.parentNode.insertBefore(aside, insertionPoint);
+                // Pull id from the href; markdown-it-footnote always emits #fnN.
+                var anchor = sup.querySelector('a[href^="#fn"]');
+                if (!anchor) return;
+                var id = anchor.getAttribute('href').replace(/^#fn/, '');
+                if (!defs.has(id)) return;
+
+                // Namespace by section index to survive cross-card id collisions.
+                var markerId = sectionIdx + ':' + id;
+
+                var placeholder = document.createElement('span');
+                placeholder.setAttribute('data-fnmarker', markerId);
+                sup.parentNode.replaceChild(placeholder, sup);
+
+                // Multi-reference footnote: only emit one aside (positioned at the
+                // first marker); subsequent markers still get a numbered <sup>.
+                if (emitted.has(id)) return;
+                emitted.add(id);
+
+                var aside = document.createElement('aside');
+                aside.className = 'sidenote';
+                aside.setAttribute('data-fnref', markerId);
+                aside.innerHTML = defs.get(id);
+
+                // Walk up to nearest block ancestor; for LI inside UL/OL, jump to the list.
+                var blockAncestor = placeholder;
+                while (blockAncestor && blockAncestor.parentNode !== postBody) {
+                    if (BLOCK.test(blockAncestor.nodeName)) break;
+                    blockAncestor = blockAncestor.parentNode;
+                }
+                if (!blockAncestor || blockAncestor === postBody) blockAncestor = placeholder;
+                if (blockAncestor.nodeName === 'LI' && blockAncestor.parentNode &&
+                    /^(UL|OL)$/.test(blockAncestor.parentNode.nodeName)) {
+                    blockAncestor = blockAncestor.parentNode;
+                }
+                // When multiple markers share a block ancestor, walk past any
+                // sidenotes already emitted for it so document order matches
+                // marker order. (Inserting at nextSibling alone reverses pairs.)
+                var insertionPoint = blockAncestor.nextSibling;
+                while (insertionPoint &&
+                       insertionPoint.nodeType === Node.ELEMENT_NODE &&
+                       insertionPoint.nodeName === 'ASIDE' &&
+                       insertionPoint.classList.contains('sidenote')) {
+                    insertionPoint = insertionPoint.nextSibling;
+                }
+                blockAncestor.parentNode.insertBefore(aside, insertionPoint);
+            });
         });
 
-        // Drop Ghost's now-redundant footnote section and the <hr> separator
-        // markdown-it-footnote emits immediately before it.
-        var sep = section.previousElementSibling;
-        if (sep && sep.nodeName === 'HR' && sep.classList.contains('footnotes-sep')) {
-            sep.remove();
-        }
-        section.remove();
+        // Drop each footnote section and its <hr.footnotes-sep>. The hr may no
+        // longer be the section's immediate previousElementSibling because we
+        // just inserted sidenotes into the surrounding flow, so skip past any
+        // sidenotes when locating it.
+        sections.forEach(function(section) {
+            var sep = section.previousElementSibling;
+            while (sep && sep.nodeName === 'ASIDE' && sep.classList.contains('sidenote')) {
+                sep = sep.previousElementSibling;
+            }
+            if (sep && sep.nodeName === 'HR' && sep.classList.contains('footnotes-sep')) {
+                sep.remove();
+            }
+            section.remove();
+        });
     }
 
     /**
