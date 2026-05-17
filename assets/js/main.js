@@ -30,6 +30,7 @@
         var postBody = document.querySelector('.post-body');
         if (!postBody) return;
 
+        transformMarkdownImages(postBody);
         transformFootnotes(postBody);
         initSidenotes();
         loadAndRenderMath(postBody).then(function(rendered) {
@@ -37,6 +38,68 @@
                 positionSidenotes();
             }
             initReadingTimeRecalc();
+        });
+    }
+
+    /**
+     * Markdown image normalization — Ghost's markdown card emits standalone
+     * images as <p><img></p> (or <p><a><img></a></p> when linked), without
+     * the kg-image-card figure wrapper the Koenig image card produces. Wrap
+     * those so they pick up the same inset/wide/full + float-wrap styling.
+     *
+     * Captions: ![alt](src "title") renders a <figcaption> from the title;
+     * if no title is set, the alt text is used as the caption instead and
+     * the img's alt is cleared so screen readers don't double-read it (the
+     * figcaption serves as the accessible description).
+     */
+    function transformMarkdownImages(postBody) {
+        var paragraphs = postBody.querySelectorAll('p');
+        Array.prototype.forEach.call(paragraphs, function(p) {
+            if (p.children.length !== 1) return;
+            // Bail if there's any non-whitespace text content alongside the image.
+            if (p.textContent && p.textContent.trim() !== '') return;
+
+            var child = p.firstElementChild;
+            var img = null;
+            var subject = null; // node to move into the new figure
+            if (child.nodeName === 'IMG') {
+                img = child;
+                subject = child;
+            } else if (child.nodeName === 'A' &&
+                       child.children.length === 1 &&
+                       child.firstElementChild.nodeName === 'IMG') {
+                img = child.firstElementChild;
+                subject = child;
+            } else {
+                return;
+            }
+
+            var figure = document.createElement('figure');
+            figure.className = 'kg-card kg-image-card';
+            figure.appendChild(subject);
+
+            // Caption: prefer title (![alt](src "title")), fall back to alt.
+            var titleAttr = img.getAttribute('title');
+            var altAttr = img.getAttribute('alt');
+            var captionText = '';
+            if (titleAttr && titleAttr.trim()) {
+                captionText = titleAttr.trim();
+                // Strip the title so the browser doesn't also show it as a tooltip.
+                img.removeAttribute('title');
+            } else if (altAttr && altAttr.trim()) {
+                captionText = altAttr.trim();
+                // figcaption now serves as the accessible description.
+                img.setAttribute('alt', '');
+            }
+
+            if (captionText) {
+                figure.classList.add('kg-card-hascaption');
+                var figcaption = document.createElement('figcaption');
+                figcaption.textContent = captionText;
+                figure.appendChild(figcaption);
+            }
+
+            p.parentNode.replaceChild(figure, p);
         });
     }
 

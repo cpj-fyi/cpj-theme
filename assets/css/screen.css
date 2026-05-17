@@ -1671,15 +1671,23 @@ body.page-template-custom-buy .site-main {
 }
 
 .content h3 {
-    font-size: var(--text-2xl);
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     margin-top: var(--space-10);
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-2);
 }
 
 .content h4 {
-    font-size: var(--text-xl);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     margin-top: var(--space-8);
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-2);
 }
 
 .content a {
@@ -3500,18 +3508,68 @@ body.tag-five-things:not(.post-template) .footer-bottom a:hover {
 
 .kg-image-card img {
     width: 100%;
+    margin: 0;
+}
+
+/* Image widths
+   - Regular (.kg-image-card): 500px editorial inset; on desktop overhangs the
+     left margin by 216px, mirroring the sidenote right-overhang.
+   - Wide (.kg-width-wide): 720px, matching the post column.
+   - Full (.kg-width-full): 1280px, matching the page max. */
+
+.kg-image-card {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .kg-width-wide {
-    max-width: var(--max-width-wide);
-    margin-left: calc(50% - 50vw + var(--space-6));
-    margin-right: calc(50% - 50vw + var(--space-6));
+    max-width: var(--max-width-content);
+    margin-left: calc(-1 * var(--space-6));
+    margin-right: calc(-1 * var(--space-6));
 }
 
 .kg-width-full {
-    max-width: none;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
+    max-width: var(--max-width);
+    margin-left: max(calc(50% - 50vw), calc((var(--max-width-content) - 2 * var(--space-6) - var(--max-width)) / 2));
+    margin-right: max(calc(50% - 50vw), calc((var(--max-width-content) - 2 * var(--space-6) - var(--max-width)) / 2));
+}
+
+@media (min-width: 1200px) {
+    .post-body .kg-image-card:not(.kg-width-wide):not(.kg-width-full) {
+        float: left;
+        clear: left;
+        margin-left: -228px;
+        margin-right: var(--space-6);
+        margin-top: 0;
+        margin-bottom: var(--space-4);
+    }
+
+    /* Prevent headings/wide blocks from wrapping next to a floated inset image */
+    .post-body .content h2,
+    .post-body .content h3,
+    .post-body .content h4,
+    .post-body .kg-width-wide,
+    .post-body .kg-width-full,
+    .post-body .content hr {
+        clear: both;
+    }
+
+    /* Chapter pages: cancel the float (sidebar grid layout has no room for the overhang) */
+    .chapter-page .post-body .kg-image-card:not(.kg-width-wide):not(.kg-width-full) {
+        float: none;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Chapter pages live inside a grid with a sticky sidebar and no .post-body
+   padding — overhangs would collide with the sidebar, so keep images within
+   the chapter column. */
+.chapter-page .post-body .kg-image-card {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .kg-bookmark-card {
@@ -4497,7 +4555,7 @@ body.tag-five-things:not(.post-template) .footer-bottom a:hover {
 
     .sidenote {
         position: absolute;
-        right: -216px;
+        right: -228px;
         width: 200px;
         margin: 0;
         padding: 0;
