@@ -7,8 +7,32 @@
 <link rel="stylesheet" type="text/css" href="{{asset "css/home-2.css"}}">
 
 <main class="h2-page">
+
+  {{!-- ============ Masthead strip ============ --}}
+  <aside class="h2-masthead">
+    <hr class="h2-rule">
+    <div class="h2-container h2-masthead-inner">
+      <p class="h2-flag h2-masthead-flag">The Front Page</p>
+      <p class="h2-masthead-date">{{date format="dddd · DD MMMM YYYY"}}</p>
+      <p class="h2-masthead-filed">
+        <span class="h2-masthead-filed-label">Filed under:</span>
+        {{#get "posts" filter="tag:essays" limit="1" include="tags"}}
+          {{#foreach posts}}
+            {{#foreach tags}}
+              {{#match slug "essays"}}{{else match slug "radar"}}{{else match slug "five-things"}}{{else match slug "hidden-patterns"}}
+              {{else}}
+                <span class="h2-masthead-tag">{{name}}</span>
+              {{/match}}
+            {{/foreach}}
+          {{/foreach}}
+        {{/get}}
+      </p>
+    </div>
+    <hr class="h2-rule">
+  </aside>
+
   {{!-- Modules will be added in subsequent tasks --}}
   <div class="h2-container">
-    <p style="padding: 4rem 0; text-align: center; font-family: system-ui;">/new/ scaffold in place. Modules incoming.</p>
   </div>
+
 </main>
