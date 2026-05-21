@@ -770,3 +770,177 @@ a.h2-index-title:hover {
     margin-left: auto;
   }
 }
+
+/* ---------- Hidden Patterns module ---------- */
+
+.h2-book {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: var(--space-12, 3rem);
+  align-items: start;
+}
+
+/* Cover column */
+.h2-book-cover-wrap {
+  max-width: 360px;
+}
+
+.h2-book-cover {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Copy column */
+.h2-book-copy {
+  min-width: 0;
+}
+
+.h2-book-flag {
+  margin-bottom: var(--space-4, 16px);
+}
+
+.h2-book-title {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text, #1a1a1a);
+  margin: 0 0 var(--space-5, 20px) 0;
+}
+
+.h2-book-deck {
+  font-family: var(--font-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  color: var(--color-text, #1a1a1a);
+  margin: 0 0 var(--space-8, 32px) 0;
+}
+
+/* Monocle-style endorsement block */
+.h2-book-pullquote {
+  border-left: 4px solid var(--h2-coral);
+  padding: var(--space-4, 16px) var(--space-6, 24px);
+  margin: 0 0 var(--space-8, 32px) 0;
+}
+
+.h2-book-pullquote p {
+  font-family: var(--font-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 1.375rem;
+  line-height: 1.4;
+  color: var(--color-text, #1a1a1a);
+  margin: 0 0 var(--space-3, 12px) 0;
+}
+
+.h2-book-pullquote-cite {
+  display: block;
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-style: normal;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-text-secondary, #666666);
+}
+
+/* CTA row */
+.h2-book-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5, 20px);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6, 24px);
+}
+
+.h2-btn {
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.h2-btn-primary {
+  display: inline-block;
+  background: var(--color-accent, var(--h2-coral));
+  color: var(--color-bg-card, #fff);
+  padding: var(--space-3, 12px) var(--space-6, 24px);
+  border-radius: 3px;
+}
+
+.h2-btn-primary:hover {
+  background: var(--color-accent-hover, #E02545);
+  color: var(--color-bg-card, #fff);
+}
+
+.h2-btn-text {
+  color: var(--h2-coral);
+  background: transparent;
+  padding: var(--space-3, 12px) 0;
+  border-bottom: 1px solid transparent;
+}
+
+.h2-btn-text:hover {
+  border-bottom-color: var(--h2-coral);
+}
+
+/* "Inside:" strip */
+.h2-book-inside {
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-text-secondary, #666666);
+  margin: 0;
+}
+
+.h2-book-inside-label {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+  margin-right: 0.4em;
+  color: var(--color-text-secondary, #666666);
+}
+
+.h2-book-inside a {
+  color: var(--color-text-secondary, #666666);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.h2-book-inside a:hover {
+  color: var(--h2-coral);
+}
+
+/* Responsive: single column at ≤768px */
+@media (max-width: 768px) {
+  .h2-book {
+    grid-template-columns: 1fr;
+    gap: var(--space-8, 32px);
+  }
+
+  .h2-book-cover-wrap {
+    max-width: 240px;
+    margin: 0 auto;
+  }
+
+  .h2-book-cover {
+    max-width: 240px;
+  }
+
+  .h2-book-title {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+
+  .h2-book-deck {
+    font-size: 1.125rem;
+  }
+
+  .h2-book-pullquote p {
+    font-size: 1.1875rem;
+  }
+}
