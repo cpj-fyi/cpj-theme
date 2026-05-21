@@ -272,3 +272,180 @@
     font-size: 1.1875rem;
   }
 }
+
+/* ---------- Subscribe bar ---------- */
+
+.h2-sub {
+  /* The section itself has no background — sits on page #F8F8F8 */
+}
+
+.h2-sub-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-16, 4rem);
+  padding-top: var(--space-14, 3.5rem);
+  padding-bottom: var(--space-14, 3.5rem);
+}
+
+/* Left: pitch */
+.h2-sub-pitch {
+  flex: 0 0 auto;
+  min-width: 200px;
+}
+
+.h2-sub-heading {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--color-text, #1a1a1a);
+  margin: 0 0 var(--space-3, 12px) 0;
+}
+
+.h2-sub-tagline {
+  font-family: var(--font-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 1.125rem;
+  line-height: 1.35;
+  color: var(--color-text-secondary, #666666);
+  margin: 0;
+}
+
+/* Right: form */
+.h2-sub-form {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5, 20px);
+}
+
+/* Input + button row — the whole row is a link to Portal */
+.h2-sub-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+
+.h2-sub-row:hover {
+  border-color: var(--h2-coral);
+  box-shadow: 0 0 0 1px var(--h2-coral);
+}
+
+.h2-sub-input-mock {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 0.9375rem;
+  color: var(--color-text-muted, #999999);
+  background: #fff;
+  cursor: text;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.h2-sub-submit {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  padding: var(--space-3, 12px) var(--space-6, 24px);
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: var(--h2-coral);
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.h2-sub-row:hover .h2-sub-submit {
+  background: var(--color-accent-hover, #E02545);
+}
+
+/* Newsletter option rows — purely decorative */
+.h2-sub-options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+}
+
+.h2-sub-option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3, 12px);
+}
+
+/* CSS-only checkbox: small square, coral check when .is-checked */
+.h2-sub-check {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  background: #fff;
+  margin-top: 2px; /* optical alignment with label text */
+  position: relative;
+}
+
+.h2-sub-option.is-checked .h2-sub-check {
+  background: var(--h2-coral);
+  border-color: var(--h2-coral);
+}
+
+/* Checkmark via pseudo-element */
+.h2-sub-option.is-checked .h2-sub-check::after {
+  content: "";
+  display: block;
+  width: 9px;
+  height: 5px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg) translate(0px, -1px);
+}
+
+.h2-sub-label {
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--color-text-secondary, #666666);
+}
+
+.h2-sub-label strong {
+  font-weight: 600;
+  color: var(--color-text, #1a1a1a);
+}
+
+/* Mobile: stack pitch above form */
+@media (max-width: 768px) {
+  .h2-sub-inner {
+    flex-direction: column;
+    gap: var(--space-8, 32px);
+    padding-top: var(--space-10, 40px);
+    padding-bottom: var(--space-10, 40px);
+  }
+
+  .h2-sub-pitch {
+    min-width: 0;
+  }
+
+  .h2-sub-heading {
+    font-size: 2rem;
+  }
+}
