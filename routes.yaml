@@ -3,6 +3,7 @@
 
 routes:
   /: index
+  /new/: home-2
   /everything/: everything
   /tags/: tags
   /rss/:
