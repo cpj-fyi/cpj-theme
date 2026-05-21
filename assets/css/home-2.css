@@ -454,3 +454,149 @@
     font-size: 2rem;
   }
 }
+
+/* ---------- Three-up index ---------- */
+
+.h2-index {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8, 2rem);
+  align-items: start;
+}
+
+.h2-index-col {
+  min-width: 0;
+}
+
+/* Column header: flag left, see-all right, underlined with coral rule */
+.h2-index-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3, 12px);
+  border-bottom: var(--h2-rule);
+  padding-bottom: var(--space-3, 12px);
+  margin-bottom: var(--space-5, 20px);
+}
+
+/* Flag inherits .h2-flag — just kill the default bottom margin */
+.h2-index-flag {
+  margin: 0;
+}
+
+/* "see all →" link */
+.h2-index-seeall {
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--h2-coral);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: text-decoration-color 0.15s ease;
+}
+
+.h2-index-seeall:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* List reset */
+.h2-index-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Each item */
+.h2-index-item {
+  margin-bottom: var(--space-5, 20px);
+  padding-bottom: var(--space-5, 20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.h2-index-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+/* Title — serif, ~18px, linked */
+.h2-index-title {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--color-text, #1a1a1a);
+  margin: 0 0 var(--space-2, 8px) 0;
+}
+
+/* When .h2-index-title is directly an <a> (static column) */
+a.h2-index-title {
+  display: block;
+  margin: 0;
+  text-decoration: none;
+}
+
+a.h2-index-title:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--h2-coral);
+  text-underline-offset: 3px;
+}
+
+.h2-index-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.h2-index-title a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--h2-coral);
+  text-underline-offset: 3px;
+}
+
+/* Meta row — ds-meta handles the flex layout and middots */
+.h2-index-meta {
+  margin-top: var(--space-1, 4px);
+}
+
+/* Empty state */
+.h2-index-empty {
+  font-family: var(--font-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 0.9375rem;
+  color: var(--color-text-muted, #999999);
+  margin: 0;
+}
+
+/* ---- Responsive: 900px → Essays full-width on top; Five Things + Index side by side below ---- */
+@media (max-width: 900px) {
+  .h2-index {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  /* Essays spans full width on the first row */
+  .h2-index-col:nth-child(1) {
+    grid-column: 1 / -1;
+  }
+
+  /* Five Things and Index sit side by side on the second row */
+  .h2-index-col:nth-child(2),
+  .h2-index-col:nth-child(3) {
+    grid-column: auto;
+  }
+}
+
+/* ---- Responsive: 600px → single column ---- */
+@media (max-width: 600px) {
+  .h2-index {
+    grid-template-columns: 1fr;
+  }
+
+  .h2-index-col:nth-child(1) {
+    grid-column: auto;
+  }
+}
