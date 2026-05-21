@@ -496,6 +496,7 @@
   white-space: nowrap;
   flex-shrink: 0;
   transition: text-decoration-color 0.15s ease;
+  padding: 8px 0;
 }
 
 .h2-index-seeall:hover {
