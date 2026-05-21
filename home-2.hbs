@@ -8,40 +8,50 @@
 
 <main class="h2-page">
 
-  {{!-- ============ Masthead strip ============ --}}
-  <aside class="h2-masthead">
-    <hr class="h2-rule">
-    <div class="h2-container h2-masthead-inner">
-      <p class="h2-flag h2-masthead-flag">The Front Page</p>
-      <p class="h2-masthead-date">{{date format="dddd · DD MMMM YYYY"}}</p>
-      <p class="h2-masthead-filed">
-        <span class="h2-masthead-filed-label">Filed under:</span>
-        {{#get "posts" filter="tag:essays" limit="1" include="tags"}}
-          {{#foreach posts}}
-            {{#foreach tags}}
-              {{#match slug "essays"}}{{else match slug "radar"}}{{else match slug "five-things"}}{{else match slug "hidden-patterns"}}
-              {{else}}
-                <span class="h2-masthead-tag">{{name}}</span>
-              {{/match}}
-            {{/foreach}}
-          {{/foreach}}
-        {{/get}}
-      </p>
-    </div>
-    <hr class="h2-rule">
-  </aside>
-
-  {{!-- ============ Lead story ============ --}}
-  <section class="h2-section h2-lead-section">
+  {{!-- ============ Pub masthead (centered) ============ --}}
+  <header class="h2-pubmast">
     <div class="h2-container">
-      {{#get "posts" filter="tag:essays" limit="1" include="tags"}}
-        {{#if posts}}
-          {{#foreach posts}}
-            <article class="h2-lead">
+      <h1 class="h2-pubmast-title">Clay Parker Jones</h1>
+      {{#if @site.description}}
+        <p class="h2-pubmast-subhead">{{@site.description}}</p>
+      {{/if}}
+    </div>
+  </header>
+
+  {{!-- ============ Top main: 3-column (Radar rail · Lead · Secondary) ============ --}}
+  <section class="h2-section h2-topmain-section">
+    <div class="h2-container h2-topmain">
+
+      {{!-- Left rail: Radar --}}
+      <aside class="h2-rail h2-rail-radar">
+        <header class="h2-rail-head">
+          <span class="radar-dot"></span>
+          <h2 class="h2-flag h2-rail-flag">Radar</h2>
+        </header>
+        {{#get "posts" filter="tag:radar" limit="5" include="tags"}}
+          {{#if posts}}
+            <ol class="h2-rail-list">
+              {{#foreach posts}}
+                <li class="h2-rail-item">
+                  <time class="h2-rail-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM"}}</time>
+                  <h3 class="h2-rail-title"><a href="{{url}}">{{title}}</a></h3>
+                </li>
+              {{/foreach}}
+            </ol>
+            <a class="h2-rail-more" href="/radar/">More on Radar →</a>
+          {{/if}}
+        {{/get}}
+      </aside>
+
+      {{!-- Center: Lead story (latest essay) --}}
+      <article class="h2-lead">
+        {{#get "posts" filter="tag:essays" limit="1" include="tags"}}
+          {{#if posts}}
+            {{#foreach posts}}
               <p class="h2-flag h2-lead-flag">Lead Essay</p>
-              <h1 class="h2-lead-title">
+              <h2 class="h2-lead-title">
                 <a href="{{url}}">{{title}}</a>
-              </h1>
+              </h2>
               {{#if custom_excerpt}}
                 <p class="h2-lead-deck">{{custom_excerpt}}</p>
               {{else}}
@@ -62,17 +72,50 @@
                      height="630">
               </figure>
               <div class="h2-lead-lede">
-                {{content words="150"}}
+                {{content words="120"}}
               </div>
               <p class="h2-lead-continue">
                 <a href="{{url}}">Continue reading →</a>
               </p>
-            </article>
-          {{/foreach}}
-        {{else}}
-          <p class="h2-lead-empty">No essays yet — back soon.</p>
-        {{/if}}
-      {{/get}}
+            {{/foreach}}
+          {{else}}
+            <p class="h2-lead-empty">No essays yet — back soon.</p>
+          {{/if}}
+        {{/get}}
+      </article>
+
+      {{!-- Right: Story 2 (second-most-recent essay) --}}
+      <article class="h2-story2">
+        {{#get "posts" filter="tag:essays" limit="2" include="tags"}}
+          {{#if posts}}
+            {{#foreach posts from="2"}}
+              <p class="h2-flag h2-story2-flag">Also Reading</p>
+              <h3 class="h2-story2-title">
+                <a href="{{url}}">{{title}}</a>
+              </h3>
+              {{#if custom_excerpt}}
+                <p class="h2-story2-deck">{{custom_excerpt}}</p>
+              {{else}}
+                <p class="h2-story2-deck">{{excerpt words="35"}}</p>
+              {{/if}}
+              <p class="h2-story2-byline">
+                <span>{{reading_time}}</span>
+                <span aria-hidden="true">·</span>
+                <span>{{date format="DD MMM YY"}}</span>
+              </p>
+              {{#if feature_image}}
+                <figure class="h2-story2-hero">
+                  <img src="{{feature_image}}" alt="" loading="lazy" width="800" height="500">
+                </figure>
+              {{/if}}
+              <p class="h2-story2-continue">
+                <a href="{{url}}">Continue reading →</a>
+              </p>
+            {{/foreach}}
+          {{/if}}
+        {{/get}}
+      </article>
+
     </div>
   </section>
 
@@ -178,31 +221,6 @@
         </ul>
       </div>
 
-    </div>
-  </section>
-
-  {{!-- ============ Radar strip ============ --}}
-  <section class="h2-radar">
-    <div class="h2-radar-inner">
-      <header class="h2-radar-head">
-        <span class="radar-dot"></span>
-        <h2 class="h2-flag h2-radar-flag">Radar</h2>
-        <p class="h2-radar-tagline">Daily-ish observations on org design.</p>
-        <a class="h2-radar-link" href="/radar/">View all →</a>
-      </header>
-      {{#get "posts" filter="tag:radar" limit="6" include="tags"}}
-        {{#if posts}}
-          <div class="h2-radar-track">
-            {{#foreach posts}}
-              <article class="h2-radar-card">
-                <time class="h2-radar-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YY"}}</time>
-                <h3 class="h2-radar-title"><a href="{{url}}">{{title}}</a></h3>
-                <p class="h2-radar-excerpt">{{excerpt words="20"}}</p>
-              </article>
-            {{/foreach}}
-          </div>
-        {{/if}}
-      {{/get}}
     </div>
   </section>
 
