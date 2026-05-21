@@ -1005,3 +1005,128 @@
   outline: 2px solid var(--h2-coral);
   outline-offset: 2px;
 }
+
+.h2-talks-cta:focus-visible,
+.h2-talks-cta-secondary:focus-visible {
+  outline: 2px solid var(--color-bg-card, #fff);
+  outline-offset: 3px;
+}
+
+/* ---------- Talks promo ---------- */
+
+/* Full-bleed hero band */
+.h2-talks {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  min-height: clamp(420px, 50vh, 640px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: var(--space-20, 5rem) 0;
+}
+
+/* Background layer: image + overlay, clipped to section bounds */
+.h2-talks-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Hero photo: covers the full band */
+.h2-talks-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  z-index: 0;
+}
+
+/* Dark gradient scrim for text legibility */
+.h2-talks-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.70) 100%);
+  z-index: 1;
+}
+
+/* Content layer: sits above image + overlay */
+.h2-talks-inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--h2-max);
+  margin: 0 auto;
+  padding: 0 var(--space-6, 24px);
+  text-align: center;
+  color: var(--color-bg-card, #fff);
+  width: 100%;
+}
+
+/* Eyebrow flag — neon green pops on dark background */
+.h2-talks-flag {
+  color: var(--h2-radar-fg);
+  margin-bottom: var(--space-5, 20px);
+}
+
+/* Large serif title */
+.h2-talks-title {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-bg-card, #fff);
+  margin: 0 0 var(--space-6, 24px) 0;
+}
+
+/* Italic deck: slightly subordinated */
+.h2-talks-deck {
+  font-family: var(--font-serif, Georgia, serif);
+  font-style: italic;
+  font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 32em;
+  margin: 0 auto var(--space-10, 40px);
+}
+
+/* Button row: centered flex */
+.h2-talks-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6, 24px);
+  flex-wrap: wrap;
+}
+
+/* Primary CTA: coral fill reads well on dark image — keep as-is from h2-btn-primary */
+
+/* Text link CTA: override coral text to white for dark background readability */
+.h2-talks-cta-secondary {
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom-color: transparent;
+}
+
+.h2-talks-cta-secondary:hover {
+  color: #fff;
+  border-bottom-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Responsive: ≤768px */
+@media (max-width: 768px) {
+  .h2-talks {
+    min-height: clamp(360px, 70vh, 500px);
+    padding: var(--space-16, 4rem) 0;
+  }
+
+  .h2-talks-actions {
+    flex-direction: column;
+    gap: var(--space-4, 16px);
+  }
+}
