@@ -119,6 +119,84 @@
     </div>
   </section>
 
+  {{!-- ============ AI stripe ============ --}}
+  <section class="h2-section h2-stripe h2-stripe-ai">
+    <hr class="h2-rule">
+    <div class="h2-container">
+      <header class="h2-stripe-head">
+        <div class="h2-stripe-head-text">
+          <h2 class="h2-stripe-flag">AI</h2>
+          <p class="h2-stripe-tagline">How generative AI is reshaping the work — and the org.</p>
+        </div>
+        <a class="h2-stripe-seeall" href="/tag/ai/">See all →</a>
+      </header>
+      {{#get "posts" filter="tag:ai" limit="3" include="tags"}}
+        {{#if posts}}
+          <div class="h2-stripe-grid">
+            {{#foreach posts}}
+              <article class="h2-stripe-card">
+                {{#if feature_image}}
+                  <a class="h2-stripe-card-image-link" href="{{url}}" aria-hidden="true" tabindex="-1">
+                    <figure class="h2-stripe-card-image">
+                      <img src="{{feature_image}}" alt="" loading="lazy" width="800" height="500">
+                    </figure>
+                  </a>
+                {{/if}}
+                <h3 class="h2-stripe-card-title"><a href="{{url}}">{{title}}</a></h3>
+                <p class="h2-stripe-card-meta">
+                  <span>{{date format="DD MMM YY"}}</span>
+                  <span aria-hidden="true">·</span>
+                  <span>{{reading_time}}</span>
+                </p>
+              </article>
+            {{/foreach}}
+          </div>
+        {{else}}
+          <p class="h2-stripe-empty">No AI posts yet.</p>
+        {{/if}}
+      {{/get}}
+    </div>
+  </section>
+
+  {{!-- ============ Org Design stripe ============ --}}
+  <section class="h2-section h2-stripe h2-stripe-orgdesign">
+    <hr class="h2-rule">
+    <div class="h2-container">
+      <header class="h2-stripe-head">
+        <div class="h2-stripe-head-text">
+          <h2 class="h2-stripe-flag">Org Design</h2>
+          <p class="h2-stripe-tagline">How organizations actually work — and how to design them better.</p>
+        </div>
+        <a class="h2-stripe-seeall" href="/tag/org-design/">See all →</a>
+      </header>
+      {{#get "posts" filter="tag:org-design" limit="3" include="tags"}}
+        {{#if posts}}
+          <div class="h2-stripe-grid">
+            {{#foreach posts}}
+              <article class="h2-stripe-card">
+                {{#if feature_image}}
+                  <a class="h2-stripe-card-image-link" href="{{url}}" aria-hidden="true" tabindex="-1">
+                    <figure class="h2-stripe-card-image">
+                      <img src="{{feature_image}}" alt="" loading="lazy" width="800" height="500">
+                    </figure>
+                  </a>
+                {{/if}}
+                <h3 class="h2-stripe-card-title"><a href="{{url}}">{{title}}</a></h3>
+                <p class="h2-stripe-card-meta">
+                  <span>{{date format="DD MMM YY"}}</span>
+                  <span aria-hidden="true">·</span>
+                  <span>{{reading_time}}</span>
+                </p>
+              </article>
+            {{/foreach}}
+          </div>
+        {{else}}
+          <p class="h2-stripe-empty">No Org Design posts yet.</p>
+        {{/if}}
+      {{/get}}
+    </div>
+  </section>
+
   {{!-- ============ Subscribe bar ============ --}}
   <section class="h2-sub" data-mode="portal">
     <hr class="h2-rule">
@@ -149,79 +227,6 @@
       </div>
     </div>
     <hr class="h2-rule">
-  </section>
-
-  {{!-- ============ Three-up index ============ --}}
-  <section class="h2-section h2-index-section">
-    <div class="h2-container h2-index">
-
-      {{!-- Column 1: Essays --}}
-      <div class="h2-index-col">
-        <header class="h2-index-head">
-          <h2 class="h2-flag h2-index-flag">Essays</h2>
-          <a class="h2-index-seeall" href="/essays/">see all →</a>
-        </header>
-        {{#get "posts" filter="tag:essays" limit="7" include="tags"}}
-          {{#if posts}}
-            <ol class="h2-index-list">
-              {{#foreach posts from="2"}}
-                <li class="h2-index-item">
-                  <h3 class="h2-index-title"><a href="{{url}}">{{title}}</a></h3>
-                  <div class="ds-meta h2-index-meta">
-                    <span class="ds-meta-item">{{date format="DD MMM YY"}}</span>
-                    {{#foreach tags}}
-                      {{#match slug "essays"}}{{else match slug "radar"}}{{else match slug "five-things"}}{{else match slug "hidden-patterns"}}
-                      {{else}}
-                        <a href="{{url}}" class="ds-meta-item topical-tag-pill">{{name}}</a>
-                      {{/match}}
-                    {{/foreach}}
-                  </div>
-                </li>
-              {{/foreach}}
-            </ol>
-          {{/if}}
-        {{/get}}
-      </div>
-
-      {{!-- Column 2: Five Things --}}
-      <div class="h2-index-col">
-        <header class="h2-index-head">
-          <h2 class="h2-flag h2-index-flag">Five Things</h2>
-          <a class="h2-index-seeall" href="/five-things/">see all →</a>
-        </header>
-        {{#get "posts" filter="tag:five-things" limit="5"}}
-          {{#if posts}}
-            <ol class="h2-index-list">
-              {{#foreach posts}}
-                <li class="h2-index-item">
-                  <h3 class="h2-index-title"><a href="{{url}}">{{title}}</a></h3>
-                  <div class="ds-meta h2-index-meta">
-                    <span class="ds-meta-item">{{date format="DD MMM YY"}}</span>
-                  </div>
-                </li>
-              {{/foreach}}
-            </ol>
-          {{else}}
-            <p class="h2-index-empty">Coming back soon.</p>
-          {{/if}}
-        {{/get}}
-      </div>
-
-      {{!-- Column 3: Index (static) --}}
-      <div class="h2-index-col">
-        <header class="h2-index-head">
-          <h2 class="h2-flag h2-index-flag">Index</h2>
-        </header>
-        <ul class="h2-index-list h2-index-list-static">
-          <li class="h2-index-item"><a class="h2-index-title" href="/colophon/">About Clay</a></li>
-          <li class="h2-index-item"><a class="h2-index-title" href="/speaking/">Speaking</a></li>
-          <li class="h2-index-item"><a class="h2-index-title" href="/talks/">Talks</a></li>
-          <li class="h2-index-item"><a class="h2-index-title" href="/buy/">Hidden Patterns</a></li>
-          <li class="h2-index-item"><a class="h2-index-title" href="/contact/">Contact</a></li>
-        </ul>
-      </div>
-
-    </div>
   </section>
 
   {{!-- ============ Hidden Patterns module ============ --}}
