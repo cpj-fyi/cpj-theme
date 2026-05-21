@@ -346,7 +346,7 @@
   font-family: var(--font-sans, system-ui, sans-serif);
   font-size: 0.9375rem;
   color: var(--color-text-muted, #999999);
-  background: #fff;
+  background: var(--color-bg-card, #fff);
   cursor: text;
   user-select: none;
   white-space: nowrap;
@@ -363,7 +363,7 @@
   font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: #fff;
+  color: var(--color-bg-card, #fff);
   background: var(--h2-coral);
   white-space: nowrap;
   transition: background 0.15s ease;
@@ -399,7 +399,7 @@
   height: 16px;
   border: 1.5px solid rgba(0, 0, 0, 0.25);
   border-radius: 2px;
-  background: #fff;
+  background: var(--color-bg-card, #fff);
   margin-top: 2px; /* optical alignment with label text */
   position: relative;
 }
@@ -415,8 +415,8 @@
   display: block;
   width: 9px;
   height: 5px;
-  border-left: 2px solid #fff;
-  border-bottom: 2px solid #fff;
+  border-left: 2px solid var(--color-bg-card, #fff);
+  border-bottom: 2px solid var(--color-bg-card, #fff);
   transform: rotate(-45deg) translate(0px, -1px);
 }
 
