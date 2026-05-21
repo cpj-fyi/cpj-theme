@@ -118,7 +118,7 @@
           <h2 class="h2-flag h2-index-flag">Essays</h2>
           <a class="h2-index-seeall" href="/essays/">see all →</a>
         </header>
-        {{#get "posts" filter="tag:essays" limit="7"}}
+        {{#get "posts" filter="tag:essays" limit="7" include="tags"}}
           {{#if posts}}
             <ol class="h2-index-list">
               {{#foreach posts from="2"}}

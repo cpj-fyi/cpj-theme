@@ -954,3 +954,20 @@ a.h2-index-title:hover {
     font-size: 1.1875rem;
   }
 }
+
+/* ---------- Focus states ---------- */
+.h2-lead-title a:focus-visible,
+.h2-lead-continue a:focus-visible,
+.h2-index-seeall:focus-visible,
+.h2-index-title:focus-visible,
+.h2-index-title a:focus-visible,
+.h2-book-inside a:focus-visible {
+  outline: 2px solid var(--h2-coral);
+  outline-offset: 2px;
+}
+
+.h2-radar-link:focus-visible,
+.h2-radar-title a:focus-visible {
+  outline: 2px solid var(--h2-radar-fg);
+  outline-offset: 2px;
+}
