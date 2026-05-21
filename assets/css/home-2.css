@@ -601,3 +601,172 @@ a.h2-index-title:hover {
     grid-column: auto;
   }
 }
+
+/* ---------- Radar strip ---------- */
+
+/* Full-bleed band: breaks out of any container to full viewport */
+.h2-radar {
+  background: var(--h2-radar-bg);
+  color: #fff;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: var(--space-16, 4rem) 0;
+}
+
+.h2-radar-inner {
+  max-width: var(--h2-max);
+  margin: 0 auto;
+  padding: 0 var(--space-6, 24px);
+}
+
+/* Header row */
+.h2-radar-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4, 16px);
+  margin-bottom: var(--space-8, 32px);
+}
+
+/* Radar dot — slight top nudge for optical baseline alignment */
+.h2-radar-head .radar-dot {
+  flex-shrink: 0;
+  align-self: center;
+  margin-bottom: 0;
+}
+
+/* "Radar" flag — neon green override on dark background */
+.h2-radar-flag {
+  color: var(--h2-radar-fg);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* Tagline — italic serif, dimmer white, fills remaining space */
+.h2-radar-tagline {
+  font-family: var(--font-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  flex: 1;
+}
+
+/* "View all →" link — neon green, small-caps sans */
+.h2-radar-link {
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--h2-radar-fg);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: text-decoration-color 0.15s ease;
+}
+
+.h2-radar-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Horizontal scroll track */
+.h2-radar-track {
+  display: flex;
+  gap: var(--space-5, 20px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--space-4, 16px);
+  /* Hide scrollbar on Webkit; Firefox falls back to auto */
+  scrollbar-width: thin;
+  scrollbar-color: var(--h2-radar-fg) rgba(255, 255, 255, 0.08);
+}
+
+.h2-radar-track::-webkit-scrollbar {
+  height: 4px;
+}
+
+.h2-radar-track::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+}
+
+.h2-radar-track::-webkit-scrollbar-thumb {
+  background: var(--h2-radar-fg);
+  border-radius: 2px;
+}
+
+/* Individual card */
+.h2-radar-card {
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  padding: var(--space-5, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+}
+
+/* Date stamp — mono, small, neon green */
+.h2-radar-date {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--h2-radar-fg);
+  text-transform: uppercase;
+}
+
+/* Title — serif, white */
+.h2-radar-title {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.3;
+  color: #fff;
+  margin: 0;
+}
+
+.h2-radar-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.h2-radar-title a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Excerpt — small, dimmer white, 2-line clamp */
+.h2-radar-excerpt {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Mobile: tighten the head row and allow tagline to wrap */
+@media (max-width: 600px) {
+  .h2-radar-head {
+    flex-wrap: wrap;
+    gap: var(--space-2, 8px) var(--space-3, 12px);
+  }
+
+  .h2-radar-tagline {
+    flex: 0 0 100%;
+    order: 3;
+  }
+
+  .h2-radar-link {
+    order: 2;
+    margin-left: auto;
+  }
+}

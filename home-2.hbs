@@ -181,6 +181,31 @@
     </div>
   </section>
 
+  {{!-- ============ Radar strip ============ --}}
+  <section class="h2-radar">
+    <div class="h2-radar-inner">
+      <header class="h2-radar-head">
+        <span class="radar-dot"></span>
+        <h2 class="h2-flag h2-radar-flag">Radar</h2>
+        <p class="h2-radar-tagline">Daily-ish observations on org design.</p>
+        <a class="h2-radar-link" href="/radar/">View all →</a>
+      </header>
+      {{#get "posts" filter="tag:radar" limit="6" include="tags"}}
+        {{#if posts}}
+          <div class="h2-radar-track">
+            {{#foreach posts}}
+              <article class="h2-radar-card">
+                <time class="h2-radar-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YY"}}</time>
+                <h3 class="h2-radar-title"><a href="{{url}}">{{title}}</a></h3>
+                <p class="h2-radar-excerpt">{{excerpt words="20"}}</p>
+              </article>
+            {{/foreach}}
+          </div>
+        {{/if}}
+      {{/get}}
+    </div>
+  </section>
+
   {{!-- More modules will go here in subsequent tasks --}}
 
 </main>
