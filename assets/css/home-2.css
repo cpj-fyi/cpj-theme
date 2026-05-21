@@ -408,6 +408,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-6, 24px);
+  margin-top: var(--space-6, 24px); /* breathing room below the hairline rule */
   margin-bottom: var(--space-10, 40px);
 }
 
@@ -797,14 +798,17 @@
     grid-column: auto;
     /* Restore normal block layout for mobile */
     display: block;
+    order: 3; /* Lead essay and Story 2 come first on mobile */
   }
 
   .h2-lead {
     grid-column: auto;
+    order: 1;
   }
 
   .h2-story2 {
     grid-column: auto;
+    order: 2;
   }
 }
 
@@ -1114,7 +1118,7 @@
 }
 
 .h2-talks-cta-secondary:hover {
-  color: #fff;
+  color: var(--color-bg-card, #fff);
   border-bottom-color: rgba(255, 255, 255, 0.6);
 }
 
