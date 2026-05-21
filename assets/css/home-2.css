@@ -138,7 +138,7 @@
 /* ---------- Lead story ---------- */
 
 .h2-lead-section {
-  border-bottom: var(--h2-rule);
+  /* border-bottom removed: the subscribe bar's .h2-rule top hairline already marks this boundary */
 }
 
 /* Constrain the lead article to the editorial column */
@@ -283,8 +283,8 @@
   display: flex;
   align-items: flex-start;
   gap: var(--space-16, 4rem);
-  padding-top: var(--space-14, 3.5rem);
-  padding-bottom: var(--space-14, 3.5rem);
+  padding-top: var(--space-16, 4rem);
+  padding-bottom: var(--space-16, 4rem);
 }
 
 /* Left: pitch */
@@ -607,7 +607,7 @@ a.h2-index-title:hover {
 /* Full-bleed band: breaks out of any container to full viewport */
 .h2-radar {
   background: var(--h2-radar-bg);
-  color: #fff;
+  color: var(--color-bg-card, #fff);
   width: 100vw;
   position: relative;
   left: 50%;
@@ -726,7 +726,7 @@ a.h2-index-title:hover {
   font-size: 1.125rem;
   font-weight: 400;
   line-height: 1.3;
-  color: #fff;
+  color: var(--color-bg-card, #fff);
   margin: 0;
 }
 
