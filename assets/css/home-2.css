@@ -134,3 +134,141 @@
     justify-content: flex-start;
   }
 }
+
+/* ---------- Lead story ---------- */
+
+.h2-lead-section {
+  border-bottom: var(--h2-rule);
+}
+
+/* Constrain the lead article to the editorial column */
+.h2-lead {
+  max-width: var(--h2-col, 720px);
+  margin: 0 auto;
+}
+
+/* Eyebrow flag — inherits .h2-flag styles, just needs bottom spacing tuned */
+.h2-lead-flag {
+  margin-bottom: var(--space-5, 20px);
+}
+
+/* Headline — Freight Text Pro, very large, tight leading */
+.h2-lead-title {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-text, #1a1a1a);
+  margin: 0 0 var(--space-6, 24px) 0;
+}
+
+.h2-lead-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.h2-lead-title a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--h2-coral);
+  text-underline-offset: 4px;
+}
+
+/* Deck — italic serif, comfortable reading size */
+.h2-lead-deck {
+  font-family: var(--font-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 1.375rem;
+  line-height: 1.35;
+  color: var(--color-text, #1a1a1a);
+  margin: 0 0 var(--space-5, 20px) 0;
+}
+
+/* Byline strip — small sans, middot-separated */
+.h2-lead-byline {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 0.5em;
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary, #666666);
+  margin: 0 0 var(--space-10, 40px) 0;
+}
+
+.h2-lead-byline [aria-hidden="true"] {
+  color: var(--color-text-muted, #999999);
+  user-select: none;
+}
+
+/* Hero image — full editorial column width */
+.h2-lead-hero {
+  margin: 0 0 var(--space-10, 40px) 0;
+}
+
+.h2-lead-hero img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* Lede text — body serif, no drop cap, generous leading */
+.h2-lead-lede {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--color-text, #1a1a1a);
+  margin-bottom: var(--space-8, 32px);
+}
+
+/* Strip any Ghost content chrome that bleeds in */
+.h2-lead-lede p {
+  margin: 0 0 1em 0;
+}
+
+.h2-lead-lede p:last-child {
+  margin-bottom: 0;
+}
+
+/* "Continue reading →" — editorial text link, coral, no button chrome */
+.h2-lead-continue {
+  margin: 0;
+}
+
+.h2-lead-continue a {
+  font-family: var(--font-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--h2-coral);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+.h2-lead-continue a:hover {
+  border-bottom-color: var(--h2-coral);
+}
+
+/* Empty state */
+.h2-lead-empty {
+  font-family: var(--font-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--color-text-secondary, #666666);
+  text-align: center;
+  padding: var(--space-16, 4rem) 0;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .h2-lead-byline {
+    gap: 0 0.4em;
+    font-size: 0.75rem;
+  }
+
+  .h2-lead-deck {
+    font-size: 1.1875rem;
+  }
+}

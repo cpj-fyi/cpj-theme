@@ -31,8 +31,51 @@
     <hr class="h2-rule">
   </aside>
 
-  {{!-- Modules will be added in subsequent tasks --}}
-  <div class="h2-container">
-  </div>
+  {{!-- ============ Lead story ============ --}}
+  <section class="h2-section h2-lead-section">
+    <div class="h2-container">
+      {{#get "posts" filter="tag:essays" limit="1" include="tags"}}
+        {{#if posts}}
+          {{#foreach posts}}
+            <article class="h2-lead">
+              <p class="h2-flag h2-lead-flag">Lead Essay</p>
+              <h1 class="h2-lead-title">
+                <a href="{{url}}">{{title}}</a>
+              </h1>
+              {{#if custom_excerpt}}
+                <p class="h2-lead-deck">{{custom_excerpt}}</p>
+              {{else}}
+                <p class="h2-lead-deck">{{excerpt words="40"}}</p>
+              {{/if}}
+              <p class="h2-lead-byline">
+                <span>By {{primary_author.name}}</span>
+                <span aria-hidden="true">·</span>
+                <span>{{reading_time}}</span>
+                <span aria-hidden="true">·</span>
+                <span>{{date format="DD MMM YY"}}</span>
+              </p>
+              <figure class="h2-lead-hero">
+                <img src="{{#if feature_image}}{{feature_image}}{{else}}{{@custom.art_url}}/{{slug}}.svg{{/if}}"
+                     alt=""
+                     loading="eager"
+                     width="1200"
+                     height="630">
+              </figure>
+              <div class="h2-lead-lede">
+                {{content words="150"}}
+              </div>
+              <p class="h2-lead-continue">
+                <a href="{{url}}">Continue reading →</a>
+              </p>
+            </article>
+          {{/foreach}}
+        {{else}}
+          <p class="h2-lead-empty">No essays yet — back soon.</p>
+        {{/if}}
+      {{/get}}
+    </div>
+  </section>
+
+  {{!-- More modules will go here in subsequent tasks --}}
 
 </main>
