@@ -11,6 +11,7 @@
   --h2-radar-fg: #00ff88;
   --h2-page-bg: #F8F8F8;
   --h2-rule: 1px solid var(--h2-coral);
+  --h2-tag-separator: #ccc;
 
   /* Reuse existing site tokens */
   --h2-max: var(--max-width, 1280px);
@@ -72,7 +73,7 @@
   font-family: var(--font-serif, Georgia, serif);
   font-size: 0.875rem;
   font-weight: 400;
-  color: #1a1a1a;
+  color: var(--color-text, #1a1a1a);
   letter-spacing: 0.01em;
   text-align: center;
   flex: 1;
@@ -92,7 +93,7 @@
   font-family: var(--font-serif, Georgia, serif);
   font-style: italic;
   font-size: 0.8125rem;
-  color: #555;
+  color: var(--color-text-secondary, #555);
   white-space: nowrap;
 }
 
@@ -108,7 +109,7 @@
 .h2-masthead-tag + .h2-masthead-tag::before {
   content: "·";
   margin-right: 0.5rem;
-  color: #ccc;
+  color: var(--h2-tag-separator);
   font-weight: 400;
 }
 
