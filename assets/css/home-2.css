@@ -1,0 +1,53 @@
+/*
+ * /new/ homepage styles
+ * All classes namespaced h2- to avoid collision with existing .home-* styles in screen.css.
+ * Loaded only via <link> in home-2.hbs.
+ */
+
+/* ---------- Local reset (zero specificity, beats theme base, loses to component classes) ---------- */
+:where(.h2-page) {
+  --h2-coral: #FF3252;
+  --h2-radar-bg: #222222;
+  --h2-radar-fg: #00ff88;
+  --h2-page-bg: #F8F8F8;
+  --h2-rule: 1px solid var(--h2-coral);
+
+  /* Reuse existing site tokens */
+  --h2-max: var(--max-width, 1280px);
+  --h2-col: var(--max-width-content, 720px);
+}
+
+/* ---------- Page wrapper ---------- */
+.h2-page {
+  background: var(--h2-page-bg);
+}
+
+/* ---------- Container ---------- */
+.h2-container {
+  max-width: var(--h2-max);
+  margin: 0 auto;
+  padding: 0 var(--space-6, 24px);
+}
+
+/* ---------- Section-flag eyebrow (used in every module) ---------- */
+.h2-flag {
+  font-family: var(--font-sans, system-ui);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--h2-coral);
+  margin: 0 0 var(--space-3, 12px) 0;
+}
+
+/* ---------- Hairline coral rule ---------- */
+.h2-rule {
+  border: 0;
+  border-top: var(--h2-rule);
+  margin: 0;
+}
+
+/* ---------- Module spacing rhythm ---------- */
+.h2-section {
+  padding: var(--space-10, 64px) 0;
+}
