@@ -10,7 +10,8 @@
   --h2-radar-bg: #222222;
   --h2-radar-fg: #00ff88;
   --h2-page-bg: #F8F8F8;
-  --h2-rule: 1px solid var(--h2-coral);
+  --h2-rule-color: rgba(0, 0, 0, 0.12);
+  --h2-rule: 1px solid var(--h2-rule-color);
   --h2-tag-separator: #ccc;
 
   /* Reuse existing site tokens */
@@ -34,18 +35,28 @@
 .h2-flag {
   font-family: var(--font-sans, system-ui);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--h2-coral);
   margin: 0 0 var(--space-3, 12px) 0;
 }
 
-/* ---------- Hairline coral rule ---------- */
+/* ---------- Hairline rule ---------- */
 .h2-rule {
   border: 0;
   border-top: var(--h2-rule);
   margin: 0;
+}
+
+/* Full-bleed modifier: stretches the rule to viewport edges */
+.h2-rule-fullbleed {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
 /* ---------- Module spacing rhythm ---------- */
@@ -62,7 +73,7 @@
 .h2-pubmast-title {
   font-family: var(--font-serif, Georgia, serif);
   font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 700;
+  font-weight: 400;
   font-style: italic;
   line-height: 1.05;
   letter-spacing: -0.02em;
@@ -86,9 +97,6 @@
   }
 }
 
-.h2-pubmast hr.h2-rule {
-  margin-top: var(--space-8, 2rem);
-}
 
 /* ---------- Lead story (center column of 3-column top main) ---------- */
 
@@ -124,52 +132,6 @@
   text-underline-offset: 4px;
 }
 
-/* Lead meta row: metabox + icon + tag */
-.h2-lead-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-3, 12px);
-  margin: var(--space-4, 16px) 0 var(--space-6, 24px);
-}
-
-.h2-metabox {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 26px;
-  padding: 0 8px;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  font-family: var(--font-mono, ui-monospace, monospace);
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-  color: var(--color-text, #1A1A1A);
-  white-space: nowrap;
-}
-
-.h2-metabox-icon {
-  padding: 0 6px;
-  color: var(--color-text-secondary, #666);
-}
-
-.h2-metabox-icon svg {
-  display: block;
-}
-
-.h2-lead-meta-tag {
-  font-family: var(--font-sans, system-ui);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--h2-coral);
-  text-decoration: none;
-}
-
-.h2-lead-meta-tag:hover {
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
 
 /* Lede wrap: positions the fade + button overlay */
 .h2-lead-lede-wrap {
@@ -216,12 +178,11 @@
     var(--h2-page-bg, #F8F8F8) 100%);
 }
 
-/* "Continue reading →" — coral filled button, centered at bottom of wrap */
+/* "Continue reading →" — coral filled button, left-aligned at bottom of wrap */
 .h2-lead-continue-btn {
   position: absolute;
   bottom: var(--space-2, 8px);
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
   display: inline-flex;
   align-items: center;
   padding: var(--space-3, 12px) var(--space-6, 24px);
@@ -255,12 +216,6 @@
   text-align: center;
   padding: var(--space-16, 4rem) 0;
   margin: 0;
-}
-
-@media (max-width: 768px) {
-  .h2-lead-meta {
-    gap: var(--space-2, 8px);
-  }
 }
 
 /* ---------- Subscribe bar ---------- */
@@ -356,7 +311,7 @@
   padding: var(--space-3, 12px) var(--space-6, 24px);
   font-family: var(--font-sans, system-ui, sans-serif);
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 0.02em;
   color: var(--color-bg-card, #fff);
   background: var(--h2-coral);
@@ -423,7 +378,7 @@
 }
 
 .h2-sub-label strong {
-  font-weight: 600;
+  font-weight: 400;
   color: var(--color-text, #1a1a1a);
 }
 
@@ -488,7 +443,7 @@
 .h2-stripe-flag {
   font-family: var(--font-serif, Georgia, serif);
   font-size: clamp(1.75rem, 3vw, 2.5rem);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.05;
   letter-spacing: -0.02em;
   color: var(--color-text, #1a1a1a);
@@ -557,14 +512,6 @@
   text-decoration: underline;
   text-decoration-color: var(--h2-coral);
   text-underline-offset: 3px;
-}
-
-/* Meta row: bordered date box + icon */
-.h2-stripe-card-meta {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2, 8px);
-  margin: 0;
 }
 
 /* Card excerpt */
@@ -660,10 +607,10 @@
   border-bottom: none;
 }
 
-/* Date — mono, neon green, very small */
+/* Date — sans, neon green, very small */
 .h2-rail-date {
   display: block;
-  font-family: var(--font-mono, ui-monospace, monospace);
+  font-family: var(--font-sans, system-ui);
   font-size: 0.625rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -696,7 +643,7 @@
   display: inline-block;
   font-family: var(--font-sans, system-ui, sans-serif);
   font-size: 0.6875rem;
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--h2-radar-fg);
@@ -931,7 +878,7 @@
 .h2-btn {
   font-family: var(--font-sans, system-ui, sans-serif);
   font-size: 0.9375rem;
-  font-weight: 600;
+  font-weight: 400;
   text-decoration: none;
   transition: background 0.15s ease, color 0.15s ease;
   white-space: nowrap;
@@ -981,7 +928,7 @@
 }
 
 .h2-book-inside-label {
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-size: 0.75rem;

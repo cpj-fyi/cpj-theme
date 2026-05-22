@@ -8,6 +8,8 @@
 
 <main class="h2-page">
 
+  <hr class="h2-rule h2-rule-fullbleed">
+
   {{!-- ============ Pub masthead (centered) ============ --}}
   <header class="h2-pubmast">
     <div class="h2-container">
@@ -15,9 +17,10 @@
       {{#if @site.description}}
         <p class="h2-pubmast-subhead">{{@site.description}}</p>
       {{/if}}
-      <hr class="h2-rule">
     </div>
   </header>
+
+  <hr class="h2-rule h2-rule-fullbleed">
 
   {{!-- ============ Top main: 3-column (Radar rail · Lead · Secondary) ============ --}}
   <section class="h2-section h2-topmain-section">
@@ -53,17 +56,16 @@
               <h2 class="h2-lead-title">
                 <a href="{{url}}">{{title}}</a>
               </h2>
-              <div class="h2-lead-meta">
-                <span class="h2-metabox">{{date format="MM DD YY"}}</span>
-                <span class="h2-metabox h2-metabox-icon" aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2">
-                    <path d="M2 3.5h10v6h-5l-3 2.5v-2.5h-2z"/>
-                  </svg>
+              <div class="ds-meta">
+                <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
+                <span class="ds-meta-item ds-meta-comments" aria-label="Comments">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  <span class="ds-meta-comments-text">{{comment_count}}</span>
                 </span>
                 {{#foreach tags}}
                   {{#match slug "essays"}}{{else match slug "radar"}}{{else match slug "five-things"}}{{else match slug "hidden-patterns"}}
                   {{else}}
-                    <a href="{{url}}" class="h2-lead-meta-tag">{{name}}</a>
+                    <a href="{{url}}" class="ds-meta-item topical-tag-pill">{{name}}</a>
                   {{/match}}
                 {{/foreach}}
               </div>
@@ -138,12 +140,11 @@
             {{#foreach posts}}
               <article class="h2-stripe-card">
                 <h3 class="h2-stripe-card-title"><a href="{{url}}">{{title}}</a></h3>
-                <div class="h2-stripe-card-meta">
-                  <span class="h2-metabox">{{date format="MM DD YY"}}</span>
-                  <span class="h2-metabox h2-metabox-icon" aria-hidden="true">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2">
-                      <path d="M2 3.5h10v6h-5l-3 2.5v-2.5h-2z"/>
-                    </svg>
+                <div class="ds-meta">
+                  <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
+                  <span class="ds-meta-item ds-meta-comments" aria-label="Comments">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    <span class="ds-meta-comments-text">{{comment_count}}</span>
                   </span>
                 </div>
                 <p class="h2-stripe-card-excerpt">{{excerpt words="35"}}</p>
@@ -183,12 +184,11 @@
             {{#foreach posts}}
               <article class="h2-stripe-card">
                 <h3 class="h2-stripe-card-title"><a href="{{url}}">{{title}}</a></h3>
-                <div class="h2-stripe-card-meta">
-                  <span class="h2-metabox">{{date format="MM DD YY"}}</span>
-                  <span class="h2-metabox h2-metabox-icon" aria-hidden="true">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2">
-                      <path d="M2 3.5h10v6h-5l-3 2.5v-2.5h-2z"/>
-                    </svg>
+                <div class="ds-meta">
+                  <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
+                  <span class="ds-meta-item ds-meta-comments" aria-label="Comments">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    <span class="ds-meta-comments-text">{{comment_count}}</span>
                   </span>
                 </div>
                 <p class="h2-stripe-card-excerpt">{{excerpt words="35"}}</p>
