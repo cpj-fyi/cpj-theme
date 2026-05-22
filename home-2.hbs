@@ -114,38 +114,44 @@
 
   {{!-- ============ AI stripe ============ --}}
   <section class="h2-section h2-stripe h2-stripe-ai">
-    <hr class="h2-rule">
+    {{#get "tags" filter="slug:ai" limit="1" include="count.posts"}}
+      {{#if tags}}
+        {{#foreach tags}}
+          <div class="h2-container">
+            <header class="h2-stripe-head">
+              <div class="h2-stripe-head-text">
+                <h2 class="h2-stripe-flag">{{name}}</h2>
+                {{#if description}}
+                  <p class="h2-stripe-tagline">{{description}}</p>
+                {{/if}}
+              </div>
+              <a class="h2-stripe-seeall" href="{{url}}">See all &rarr;</a>
+            </header>
+          </div>
+        {{/foreach}}
+      {{/if}}
+    {{/get}}
     <div class="h2-container">
-      <header class="h2-stripe-head">
-        <div class="h2-stripe-head-text">
-          <h2 class="h2-stripe-flag">AI</h2>
-          <p class="h2-stripe-tagline">How generative AI is reshaping the work — and the org.</p>
-        </div>
-        <a class="h2-stripe-seeall" href="/tag/ai/">See all →</a>
-      </header>
       {{#get "posts" filter="tag:ai" limit="3" include="tags"}}
         {{#if posts}}
           <div class="h2-stripe-grid">
             {{#foreach posts}}
               <article class="h2-stripe-card">
-                {{#if feature_image}}
-                  <a class="h2-stripe-card-image-link" href="{{url}}" aria-hidden="true" tabindex="-1">
-                    <figure class="h2-stripe-card-image">
-                      <img src="{{feature_image}}" alt="" loading="lazy" width="800" height="500">
-                    </figure>
-                  </a>
-                {{/if}}
                 <h3 class="h2-stripe-card-title"><a href="{{url}}">{{title}}</a></h3>
-                <p class="h2-stripe-card-meta">
-                  <span>{{date format="DD MMM YY"}}</span>
-                  <span aria-hidden="true">·</span>
-                  <span>{{reading_time}}</span>
-                </p>
+                <div class="h2-stripe-card-meta">
+                  <span class="h2-metabox">{{date format="MM DD YY"}}</span>
+                  <span class="h2-metabox h2-metabox-icon" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2">
+                      <path d="M2 3.5h10v6h-5l-3 2.5v-2.5h-2z"/>
+                    </svg>
+                  </span>
+                </div>
+                <p class="h2-stripe-card-excerpt">{{excerpt words="35"}}</p>
               </article>
             {{/foreach}}
           </div>
         {{else}}
-          <p class="h2-stripe-empty">No AI posts yet.</p>
+          <p class="h2-stripe-empty">No posts yet.</p>
         {{/if}}
       {{/get}}
     </div>
@@ -153,38 +159,44 @@
 
   {{!-- ============ Org Design stripe ============ --}}
   <section class="h2-section h2-stripe h2-stripe-orgdesign">
-    <hr class="h2-rule">
+    {{#get "tags" filter="slug:org-design" limit="1" include="count.posts"}}
+      {{#if tags}}
+        {{#foreach tags}}
+          <div class="h2-container">
+            <header class="h2-stripe-head">
+              <div class="h2-stripe-head-text">
+                <h2 class="h2-stripe-flag">{{name}}</h2>
+                {{#if description}}
+                  <p class="h2-stripe-tagline">{{description}}</p>
+                {{/if}}
+              </div>
+              <a class="h2-stripe-seeall" href="{{url}}">See all &rarr;</a>
+            </header>
+          </div>
+        {{/foreach}}
+      {{/if}}
+    {{/get}}
     <div class="h2-container">
-      <header class="h2-stripe-head">
-        <div class="h2-stripe-head-text">
-          <h2 class="h2-stripe-flag">Org Design</h2>
-          <p class="h2-stripe-tagline">How organizations actually work — and how to design them better.</p>
-        </div>
-        <a class="h2-stripe-seeall" href="/tag/org-design/">See all →</a>
-      </header>
       {{#get "posts" filter="tag:org-design" limit="3" include="tags"}}
         {{#if posts}}
           <div class="h2-stripe-grid">
             {{#foreach posts}}
               <article class="h2-stripe-card">
-                {{#if feature_image}}
-                  <a class="h2-stripe-card-image-link" href="{{url}}" aria-hidden="true" tabindex="-1">
-                    <figure class="h2-stripe-card-image">
-                      <img src="{{feature_image}}" alt="" loading="lazy" width="800" height="500">
-                    </figure>
-                  </a>
-                {{/if}}
                 <h3 class="h2-stripe-card-title"><a href="{{url}}">{{title}}</a></h3>
-                <p class="h2-stripe-card-meta">
-                  <span>{{date format="DD MMM YY"}}</span>
-                  <span aria-hidden="true">·</span>
-                  <span>{{reading_time}}</span>
-                </p>
+                <div class="h2-stripe-card-meta">
+                  <span class="h2-metabox">{{date format="MM DD YY"}}</span>
+                  <span class="h2-metabox h2-metabox-icon" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2">
+                      <path d="M2 3.5h10v6h-5l-3 2.5v-2.5h-2z"/>
+                    </svg>
+                  </span>
+                </div>
+                <p class="h2-stripe-card-excerpt">{{excerpt words="35"}}</p>
               </article>
             {{/foreach}}
           </div>
         {{else}}
-          <p class="h2-stripe-empty">No Org Design posts yet.</p>
+          <p class="h2-stripe-empty">No posts yet.</p>
         {{/if}}
       {{/get}}
     </div>
