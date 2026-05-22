@@ -133,6 +133,11 @@
 }
 
 
+/* 20px gap below lead meta row before lede starts */
+.h2-lead .ds-meta {
+  padding-bottom: 20px;
+}
+
 /* Lede wrap: positions the fade + button overlay */
 .h2-lead-lede-wrap {
   position: relative;
@@ -518,23 +523,6 @@
   line-height: 1.4;
   color: var(--color-text, #1a1a1a);
   margin: 0 0 var(--space-4, 16px) 0;
-}
-
-/* Byline — reading time + date only */
-.h2-story2-byline {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0 0.5em;
-  font-family: var(--font-sans, system-ui, sans-serif);
-  font-size: 0.75rem;
-  color: var(--color-text-secondary, #666666);
-  margin: 0 0 var(--space-6, 24px) 0;
-}
-
-.h2-story2-byline [aria-hidden="true"] {
-  color: var(--color-text-muted, #999999);
-  user-select: none;
 }
 
 /* Continue link — same coral italic as lead */
