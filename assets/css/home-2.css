@@ -63,6 +63,7 @@
   font-family: var(--font-serif, Georgia, serif);
   font-size: clamp(2.5rem, 6vw, 4.5rem);
   font-weight: 700;
+  font-style: italic;
   line-height: 1.05;
   letter-spacing: -0.02em;
   color: var(--color-text, #1A1A1A);
@@ -83,6 +84,10 @@
   .h2-pubmast {
     padding: var(--space-8, 2rem) 0 var(--space-6, 1.5rem);
   }
+}
+
+.h2-pubmast hr.h2-rule {
+  margin-top: var(--space-8, 2rem);
 }
 
 /* ---------- Lead story (center column of 3-column top main) ---------- */
@@ -119,44 +124,56 @@
   text-underline-offset: 4px;
 }
 
-/* Deck — italic serif, comfortable reading size */
-.h2-lead-deck {
-  font-family: var(--font-serif, Georgia, serif);
-  font-style: italic;
-  font-size: 1.375rem;
-  line-height: 1.35;
-  color: var(--color-text, #1a1a1a);
-  margin: 0 0 var(--space-5, 20px) 0;
-}
-
-/* Byline strip — small sans, middot-separated */
-.h2-lead-byline {
+/* Lead meta row: metabox + icon + tag */
+.h2-lead-meta {
   display: flex;
-  align-items: baseline;
   flex-wrap: wrap;
-  gap: 0 0.5em;
-  font-family: var(--font-sans, system-ui, sans-serif);
-  font-size: 0.8125rem;
-  color: var(--color-text-secondary, #666666);
-  margin: 0 0 var(--space-10, 40px) 0;
+  align-items: center;
+  gap: var(--space-3, 12px);
+  margin: var(--space-4, 16px) 0 var(--space-6, 24px);
 }
 
-.h2-lead-byline [aria-hidden="true"] {
-  color: var(--color-text-muted, #999999);
-  user-select: none;
+.h2-metabox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 26px;
+  padding: 0 8px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text, #1A1A1A);
+  white-space: nowrap;
 }
 
-/* Hero image — full editorial column width */
-.h2-lead-hero {
-  margin: 0 0 var(--space-10, 40px) 0;
+.h2-metabox-icon {
+  padding: 0 6px;
+  color: var(--color-text-secondary, #666);
 }
 
-.h2-lead-hero img {
+.h2-metabox-icon svg {
   display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+}
+
+.h2-lead-meta-tag {
+  font-family: var(--font-sans, system-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--h2-coral);
+  text-decoration: none;
+}
+
+.h2-lead-meta-tag:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Lede wrap: positions the fade + button overlay */
+.h2-lead-lede-wrap {
+  position: relative;
 }
 
 /* Lede text — body serif, no drop cap, generous leading */
@@ -165,7 +182,6 @@
   font-size: 1.0625rem;
   line-height: 1.6;
   color: var(--color-text, #1a1a1a);
-  margin-bottom: var(--space-8, 32px);
 }
 
 /* Strip any Ghost content chrome that bleeds in */
@@ -177,23 +193,57 @@
   margin-bottom: 0;
 }
 
-/* "Continue reading →" — editorial text link, coral, no button chrome */
-.h2-lead-continue {
-  margin: 0;
+.h2-lead-lede h2,
+.h2-lead-lede h3,
+.h2-lead-lede h4 {
+  font-family: var(--font-serif, Georgia, serif);
+  font-weight: 400;
+  margin: var(--space-6, 24px) 0 var(--space-3, 12px);
+  line-height: 1.2;
 }
 
-.h2-lead-continue a {
+/* Gradient fade — transparent at top, page-bg at bottom */
+.h2-lead-lede-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(248, 248, 248, 0) 0%,
+    var(--h2-page-bg, #F8F8F8) 70%,
+    var(--h2-page-bg, #F8F8F8) 100%);
+}
+
+/* "Continue reading →" — coral filled button, centered at bottom of wrap */
+.h2-lead-continue-btn {
+  position: absolute;
+  bottom: var(--space-2, 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-3, 12px) var(--space-6, 24px);
+  background: var(--color-accent, #FF3252);
+  color: var(--color-bg-card, #fff);
   font-family: var(--font-serif, Georgia, serif);
   font-style: italic;
   font-size: 1rem;
-  color: var(--h2-coral);
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.15s ease;
+  border-radius: 2px;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+  z-index: 1;
 }
 
-.h2-lead-continue a:hover {
-  border-bottom-color: var(--h2-coral);
+.h2-lead-continue-btn:hover {
+  background: var(--color-accent-hover, #E02545);
+}
+
+.h2-lead-continue-btn:focus-visible {
+  outline: 2px solid var(--h2-coral);
+  outline-offset: 3px;
 }
 
 /* Empty state */
@@ -208,13 +258,8 @@
 }
 
 @media (max-width: 768px) {
-  .h2-lead-byline {
-    gap: 0 0.4em;
-    font-size: 0.75rem;
-  }
-
-  .h2-lead-deck {
-    font-size: 1.1875rem;
+  .h2-lead-meta {
+    gap: var(--space-2, 8px);
   }
 }
 
@@ -729,19 +774,6 @@
   user-select: none;
 }
 
-/* Feature image — 4:3, full column width */
-.h2-story2-hero {
-  margin: 0 0 var(--space-6, 24px) 0;
-}
-
-.h2-story2-hero img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-
 /* Continue link — same coral italic as lead */
 .h2-story2-continue {
   margin: 0;
@@ -759,6 +791,11 @@
 
 .h2-story2-continue a:hover {
   border-bottom-color: var(--h2-coral);
+}
+
+/* Hairline separator below story 2 continue link */
+.h2-story2-rule {
+  margin-top: var(--space-6, 24px);
 }
 
 /* ---- Responsive: ≤1024px → 2-col (Lead spans, Story 2 + Rail side by side below) ---- */
@@ -998,7 +1035,6 @@
 
 /* ---------- Focus states ---------- */
 .h2-lead-title a:focus-visible,
-.h2-lead-continue a:focus-visible,
 .h2-stripe-card-title a:focus-visible,
 .h2-stripe-seeall:focus-visible,
 .h2-book-inside a:focus-visible,

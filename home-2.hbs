@@ -15,6 +15,7 @@
       {{#if @site.description}}
         <p class="h2-pubmast-subhead">{{@site.description}}</p>
       {{/if}}
+      <hr class="h2-rule">
     </div>
   </header>
 
@@ -52,31 +53,27 @@
               <h2 class="h2-lead-title">
                 <a href="{{url}}">{{title}}</a>
               </h2>
-              {{#if custom_excerpt}}
-                <p class="h2-lead-deck">{{custom_excerpt}}</p>
-              {{else}}
-                <p class="h2-lead-deck">{{excerpt words="40"}}</p>
-              {{/if}}
-              <p class="h2-lead-byline">
-                <span>By {{primary_author.name}}</span>
-                <span aria-hidden="true">·</span>
-                <span>{{reading_time}}</span>
-                <span aria-hidden="true">·</span>
-                <span>{{date format="DD MMM YY"}}</span>
-              </p>
-              <figure class="h2-lead-hero">
-                <img src="{{#if feature_image}}{{feature_image}}{{else}}{{@custom.art_url}}/{{slug}}.svg{{/if}}"
-                     alt=""
-                     loading="eager"
-                     width="1200"
-                     height="630">
-              </figure>
-              <div class="h2-lead-lede">
-                {{content words="120"}}
+              <div class="h2-lead-meta">
+                <span class="h2-metabox">{{date format="MM DD YY"}}</span>
+                <span class="h2-metabox h2-metabox-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2">
+                    <path d="M2 3.5h10v6h-5l-3 2.5v-2.5h-2z"/>
+                  </svg>
+                </span>
+                {{#foreach tags}}
+                  {{#match slug "essays"}}{{else match slug "radar"}}{{else match slug "five-things"}}{{else match slug "hidden-patterns"}}
+                  {{else}}
+                    <a href="{{url}}" class="h2-lead-meta-tag">{{name}}</a>
+                  {{/match}}
+                {{/foreach}}
               </div>
-              <p class="h2-lead-continue">
-                <a href="{{url}}">Continue reading →</a>
-              </p>
+              <div class="h2-lead-lede-wrap">
+                <div class="h2-lead-lede">
+                  {{content words="220"}}
+                </div>
+                <div class="h2-lead-lede-fade" aria-hidden="true"></div>
+                <a class="h2-lead-continue-btn" href="{{url}}">Continue reading &rarr;</a>
+              </div>
             {{/foreach}}
           {{else}}
             <p class="h2-lead-empty">No essays yet — back soon.</p>
@@ -103,14 +100,10 @@
                 <span aria-hidden="true">·</span>
                 <span>{{date format="DD MMM YY"}}</span>
               </p>
-              {{#if feature_image}}
-                <figure class="h2-story2-hero">
-                  <img src="{{feature_image}}" alt="" loading="lazy" width="800" height="500">
-                </figure>
-              {{/if}}
               <p class="h2-story2-continue">
                 <a href="{{url}}">Continue reading →</a>
               </p>
+              <hr class="h2-rule h2-story2-rule">
             {{/foreach}}
           {{/if}}
         {{/get}}
