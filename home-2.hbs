@@ -29,7 +29,6 @@
       {{!-- Left rail: Radar --}}
       <aside class="h2-rail h2-rail-radar">
         <header class="h2-rail-head">
-          <span class="radar-dot"></span>
           <h2 class="h2-flag h2-rail-flag">Radar</h2>
         </header>
         {{#get "posts" filter="tag:radar" limit="5" include="tags"}}
@@ -109,6 +108,32 @@
             {{/foreach}}
           {{/if}}
         {{/get}}
+        <div class="h2-story2-bio">
+          <ul class="h2-story2-social" aria-label="Social accounts">
+            {{#if @site.twitter}}
+              <li>
+                <a href="https://twitter.com/{{@site.twitter}}" aria-label="X (Twitter)" rel="me noopener" target="_blank">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </a>
+              </li>
+            {{/if}}
+            {{#if @site.facebook}}
+              <li>
+                <a href="https://www.facebook.com/{{@site.facebook}}" aria-label="Facebook" rel="me noopener" target="_blank">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+                  </svg>
+                </a>
+              </li>
+            {{/if}}
+          </ul>
+          <p class="h2-story2-bio-text">
+            cpj.fyi is the site of me, Clay Parker Jones. I am Senior Director of Org Design &amp; Development at Airbnb, and author of <em>Hidden Patterns</em>. The archives here stretch back to 2006.
+          </p>
+          <a class="h2-story2-subscribe" href="#/portal/signup" data-portal="signup">Subscribe &rarr;</a>
+        </div>
       </article>
 
     </div>
@@ -202,38 +227,6 @@
     </div>
   </section>
 
-  {{!-- ============ Subscribe bar ============ --}}
-  <section class="h2-sub" data-mode="portal">
-    <hr class="h2-rule">
-    <div class="h2-container h2-sub-inner">
-      <div class="h2-sub-pitch">
-        <h2 class="h2-sub-heading">Subscribe.</h2>
-        <p class="h2-sub-tagline">Pick what arrives.</p>
-      </div>
-      <div class="h2-sub-form">
-        <a href="#/portal/signup" class="h2-sub-row" data-portal="signup" aria-label="Open signup">
-          <span class="h2-sub-input-mock" aria-hidden="true">your@email.com</span>
-          <span class="h2-sub-submit" aria-hidden="true">Subscribe →</span>
-        </a>
-        <ul class="h2-sub-options" aria-hidden="true">
-          <li class="h2-sub-option is-checked">
-            <span class="h2-sub-check"></span>
-            <span class="h2-sub-label"><strong>Essays</strong> — Long-form pieces, every few weeks.</span>
-          </li>
-          <li class="h2-sub-option is-checked">
-            <span class="h2-sub-check"></span>
-            <span class="h2-sub-label"><strong>Five Things</strong> — Short list-format posts.</span>
-          </li>
-          <li class="h2-sub-option is-checked">
-            <span class="h2-sub-check"></span>
-            <span class="h2-sub-label"><strong>Radar</strong> — Daily-ish observations on org design.</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <hr class="h2-rule">
-  </section>
-
   {{!-- ============ Hidden Patterns module ============ --}}
   <section class="h2-section h2-book-section">
     <div class="h2-container h2-book">
@@ -250,12 +243,12 @@
           Most &ldquo;people problems&rdquo; are org design problems. This book shows you how to fix them for good.
         </p>
         <blockquote class="h2-book-pullquote">
-          <p>&ldquo;If <em>A Pattern Language</em> was for buildings, <em>Hidden Patterns</em> is for the invisible architecture of work.&rdquo;</p>
-          <cite class="h2-book-pullquote-cite">&mdash; Mick McConnell, Head of Space, Airbnb</cite>
+          <p>&ldquo;Most management books offer theory; <em>Hidden Patterns</em> offers transformation. It empowers anyone to make practical, concrete changes that yield tangible results and elevate every dimension of work&mdash;from revenue and profit to meaning and satisfaction.&rdquo;</p>
+          <cite class="h2-book-pullquote-cite">&mdash; Marissa Jarratt, CMO, 7-Eleven</cite>
         </blockquote>
         <div class="h2-book-actions">
           <a class="h2-btn h2-btn-primary" href="/buy/">Buy the book &rarr;</a>
-          <a class="h2-btn h2-btn-text" href="/foundations/">Read a chapter</a>
+          <a class="h2-btn h2-btn-text" href="/introduction/">Read a free chapter</a>
         </div>
         <p class="h2-book-inside">
           <span class="h2-book-inside-label">Inside:</span>
@@ -287,8 +280,7 @@
       <h2 class="h2-talks-title" id="h2-talks-title">Bring this thinking to your team.</h2>
       <p class="h2-talks-deck">Keynotes and workshops on organization design, AI, and the patterns that shape how work actually works.</p>
       <div class="h2-talks-actions">
-        <a class="h2-btn h2-btn-primary h2-talks-cta" href="/speaking/">See speaking →</a>
-        <a class="h2-btn h2-btn-text h2-talks-cta-secondary" href="/talks/">Recent talks</a>
+        <a class="h2-btn h2-btn-primary h2-talks-cta" href="/talks/">See recent engagements &amp; book &rarr;</a>
       </div>
     </div>
   </section>

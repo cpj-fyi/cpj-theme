@@ -218,188 +218,6 @@
   margin: 0;
 }
 
-/* ---------- Subscribe bar ---------- */
-
-.h2-sub {
-  /* The section itself has no background — sits on page #F8F8F8 */
-}
-
-.h2-sub-inner {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-16, 4rem);
-  padding-top: var(--space-16, 4rem);
-  padding-bottom: var(--space-16, 4rem);
-}
-
-/* Left: pitch */
-.h2-sub-pitch {
-  flex: 0 0 auto;
-  min-width: 200px;
-}
-
-.h2-sub-heading {
-  font-family: var(--font-serif, Georgia, serif);
-  font-size: clamp(2rem, 3vw, 2.5rem);
-  font-weight: 400;
-  line-height: 1.0;
-  letter-spacing: -0.02em;
-  color: var(--color-text, #1a1a1a);
-  margin: 0 0 var(--space-3, 12px) 0;
-}
-
-.h2-sub-tagline {
-  font-family: var(--font-serif, Georgia, serif);
-  font-style: italic;
-  font-size: 1.125rem;
-  line-height: 1.35;
-  color: var(--color-text-secondary, #666666);
-  margin: 0;
-}
-
-/* Right: form */
-.h2-sub-form {
-  flex: 1 1 0;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-5, 20px);
-}
-
-/* Input + button row — the whole row is a link to Portal */
-.h2-sub-row {
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  border: 1px solid rgba(0, 0, 0, 0.18);
-  border-radius: 3px;
-  overflow: hidden;
-  text-decoration: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  cursor: pointer;
-}
-
-.h2-sub-row:hover {
-  border-color: var(--h2-coral);
-  box-shadow: 0 0 0 1px var(--h2-coral);
-}
-
-.h2-sub-row:focus-visible {
-  outline: 2px solid var(--h2-coral);
-  outline-offset: 2px;
-}
-
-.h2-sub-input-mock {
-  flex: 1 1 0;
-  min-width: 0;
-  padding: var(--space-3, 12px) var(--space-4, 16px);
-  font-family: var(--font-sans, system-ui, sans-serif);
-  font-size: 0.9375rem;
-  color: var(--color-text-muted, #999999);
-  background: var(--color-bg-card, #fff);
-  cursor: text;
-  user-select: none;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.h2-sub-submit {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  padding: var(--space-3, 12px) var(--space-6, 24px);
-  font-family: var(--font-sans, system-ui, sans-serif);
-  font-size: 0.875rem;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  color: var(--color-bg-card, #fff);
-  background: var(--h2-coral);
-  white-space: nowrap;
-  transition: background 0.15s ease;
-}
-
-.h2-sub-row:hover .h2-sub-submit {
-  background: var(--color-accent-hover, #E02545);
-}
-
-/* Newsletter option rows — purely decorative */
-.h2-sub-options {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3, 12px);
-}
-
-.h2-sub-option {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-3, 12px);
-}
-
-/* CSS-only checkbox: small square, coral check when .is-checked */
-.h2-sub-check {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-  border: 1.5px solid rgba(0, 0, 0, 0.25);
-  border-radius: 2px;
-  background: var(--color-bg-card, #fff);
-  margin-top: 2px; /* optical alignment with label text */
-  position: relative;
-}
-
-.h2-sub-option.is-checked .h2-sub-check {
-  background: var(--h2-coral);
-  border-color: var(--h2-coral);
-}
-
-/* Checkmark via pseudo-element */
-.h2-sub-option.is-checked .h2-sub-check::after {
-  content: "";
-  display: block;
-  width: 9px;
-  height: 5px;
-  border-left: 2px solid var(--color-bg-card, #fff);
-  border-bottom: 2px solid var(--color-bg-card, #fff);
-  transform: rotate(-45deg) translate(0px, -1px);
-}
-
-.h2-sub-label {
-  font-family: var(--font-sans, system-ui, sans-serif);
-  font-size: 0.875rem;
-  line-height: 1.4;
-  color: var(--color-text-secondary, #666666);
-}
-
-.h2-sub-label strong {
-  font-weight: 400;
-  color: var(--color-text, #1a1a1a);
-}
-
-/* Mobile: stack pitch above form */
-@media (max-width: 768px) {
-  .h2-sub-inner {
-    flex-direction: column;
-    gap: var(--space-8, 32px);
-    padding-top: var(--space-10, 40px);
-    padding-bottom: var(--space-10, 40px);
-  }
-
-  .h2-sub-pitch {
-    min-width: 0;
-  }
-
-  .h2-sub-heading {
-    font-size: 2rem;
-  }
-}
-
 /* ---------- Topic stripes ---------- */
 
 /* Full-bleed colored band */
@@ -565,9 +383,12 @@
 /* ---- Left rail: Radar ---- */
 
 .h2-rail-radar {
-  background: var(--h2-radar-bg);
+  background: rgba(20, 20, 20, 0.55);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
   color: var(--color-bg-card, #fff);
-  border-radius: 2px;
   padding: var(--space-5, 20px);
   min-width: 0;
 }
@@ -738,6 +559,85 @@
 /* Hairline separator below story 2 continue link */
 .h2-story2-rule {
   margin-top: var(--space-6, 24px);
+}
+
+/* Bio + social + subscribe block inside Story 2 */
+.h2-story2-bio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+  margin-top: var(--space-6, 24px);
+}
+
+.h2-story2-social {
+  display: flex;
+  gap: var(--space-3, 12px);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.h2-story2-social li {
+  margin: 0;
+}
+
+.h2-story2-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--color-text, #1A1A1A);
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.h2-story2-social a:hover {
+  background: var(--color-text, #1A1A1A);
+  color: var(--color-bg-card, #fff);
+}
+
+.h2-story2-social a:focus-visible {
+  outline: 2px solid var(--h2-coral);
+  outline-offset: 3px;
+}
+
+.h2-story2-bio-text {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--color-text, #1A1A1A);
+  margin: 0;
+}
+
+.h2-story2-bio-text em {
+  font-style: italic;
+}
+
+.h2-story2-subscribe {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3, 12px) var(--space-5, 20px);
+  background: var(--color-accent, #FF3252);
+  color: var(--color-bg-card, #fff);
+  font-family: var(--font-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 1rem;
+  text-decoration: none;
+  border-radius: 2px;
+  align-self: flex-start;
+  transition: background 0.15s;
+}
+
+.h2-story2-subscribe:hover {
+  background: var(--color-accent-hover, #E02545);
+}
+
+.h2-story2-subscribe:focus-visible {
+  outline: 2px solid var(--h2-coral);
+  outline-offset: 3px;
 }
 
 /* ---- Responsive: ≤1024px → 2-col (Lead spans, Story 2 + Rail side by side below) ---- */
@@ -988,8 +888,7 @@
   outline-offset: 2px;
 }
 
-.h2-talks-cta:focus-visible,
-.h2-talks-cta-secondary:focus-visible {
+.h2-talks-cta:focus-visible {
   outline: 2px solid var(--color-bg-card, #fff);
   outline-offset: 3px;
 }
@@ -1050,9 +949,9 @@
   width: 100%;
 }
 
-/* Eyebrow flag — neon green pops on dark background */
+/* Eyebrow flag — coral on dark background */
 .h2-talks-flag {
-  color: var(--h2-radar-fg);
+  color: var(--h2-coral);
   margin-bottom: var(--space-5, 20px);
 }
 
@@ -1088,17 +987,6 @@
 }
 
 /* Primary CTA: coral fill reads well on dark image — keep as-is from h2-btn-primary */
-
-/* Text link CTA: override coral text to white for dark background readability */
-.h2-talks-cta-secondary {
-  color: rgba(255, 255, 255, 0.9);
-  border-bottom-color: transparent;
-}
-
-.h2-talks-cta-secondary:hover {
-  color: var(--color-bg-card, #fff);
-  border-bottom-color: rgba(255, 255, 255, 0.6);
-}
 
 /* Responsive: ≤768px */
 @media (max-width: 768px) {
