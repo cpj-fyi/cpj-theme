@@ -205,9 +205,12 @@
       {{#get "posts" filter="tag:ai" limit="all" order="published_at asc"}}
         {{#if posts}}
           <div class="h2-violin" aria-label="Filing density">
-            <svg class="h2-violin-svg" data-violin
-                 data-posts='[{{#foreach posts}}"{{date format="YYYY-MM"}}"{{#unless @last}},{{/unless}}{{/foreach}}]'
-                 aria-hidden="true"></svg>
+            <svg class="h2-violin-svg" data-violin aria-hidden="true"></svg>
+            <ul class="h2-violin-data" hidden aria-hidden="true">
+              {{#foreach posts}}
+                <li data-d="{{date format="YYYY-MM"}}" data-t="{{title}}" data-u="{{url}}"></li>
+              {{/foreach}}
+            </ul>
             <span class="h2-violin-caption">
               <b>{{posts.length}}</b>&nbsp;posts &middot;
               {{#foreach posts limit="1"}}&rsquo;{{date format="YY"}}{{/foreach}}
@@ -266,9 +269,12 @@
       {{#get "posts" filter="tag:org-design" limit="all" order="published_at asc"}}
         {{#if posts}}
           <div class="h2-violin" aria-label="Filing density">
-            <svg class="h2-violin-svg" data-violin
-                 data-posts='[{{#foreach posts}}"{{date format="YYYY-MM"}}"{{#unless @last}},{{/unless}}{{/foreach}}]'
-                 aria-hidden="true"></svg>
+            <svg class="h2-violin-svg" data-violin aria-hidden="true"></svg>
+            <ul class="h2-violin-data" hidden aria-hidden="true">
+              {{#foreach posts}}
+                <li data-d="{{date format="YYYY-MM"}}" data-t="{{title}}" data-u="{{url}}"></li>
+              {{/foreach}}
+            </ul>
             <span class="h2-violin-caption">
               <b>{{posts.length}}</b>&nbsp;posts &middot;
               {{#foreach posts limit="1"}}&rsquo;{{date format="YY"}}{{/foreach}}
@@ -421,23 +427,31 @@
 
       const CANDIDATES = buildCandidates();
 
+      function readPosts(svg) {
+        const root = svg.closest('.h2-violin');
+        if (!root) return [];
+        const items = root.querySelectorAll('.h2-violin-data li');
+        return Array.from(items).map(function (li) {
+          return {
+            d: li.getAttribute('data-d') || '',
+            t: li.getAttribute('data-t') || '',
+            u: li.getAttribute('data-u') || '',
+          };
+        }).filter(function (p) { return p.d; });
+      }
+
       function renderOne(svg) {
-        let posts;
-        try {
-          posts = JSON.parse(svg.getAttribute('data-posts') || '[]');
-        } catch (e) {
-          posts = [];
-        }
+        const posts = readPosts(svg);
         if (!posts.length) return;
 
-        const months = posts.map(monthIndex);
+        const months = posts.map(function (p) { return monthIndex(p.d); });
         const xMin = Math.min.apply(null, months);
         const xMax = Math.max.apply(null, months);
         const range = Math.max(1, xMax - xMin);
 
         while (svg.firstChild) svg.removeChild(svg.firstChild);
         const W = svg.clientWidth || svg.getBoundingClientRect().width || 800;
-        const H = parseFloat(getComputedStyle(svg).height) || 28;
+        const H = parseFloat(getComputedStyle(svg).height) || 36;
         const cy = H / 2;
         svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
         svg.setAttribute('preserveAspectRatio', 'none');
@@ -453,7 +467,7 @@
         line.setAttribute('stroke-width', '1');
         svg.appendChild(line);
 
-        // Year ticks below the centerline
+        // Year ticks
         const startYear = Math.ceil(xMin / 12);
         const endYear = Math.floor(xMax / 12);
         for (let y = startYear; y <= endYear; y++) {
@@ -471,9 +485,12 @@
           svg.appendChild(tick);
         }
 
-        // Place dots — horizontal-first candidate search
+        // Pair posts with placed positions (sorted by month asc, matching previous behavior)
+        const indexed = posts.map(function (p, i) {
+          return { post: p, m: months[i] };
+        }).sort(function (a, b) { return a.m - b.m; });
+
         const placed = [];
-        const sorted = months.slice().sort((a, b) => a - b);
 
         function collides(x, y) {
           for (let i = 0; i < placed.length; i++) {
@@ -485,9 +502,9 @@
           return false;
         }
 
-        for (let i = 0; i < sorted.length; i++) {
-          const m = sorted[i];
-          const idealX = ((m - xMin) / range) * W;
+        for (let i = 0; i < indexed.length; i++) {
+          const item = indexed[i];
+          const idealX = ((item.m - xMin) / range) * W;
           let chosen = null;
           for (let c = 0; c < CANDIDATES.length; c++) {
             const cx = idealX + CANDIDATES[c][0];
@@ -498,12 +515,25 @@
             }
           }
           if (!chosen) chosen = { x: idealX, y: cy };
-          chosen.last = i === sorted.length - 1;
+          chosen.post = item.post;
+          chosen.last = i === indexed.length - 1;
           placed.push(chosen);
         }
 
+        // Build each dot as an <a class="h2-violin-dot"> wrapping circle + hit + leader + text
+        const LEADER_LEN = 14;
+        const TEXT_GAP = 4;
+
         for (let i = 0; i < placed.length; i++) {
           const p = placed[i];
+
+          const a = document.createElementNS(SVG_NS, 'a');
+          a.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', p.post.u);
+          a.setAttribute('href', p.post.u);
+          a.setAttribute('class', 'h2-violin-dot');
+          a.setAttribute('tabindex', '0');
+
+          // Visible dot
           const c = document.createElementNS(SVG_NS, 'circle');
           c.setAttribute('cx', p.x.toFixed(2));
           c.setAttribute('cy', p.y.toFixed(2));
@@ -512,15 +542,42 @@
             c.setAttribute('fill', '#FF3252');
             c.setAttribute('stroke', '#1A1A1A');
             c.setAttribute('stroke-opacity', '0.20');
-            c.setAttribute('stroke-width', '0.75');
           } else {
             c.setAttribute('fill', '#1A1A1A');
             c.setAttribute('fill-opacity', '0.50');
             c.setAttribute('stroke', '#1A1A1A');
             c.setAttribute('stroke-opacity', '0.55');
-            c.setAttribute('stroke-width', '0.75');
           }
-          svg.appendChild(c);
+          c.setAttribute('stroke-width', '0.75');
+          a.appendChild(c);
+
+          // Invisible larger hit target (~9px radius)
+          const hit = document.createElementNS(SVG_NS, 'circle');
+          hit.setAttribute('cx', p.x.toFixed(2));
+          hit.setAttribute('cy', p.y.toFixed(2));
+          hit.setAttribute('r', 9);
+          hit.setAttribute('class', 'h2-violin-hit');
+          a.appendChild(hit);
+
+          // Leader line (vertical, dot top → tooltip baseline area)
+          const leader = document.createElementNS(SVG_NS, 'line');
+          leader.setAttribute('x1', p.x.toFixed(2));
+          leader.setAttribute('x2', p.x.toFixed(2));
+          leader.setAttribute('y1', (p.y - dotR).toFixed(2));
+          leader.setAttribute('y2', (p.y - dotR - LEADER_LEN).toFixed(2));
+          leader.setAttribute('class', 'h2-violin-leader');
+          a.appendChild(leader);
+
+          // Title text (SF Mono small)
+          const text = document.createElementNS(SVG_NS, 'text');
+          text.setAttribute('x', p.x.toFixed(2));
+          text.setAttribute('y', (p.y - dotR - LEADER_LEN - TEXT_GAP).toFixed(2));
+          text.setAttribute('text-anchor', 'middle');
+          text.setAttribute('class', 'h2-violin-tip');
+          text.textContent = p.post.t;
+          a.appendChild(text);
+
+          svg.appendChild(a);
         }
       }
 

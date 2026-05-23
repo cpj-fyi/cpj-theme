@@ -339,6 +339,58 @@
   font-weight: 400;
 }
 
+.h2-violin-data {
+  /* hidden data carrier — the JS reads its li elements to build dots */
+  display: none;
+}
+
+/* Dot group: hover state reveals leader + title */
+.h2-violin-dot {
+  cursor: pointer;
+}
+
+.h2-violin-leader,
+.h2-violin-tip {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 100ms ease;
+}
+
+.h2-violin-dot:hover .h2-violin-leader,
+.h2-violin-dot:hover .h2-violin-tip,
+.h2-violin-dot:focus-visible .h2-violin-leader,
+.h2-violin-dot:focus-visible .h2-violin-tip {
+  opacity: 1;
+}
+
+.h2-violin-leader {
+  stroke: #1A1A1A;
+  stroke-width: 1;
+  stroke-opacity: 0.7;
+}
+
+.h2-violin-tip {
+  font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 400;
+  fill: #1A1A1A;
+  letter-spacing: 0;
+  paint-order: stroke;
+  stroke: rgba(245, 237, 219, 0.85);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.h2-violin-hit {
+  fill: transparent;
+  pointer-events: all;
+}
+
+/* Bump the .h2-violin top margin so the tooltip has room to extend above */
+.h2-violin {
+  margin-top: 32px;
+}
+
 /* Posts grid */
 .h2-stripe-grid {
   display: grid;
