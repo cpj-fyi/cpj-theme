@@ -210,24 +210,41 @@
 
   {{!-- ============ AI stripe ============ --}}
   <section class="h2-section h2-stripe h2-stripe-ai">
-    {{#get "tags" filter="slug:ai" limit="1" include="count.posts"}}
-      {{#if tags}}
-        {{#foreach tags}}
-          <div class="h2-container">
-            <header class="h2-stripe-head">
-              <div class="h2-stripe-head-text">
-                <h2 class="h2-stripe-flag">{{name}}</h2>
-                {{#if description}}
-                  <p class="h2-stripe-tagline">{{description}}</p>
-                {{/if}}
-              </div>
-              <a class="h2-stripe-seeall" href="{{url}}">See all &rarr;</a>
-            </header>
-          </div>
-        {{/foreach}}
-      {{/if}}
-    {{/get}}
     <div class="h2-container">
+      {{#get "tags" filter="slug:ai" limit="1"}}
+        {{#if tags}}
+          {{#foreach tags}}
+            <header class="h2-stripe-h">
+              <div class="h2-stripe-h-left">
+                <span class="h2-stripe-eyebrow" aria-hidden="true">Theme</span>
+                <h2 class="h2-stripe-title">{{name}}</h2>
+              </div>
+              <a class="h2-stripe-see" href="{{url}}">See all <span aria-hidden="true">&rarr;</span></a>
+            </header>
+            {{#if description}}
+              <p class="h2-stripe-dek">{{description}}</p>
+            {{/if}}
+          {{/foreach}}
+        {{/if}}
+      {{/get}}
+
+      {{!-- Violin rule: dots = ALL posts in the category, regardless of essays/speaking filter --}}
+      {{#get "posts" filter="tag:ai" limit="all" order="published_at asc"}}
+        {{#if posts}}
+          <div class="h2-violin" aria-label="Filing density">
+            <svg class="h2-violin-svg" data-violin
+                 data-posts='[{{#foreach posts}}"{{date format="YYYY-MM"}}"{{#unless @last}},{{/unless}}{{/foreach}}]'
+                 aria-hidden="true"></svg>
+            <span class="h2-violin-caption">
+              <b>{{posts.length}}</b>&nbsp;posts &middot;
+              {{#foreach posts limit="1"}}&rsquo;{{date format="YY"}}{{/foreach}}
+              &mdash;
+              {{#foreach posts}}{{#if @last}}&rsquo;{{date format="YY"}}{{/if}}{{/foreach}}
+            </span>
+          </div>
+        {{/if}}
+      {{/get}}
+
       {{#get "posts" filter="tag:ai+tag:[essays,speaking]" limit="3" include="tags"}}
         {{#if posts}}
           <div class="h2-stripe-grid">
@@ -238,8 +255,8 @@
                   <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
                   <span class="ds-meta-item ds-meta-comments" aria-label="Comments">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                    <span class="ds-meta-comments-text">{{comment_count}}</span>
-                  </span>
+                  <span class="ds-meta-comments-text">{{comment_count}}</span>
+                </span>
                 </div>
                 <p class="h2-stripe-card-excerpt">{{excerpt words="35"}}</p>
               </article>
@@ -254,24 +271,41 @@
 
   {{!-- ============ Org Design stripe ============ --}}
   <section class="h2-section h2-stripe h2-stripe-orgdesign">
-    {{#get "tags" filter="slug:org-design" limit="1" include="count.posts"}}
-      {{#if tags}}
-        {{#foreach tags}}
-          <div class="h2-container">
-            <header class="h2-stripe-head">
-              <div class="h2-stripe-head-text">
-                <h2 class="h2-stripe-flag">{{name}}</h2>
-                {{#if description}}
-                  <p class="h2-stripe-tagline">{{description}}</p>
-                {{/if}}
-              </div>
-              <a class="h2-stripe-seeall" href="{{url}}">See all &rarr;</a>
-            </header>
-          </div>
-        {{/foreach}}
-      {{/if}}
-    {{/get}}
     <div class="h2-container">
+      {{#get "tags" filter="slug:org-design" limit="1"}}
+        {{#if tags}}
+          {{#foreach tags}}
+            <header class="h2-stripe-h">
+              <div class="h2-stripe-h-left">
+                <span class="h2-stripe-eyebrow" aria-hidden="true">Theme</span>
+                <h2 class="h2-stripe-title">{{name}}</h2>
+              </div>
+              <a class="h2-stripe-see" href="{{url}}">See all <span aria-hidden="true">&rarr;</span></a>
+            </header>
+            {{#if description}}
+              <p class="h2-stripe-dek">{{description}}</p>
+            {{/if}}
+          {{/foreach}}
+        {{/if}}
+      {{/get}}
+
+      {{!-- Violin rule: dots = ALL posts in the category, regardless of essays/speaking filter --}}
+      {{#get "posts" filter="tag:org-design" limit="all" order="published_at asc"}}
+        {{#if posts}}
+          <div class="h2-violin" aria-label="Filing density">
+            <svg class="h2-violin-svg" data-violin
+                 data-posts='[{{#foreach posts}}"{{date format="YYYY-MM"}}"{{#unless @last}},{{/unless}}{{/foreach}}]'
+                 aria-hidden="true"></svg>
+            <span class="h2-violin-caption">
+              <b>{{posts.length}}</b>&nbsp;posts &middot;
+              {{#foreach posts limit="1"}}&rsquo;{{date format="YY"}}{{/foreach}}
+              &mdash;
+              {{#foreach posts}}{{#if @last}}&rsquo;{{date format="YY"}}{{/if}}{{/foreach}}
+            </span>
+          </div>
+        {{/if}}
+      {{/get}}
+
       {{#get "posts" filter="tag:org-design+tag:[essays,speaking]" limit="3" include="tags"}}
         {{#if posts}}
           <div class="h2-stripe-grid">
@@ -282,8 +316,8 @@
                   <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
                   <span class="ds-meta-item ds-meta-comments" aria-label="Comments">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                    <span class="ds-meta-comments-text">{{comment_count}}</span>
-                  </span>
+                  <span class="ds-meta-comments-text">{{comment_count}}</span>
+                </span>
                 </div>
                 <p class="h2-stripe-card-excerpt">{{excerpt words="35"}}</p>
               </article>
@@ -332,6 +366,99 @@
       </div>
     </div>
   </section>
+
+  {{!-- ============ Violin beeswarm renderer ============ --}}
+  <script>
+    (function () {
+      const SVG_NS = 'http://www.w3.org/2000/svg';
+      const dotR = 3;
+      const yStep = 7;
+      const H = 18;
+      const cy = H / 2;
+      const xClear = 14;
+
+      function monthIndex(ym) {
+        // ym is "YYYY-MM"
+        const [y, m] = ym.split('-').map(n => parseInt(n, 10));
+        return y * 12 + (m - 1);
+      }
+
+      function renderOne(svg) {
+        let posts;
+        try {
+          posts = JSON.parse(svg.getAttribute('data-posts') || '[]');
+        } catch (e) {
+          posts = [];
+        }
+        if (!posts.length) return;
+
+        const months = posts.map(monthIndex);
+        const xMin = Math.min.apply(null, months);
+        const xMax = Math.max.apply(null, months);
+        const range = Math.max(1, xMax - xMin);
+
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+        const W = svg.clientWidth || svg.getBoundingClientRect().width || 800;
+        svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        svg.setAttribute('preserveAspectRatio', 'none');
+
+        // hairline centerline
+        const line = document.createElementNS(SVG_NS, 'line');
+        line.setAttribute('x1', 0);
+        line.setAttribute('x2', W);
+        line.setAttribute('y1', cy);
+        line.setAttribute('y2', cy);
+        line.setAttribute('stroke', '#1A1A1A');
+        line.setAttribute('stroke-opacity', '0.18');
+        line.setAttribute('stroke-width', '1');
+        svg.appendChild(line);
+
+        const slots = [0, -1, 1, -2, 2, -3, 3, -4, 4].map(k => cy + k * yStep);
+        const placed = [];
+        const sorted = months.slice().sort((a, b) => a - b);
+
+        for (let i = 0; i < sorted.length; i++) {
+          const m = sorted[i];
+          const x = ((m - xMin) / range) * W;
+          const neighbours = placed.filter(p => Math.abs(p.x - x) < xClear);
+          const used = new Set(neighbours.map(p => p.y));
+          let y = slots.find(s => !used.has(s));
+          if (y === undefined) y = cy;
+          placed.push({ x: x, y: y, last: i === sorted.length - 1 });
+        }
+
+        for (let i = 0; i < placed.length; i++) {
+          const p = placed[i];
+          const c = document.createElementNS(SVG_NS, 'circle');
+          c.setAttribute('cx', p.x.toFixed(2));
+          c.setAttribute('cy', p.y.toFixed(2));
+          c.setAttribute('r', dotR);
+          if (p.last) {
+            c.setAttribute('fill', '#FF3252');
+          } else {
+            c.setAttribute('fill', '#1A1A1A');
+            c.setAttribute('fill-opacity', '0.45');
+          }
+          svg.appendChild(c);
+        }
+      }
+
+      function renderAll() {
+        document.querySelectorAll('[data-violin]').forEach(renderOne);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', renderAll);
+      } else {
+        renderAll();
+      }
+      let resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(renderAll, 80);
+      });
+    })();
+  </script>
 
   {{!-- ============ Talks promo ============ --}}
   <section class="h2-talks" aria-labelledby="h2-talks-title">

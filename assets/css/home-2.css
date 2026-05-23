@@ -224,8 +224,6 @@
 }
 
 /* ---------- Topic stripes ---------- */
-
-/* Full-bleed colored band */
 .h2-stripe {
   position: relative;
   width: 100vw;
@@ -235,95 +233,130 @@
   margin-right: -50vw;
 }
 
-.h2-stripe-ai {
-  background: #F4ECD8;
-}
-
-.h2-stripe-orgdesign {
-  background: #E5E5E5;
-}
-
-/* Re-center content inside the full-bleed band */
 .h2-stripe .h2-container {
   max-width: var(--h2-max);
 }
 
-/* Section header: flag+tagline left, "See all" right */
-.h2-stripe-head {
-  display: flex;
+.h2-stripe-ai { background: #F5EDDB; }
+.h2-stripe-orgdesign { background: #E5E5E5; }
+
+.h2-stripe-h {
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-6, 24px);
-  padding-top: var(--space-6, 24px);
-  margin-bottom: var(--space-10, 40px);
+  column-gap: var(--space-6, 24px);
+  margin-bottom: var(--space-4, 14px);
 }
 
-.h2-stripe-head-text {
-  min-width: 0;
+.h2-stripe-h-left {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
 }
 
-/* Section title — serif, prominent, clean (no underline accent) */
-.h2-stripe-flag {
-  font-family: var(--font-serif, Georgia, serif);
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
+.h2-stripe-eyebrow {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-sans, system-ui);
+  font-size: 9px;
   font-weight: 400;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  color: var(--color-text, #1a1a1a);
-  margin: 0 0 var(--space-2, 8px) 0;
+  line-height: 0.86;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 26, 0.62);
+  margin-bottom: 10px;
 }
 
-/* Regular-serif tagline below the title */
-.h2-stripe-tagline {
+.h2-stripe-title {
   font-family: var(--font-serif, Georgia, serif);
-  font-size: 1rem;
-  line-height: 1.4;
-  color: var(--color-text-secondary, #666666);
-  margin: var(--space-3, 12px) 0 0 0;
+  font-weight: 400;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--color-text, #1A1A1A);
 }
 
-/* "See all →" link — italic serif coral */
-.h2-stripe-seeall {
+.h2-stripe-see {
   font-family: var(--font-serif, Georgia, serif);
   font-style: italic;
-  font-size: 1rem;
   font-weight: 400;
+  font-size: 1.1875rem;
   color: var(--h2-coral);
   text-decoration: none;
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
-.h2-stripe-seeall:hover {
+.h2-stripe-see:hover {
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: 4px;
 }
 
-/* 3-column card grid */
+.h2-stripe-see:focus-visible {
+  outline: 2px solid var(--h2-coral);
+  outline-offset: 3px;
+}
+
+.h2-stripe-dek {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 1.1875rem;
+  line-height: 1.4;
+  color: rgba(26, 26, 26, 0.62);
+  margin: 0 0 var(--space-5, 20px);
+  max-width: 80ch;
+  text-wrap: pretty;
+}
+
+/* Violin rule */
+.h2-violin {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: var(--space-9, 36px);
+}
+
+.h2-violin-svg {
+  display: block;
+  width: 100%;
+  height: 18px;
+}
+
+.h2-violin-caption {
+  font-family: var(--font-sans, system-ui);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 26, 0.62);
+  white-space: nowrap;
+}
+
+.h2-violin-caption b {
+  color: var(--color-text, #1A1A1A);
+  font-weight: 400;
+}
+
+/* Posts grid */
 .h2-stripe-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6, 24px);
+  column-gap: var(--space-12, 48px);
   align-items: start;
-  padding-bottom: var(--space-6, 24px);
 }
 
-/* Individual card */
 .h2-stripe-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3, 12px);
-  min-width: 0;
+  display: grid;
+  row-gap: var(--space-3, 12px);
 }
 
-/* Card title — serif, regular weight, linked */
 .h2-stripe-card-title {
   font-family: var(--font-serif, Georgia, serif);
-  font-size: 1.25rem;
   font-weight: 400;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
+  font-size: 1.625rem;
+  line-height: 1.15;
   margin: 0;
+  text-wrap: pretty;
 }
 
 .h2-stripe-card-title a {
@@ -333,45 +366,53 @@
 
 .h2-stripe-card-title a:hover {
   text-decoration: underline;
-  text-decoration-color: var(--h2-coral);
-  text-underline-offset: 3px;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
 }
 
-/* Card excerpt */
 .h2-stripe-card-excerpt {
   font-family: var(--font-serif, Georgia, serif);
-  font-size: 0.9375rem;
-  line-height: 1.5;
-  color: var(--color-text, #1A1A1A);
+  font-size: 1.0625rem;
+  line-height: 1.45;
   margin: 0;
+  color: var(--color-text, #1A1A1A);
+  text-wrap: pretty;
 }
 
-/* Empty state */
 .h2-stripe-empty {
   font-family: var(--font-serif, Georgia, serif);
   font-style: italic;
-  font-size: 0.9375rem;
-  color: var(--color-text-muted, #999999);
+  color: rgba(26, 26, 26, 0.62);
   margin: 0;
-  padding-bottom: var(--space-6, 24px);
 }
 
-/* ---- Responsive: ≤900px → 2 columns ---- */
+/* Responsive */
 @media (max-width: 900px) {
   .h2-stripe-grid {
     grid-template-columns: repeat(2, 1fr);
+    column-gap: var(--space-8, 32px);
+    row-gap: var(--space-8, 32px);
   }
 }
 
-/* ---- Responsive: ≤600px → single column ---- */
 @media (max-width: 600px) {
   .h2-stripe-grid {
     grid-template-columns: 1fr;
+    row-gap: var(--space-8, 32px);
   }
 
-  .h2-stripe-head {
-    flex-wrap: wrap;
-    gap: var(--space-3, 12px);
+  .h2-stripe-h {
+    grid-template-columns: 1fr;
+    row-gap: var(--space-3, 12px);
+  }
+
+  .h2-stripe-see {
+    justify-self: start;
+  }
+
+  /* Violin: keep visible but tighten its height on small screens */
+  .h2-violin-svg {
+    height: 14px;
   }
 }
 
@@ -908,7 +949,6 @@
 /* ---------- Focus states ---------- */
 .h2-lead-title a:focus-visible,
 .h2-stripe-card-title a:focus-visible,
-.h2-stripe-seeall:focus-visible,
 .h2-book-inside a:focus-visible,
 .h2-story2-title a:focus-visible,
 .h2-story2-continue a:focus-visible {
