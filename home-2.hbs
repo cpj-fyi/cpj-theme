@@ -340,12 +340,38 @@
         var rounded = Math.floor(n / 100) * 100;
         return rounded.toLocaleString('en-US') + '+';
       }
+
+      function applyToAll(n) {
+        var text = fmt(n);
+        if (!text) return;
+        document.querySelectorAll('.h2-subscriber-count').forEach(function (el) {
+          el.textContent = text;
+          el.setAttribute('data-count', String(n));
+        });
+      }
+
+      // 1. Render the fallback (whatever's already in data-count) immediately.
       document.querySelectorAll('.h2-subscriber-count').forEach(function (el) {
         var raw = parseInt((el.getAttribute('data-count') || el.textContent || '').replace(/[^0-9]/g, ''), 10);
         if (Number.isFinite(raw) && raw > 0) {
           el.textContent = fmt(raw);
         }
       });
+
+      // 2. Then try the worker for a live count.
+      var WORKER_URL = 'https://cpj-worker.clay-893.workers.dev/subscribers';
+      var controller = new AbortController();
+      var timer = setTimeout(function () { controller.abort(); }, 4000);
+
+      fetch(WORKER_URL, { signal: controller.signal })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (data) {
+          clearTimeout(timer);
+          if (!data) return;
+          var n = data && data.count;
+          if (Number.isFinite(n) && n > 0) applyToAll(n);
+        })
+        .catch(function () { /* keep fallback */ });
     })();
   </script>
 
@@ -492,6 +518,38 @@
       <p class="h2-talks-deck">Keynotes and workshops on organization design, AI, and the patterns that shape how work actually works.</p>
       <div class="h2-talks-actions">
         <a class="h2-btn h2-btn-primary h2-talks-cta" href="/talks/">See recent engagements &amp; book &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  {{!-- ============ ccccharter promo stripe ============ --}}
+  <section class="h2-section h2-stripe h2-stripe-charter">
+    <div class="h2-container">
+      <header class="h2-stripe-h">
+        <div class="h2-stripe-h-left">
+          <span class="h2-stripe-eyebrow" aria-hidden="true">Instrument</span>
+          <h2 class="h2-stripe-title h2-stripe-title-charter">ccc<em>charter</em></h2>
+        </div>
+        <a class="h2-stripe-see" href="https://www.ccccharter.com" target="_blank" rel="noopener">Try ccccharter <span aria-hidden="true">&rarr;</span></a>
+      </header>
+      <p class="h2-stripe-dek">A small instrument for team and role charters. One shape, every team. Linked. Versioned. Drafted from your Slack when you want it. Written by hand when you don't.</p>
+
+      <div class="h2-charter-features">
+        <article class="h2-charter-feature">
+          <span class="h2-charter-feature-num">01</span>
+          <h3 class="h2-charter-feature-title">One shape, every team</h3>
+          <p class="h2-charter-feature-body">Six sections, in the same order, on every charter. A new manager reads across the org in an afternoon &mdash; not a quarter.</p>
+        </article>
+        <article class="h2-charter-feature">
+          <span class="h2-charter-feature-num">02</span>
+          <h3 class="h2-charter-feature-title">An org as a graph</h3>
+          <p class="h2-charter-feature-body">Roles in one charter link to roles in another. Subteams nest under superteams. Mentions become real edges &mdash; not lost prose.</p>
+        </article>
+        <article class="h2-charter-feature">
+          <span class="h2-charter-feature-num">03</span>
+          <h3 class="h2-charter-feature-title">Versioned, not lost</h3>
+          <p class="h2-charter-feature-body">Every save is a version. Subscribe to a charter and get notified when it changes. See who edited what.</p>
+        </article>
       </div>
     </div>
   </section>
