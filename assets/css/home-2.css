@@ -320,7 +320,7 @@
 .h2-violin-svg {
   display: block;
   width: 100%;
-  height: 28px;
+  height: 36px;
   overflow: visible;
 }
 
@@ -417,7 +417,7 @@
   }
 
   .h2-violin-svg {
-    height: 22px;
+    height: 30px;
   }
 }
 

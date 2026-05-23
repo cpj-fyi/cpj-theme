@@ -120,12 +120,12 @@
             {{!-- Name + role lockup --}}
             <div>
               <h2 class="h2-colophon-name">Clay Parker Jones</h2>
-              <p class="h2-colophon-role">Writes here, in long form, about <em>systems</em>, <em>artificial intelligence</em>, and designing for a better, more human future.</p>
+              <p class="h2-colophon-role">Writes here, in long form, about systems, artificial intelligence, and designing for a better, more human future.</p>
             </div>
 
             {{!-- Structured facts --}}
             <dl class="h2-colophon-facts">
-              <dt>Role</dt><dd>Sr. Director, Org Design <span class="h2-colophon-nowrap"><span class="h2-colophon-sep">&middot;</span> Airbnb</span></dd>
+              <dt>Role</dt><dd>Sr. Director, Org Design @ Airbnb</dd>
               <dt>Book</dt><dd><em>Hidden Patterns</em> <span class="h2-colophon-nowrap"><span class="h2-colophon-sep">&middot;</span> 2026</span></dd>
               <dt>Based</dt><dd>Brooklyn, NY</dd>
               {{#get "posts" limit="1"}}
@@ -378,12 +378,48 @@
     (function () {
       const SVG_NS = 'http://www.w3.org/2000/svg';
       const dotR = 3;
-      const minDist = 7;   // minimum center-to-center distance between dots
+      const minDist = 7;       // center-to-center collision distance
+      const yStep = 7;         // vertical slot spacing
+      const maxStack = 2;      // capped at ±2 slots above/below centerline
 
       function monthIndex(ym) {
         const [y, m] = ym.split('-').map(n => parseInt(n, 10));
         return y * 12 + (m - 1);
       }
+
+      function buildCandidates() {
+        // Walk a candidate list that prioritizes horizontal spread over vertical stacking.
+        // Order:
+        //   ring 0: (0, 0)
+        //   ring k (k=1..N): (±k*stepX, 0) — slide along centerline first
+        //   then (±k*stepX, ±yStep) — one slot up/down with horizontal spread
+        //   then (±k*stepX, ±2*yStep) — two slots up/down with horizontal spread
+        // Horizontal step is set to minDist so each lateral nudge avoids collision.
+        const cands = [[0, 0]];
+        const stepX = minDist;
+        const maxX = 60; // can drift up to ~60px from ideal
+        const yLevels = [];
+        for (let s = 1; s <= maxStack; s++) {
+          yLevels.push(-s * yStep);
+          yLevels.push(s * yStep);
+        }
+        // Slide horizontally on the centerline first
+        for (let k = 1; k * stepX <= maxX; k++) {
+          cands.push([-k * stepX, 0]);
+          cands.push([k * stepX, 0]);
+        }
+        // For each vertical level, sweep horizontally
+        for (let dy of yLevels) {
+          cands.push([0, dy]);
+          for (let k = 1; k * stepX <= maxX; k++) {
+            cands.push([-k * stepX, dy]);
+            cands.push([k * stepX, dy]);
+          }
+        }
+        return cands;
+      }
+
+      const CANDIDATES = buildCandidates();
 
       function renderOne(svg) {
         let posts;
@@ -417,7 +453,29 @@
         line.setAttribute('stroke-width', '1');
         svg.appendChild(line);
 
-        function collides(x, y, placed) {
+        // Year ticks below the centerline
+        const startYear = Math.ceil(xMin / 12);
+        const endYear = Math.floor(xMax / 12);
+        for (let y = startYear; y <= endYear; y++) {
+          const monthIdx = y * 12;
+          if (monthIdx < xMin || monthIdx > xMax) continue;
+          const tx = ((monthIdx - xMin) / range) * W;
+          const tick = document.createElementNS(SVG_NS, 'line');
+          tick.setAttribute('x1', tx);
+          tick.setAttribute('x2', tx);
+          tick.setAttribute('y1', cy + dotR + 3);
+          tick.setAttribute('y2', cy + dotR + 6);
+          tick.setAttribute('stroke', '#1A1A1A');
+          tick.setAttribute('stroke-opacity', '0.28');
+          tick.setAttribute('stroke-width', '1');
+          svg.appendChild(tick);
+        }
+
+        // Place dots — horizontal-first candidate search
+        const placed = [];
+        const sorted = months.slice().sort((a, b) => a - b);
+
+        function collides(x, y) {
           for (let i = 0; i < placed.length; i++) {
             const p = placed[i];
             const dx = x - p.x;
@@ -427,37 +485,15 @@
           return false;
         }
 
-        // Candidate spiral around the ideal position: try the centerline first,
-        // then small offsets that grow outward, alternating x and y so clusters
-        // form natural blobs rather than tall vertical columns.
-        const candidates = [[0, 0]];
-        for (let r = 1; r <= 18; r++) {
-          const step = minDist * 0.6;
-          const offsets = [
-            [0,         -r * step],
-            [0,          r * step],
-            [-r * step,  0],
-            [ r * step,  0],
-            [-r * step * 0.7, -r * step * 0.7],
-            [ r * step * 0.7, -r * step * 0.7],
-            [-r * step * 0.7,  r * step * 0.7],
-            [ r * step * 0.7,  r * step * 0.7],
-          ];
-          for (let i = 0; i < offsets.length; i++) candidates.push(offsets[i]);
-        }
-
-        const placed = [];
-        const sorted = months.slice().sort((a, b) => a - b);
-
         for (let i = 0; i < sorted.length; i++) {
           const m = sorted[i];
           const idealX = ((m - xMin) / range) * W;
           let chosen = null;
-          for (let c = 0; c < candidates.length; c++) {
-            const cx = idealX + candidates[c][0];
-            const cy_try = cy + candidates[c][1];
-            if (!collides(cx, cy_try, placed)) {
-              chosen = { x: cx, y: cy_try };
+          for (let c = 0; c < CANDIDATES.length; c++) {
+            const cx = idealX + CANDIDATES[c][0];
+            const cyTry = cy + CANDIDATES[c][1];
+            if (!collides(cx, cyTry)) {
+              chosen = { x: cx, y: cyTry };
               break;
             }
           }
@@ -474,9 +510,15 @@
           c.setAttribute('r', dotR);
           if (p.last) {
             c.setAttribute('fill', '#FF3252');
+            c.setAttribute('stroke', '#1A1A1A');
+            c.setAttribute('stroke-opacity', '0.20');
+            c.setAttribute('stroke-width', '0.75');
           } else {
             c.setAttribute('fill', '#1A1A1A');
-            c.setAttribute('fill-opacity', '0.45');
+            c.setAttribute('fill-opacity', '0.50');
+            c.setAttribute('stroke', '#1A1A1A');
+            c.setAttribute('stroke-opacity', '0.55');
+            c.setAttribute('stroke-width', '0.75');
           }
           svg.appendChild(c);
         }
@@ -556,7 +598,7 @@
         <article class="h2-charter-feature">
           <span class="h2-charter-feature-num">02</span>
           <h3 class="h2-charter-feature-title">An org as a graph</h3>
-          <p class="h2-charter-feature-body">Roles in one charter link to roles in another. Subteams nest under superteams. Mentions become real edges &mdash; not lost prose.</p>
+          <p class="h2-charter-feature-body">Roles in one charter link to roles in another. Subteams nest under superteams. Mentions connect the team graph.</p>
         </article>
         <article class="h2-charter-feature">
           <span class="h2-charter-feature-num">03</span>
