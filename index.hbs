@@ -394,27 +394,20 @@
       }
 
       function buildCandidates() {
-        // Walk a candidate list that prioritizes horizontal spread over vertical stacking.
-        // Order:
-        //   ring 0: (0, 0)
-        //   ring k (k=1..N): (±k*stepX, 0) — slide along centerline first
-        //   then (±k*stepX, ±yStep) — one slot up/down with horizontal spread
-        //   then (±k*stepX, ±2*yStep) — two slots up/down with horizontal spread
-        // Horizontal step is set to minDist so each lateral nudge avoids collision.
         const cands = [[0, 0]];
-        const stepX = minDist;
-        const maxX = 60; // can drift up to ~60px from ideal
+        const stepX = minDist;     // 7
+        const maxX = 14;            // 2 lateral slots per side per level
         const yLevels = [];
         for (let s = 1; s <= maxStack; s++) {
           yLevels.push(-s * yStep);
           yLevels.push(s * yStep);
         }
-        // Slide horizontally on the centerline first
+        // Centerline first
         for (let k = 1; k * stepX <= maxX; k++) {
           cands.push([-k * stepX, 0]);
           cands.push([k * stepX, 0]);
         }
-        // For each vertical level, sweep horizontally
+        // Each vertical level, sweep horizontally
         for (let dy of yLevels) {
           cands.push([0, dy]);
           for (let k = 1; k * stepX <= maxX; k++) {
@@ -521,8 +514,9 @@
         }
 
         // Build each dot as an <a class="h2-violin-dot"> wrapping circle + hit + leader + text
-        const LEADER_LEN = 14;
-        const TEXT_GAP = 4;
+        // Tooltip lives in the empty 32px above the SVG. Fixed y for all dots.
+        const TIP_Y = -8;        // 8px above the viewBox top — sits in the .h2-violin top margin
+        const LEADER_TOP = -4;   // leader stops 4px below the text baseline
 
         for (let i = 0; i < placed.length; i++) {
           const p = placed[i];
@@ -559,19 +553,19 @@
           hit.setAttribute('class', 'h2-violin-hit');
           a.appendChild(hit);
 
-          // Leader line (vertical, dot top → tooltip baseline area)
+          // Leader line (vertical, dot top → fixed tooltip baseline)
           const leader = document.createElementNS(SVG_NS, 'line');
           leader.setAttribute('x1', p.x.toFixed(2));
           leader.setAttribute('x2', p.x.toFixed(2));
           leader.setAttribute('y1', (p.y - dotR).toFixed(2));
-          leader.setAttribute('y2', (p.y - dotR - LEADER_LEN).toFixed(2));
+          leader.setAttribute('y2', LEADER_TOP);
           leader.setAttribute('class', 'h2-violin-leader');
           a.appendChild(leader);
 
-          // Title text (SF Mono small)
+          // Title text (SF Mono small) at fixed top position
           const text = document.createElementNS(SVG_NS, 'text');
           text.setAttribute('x', p.x.toFixed(2));
-          text.setAttribute('y', (p.y - dotR - LEADER_LEN - TEXT_GAP).toFixed(2));
+          text.setAttribute('y', TIP_Y);
           text.setAttribute('text-anchor', 'middle');
           text.setAttribute('class', 'h2-violin-tip');
           text.textContent = p.post.t;

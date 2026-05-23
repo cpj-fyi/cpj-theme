@@ -375,10 +375,6 @@
   font-weight: 400;
   fill: #1A1A1A;
   letter-spacing: 0;
-  paint-order: stroke;
-  stroke: rgba(245, 237, 219, 0.85);
-  stroke-width: 3px;
-  stroke-linejoin: round;
 }
 
 .h2-violin-hit {
