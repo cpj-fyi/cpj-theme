@@ -71,6 +71,26 @@
         "type": "text",
         "default": "https://monafor.clay-893.workers.dev",
         "description": "Base URL of the monafor/art Worker (no trailing slash)."
+      },
+      "subscriber_count": {
+        "type": "text",
+        "default": "1000",
+        "description": "Approximate subscriber count (will be rounded down to the nearest 100 above 1k for display)"
+      },
+      "latest_thread_text": {
+        "type": "text",
+        "default": "",
+        "description": "Text of the latest Threads post to feature in the right rail \"Now on Threads\" block. Leave blank to hide the block."
+      },
+      "latest_thread_url": {
+        "type": "text",
+        "default": "",
+        "description": "URL of the latest Threads post (links the 'Now on Threads' tag)"
+      },
+      "latest_thread_stamp": {
+        "type": "text",
+        "default": "",
+        "description": "Time stamp like '2h ago · @cpj' shown beneath the latest thread"
       }
     }
   }
