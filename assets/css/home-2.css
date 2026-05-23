@@ -1143,7 +1143,7 @@
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
-  padding: clamp(56px, 8vw, 96px) 0;
+  padding: clamp(40px, 5vw, 64px) 0;
 }
 
 .h2-charter-inner {
@@ -1153,18 +1153,40 @@
   text-align: center;
 }
 
+.h2-charter-pitch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans, system-ui);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0 0 28px;
+}
+
+.h2-charter-pitch-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #D83586;
+  box-shadow: 0 0 0 3px rgba(216, 53, 134, 0.22);
+}
+
 .h2-charter-brand {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 56px;
+  margin-bottom: 28px;
   color: #FFFFFF;
 }
 
-.h2-charter-favicon {
+.h2-charter-logo {
   display: block;
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
 }
 
 .h2-charter-wordmark {
@@ -1180,15 +1202,6 @@
   font-weight: 400;
 }
 
-.h2-charter-eyebrow {
-  font-family: var(--font-sans, system-ui);
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
-  margin: 0 0 18px;
-}
 
 .h2-charter-title {
   font-family: var(--font-serif, Georgia, serif);
@@ -1198,7 +1211,7 @@
   line-height: 1.1;
   letter-spacing: -0.01em;
   color: #FFFFFF;
-  margin: 0 auto 18px;
+  margin: 0 auto 14px;
   max-width: 20ch;
   text-wrap: balance;
 }
@@ -1208,7 +1221,7 @@
   font-size: 1.0625rem;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.7);
-  margin: 0 auto 32px;
+  margin: 0 auto 24px;
   max-width: 56ch;
   text-wrap: pretty;
 }
@@ -1220,7 +1233,7 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-bottom: 72px;
+  margin-bottom: 48px;
 }
 
 .h2-charter-btn {
@@ -1284,9 +1297,9 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 48px;
-  row-gap: 40px;
+  row-gap: 28px;
   text-align: left;
-  margin: 0 0 56px;
+  margin: 0;
 }
 
 .h2-charter-feature {
@@ -1321,17 +1334,6 @@
   margin: 0;
 }
 
-/* Footer signature */
-.h2-charter-sig {
-  font-family: var(--font-sans, system-ui);
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.40);
-  margin: 0;
-  text-align: center;
-}
 
 @media (max-width: 900px) {
   .h2-charter-features {
@@ -1347,10 +1349,10 @@
   }
 
   .h2-charter-brand {
-    margin-bottom: 40px;
+    margin-bottom: 24px;
   }
 
   .h2-charter-actions {
-    margin-bottom: 56px;
+    margin-bottom: 36px;
   }
 }
