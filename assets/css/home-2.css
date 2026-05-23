@@ -570,7 +570,14 @@
   color: var(--h2-coral);
 }
 
-/* ---- Right column: Story 2 ---- */
+/* ---- Right column: Story 2 + Colophon wrapper ---- */
+
+.h2-rightcol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9, 36px);
+  min-width: 0;
+}
 
 .h2-story2 {
   min-width: 0;
@@ -638,8 +645,8 @@
     grid-column: 1;
   }
 
-  /* Story 2: right column on second row */
-  .h2-story2 {
+  /* Right column (Story 2 + Colophon): right column on second row */
+  .h2-rightcol {
     grid-column: 2;
   }
 }
@@ -663,7 +670,7 @@
     order: 1;
   }
 
-  .h2-story2 {
+  .h2-rightcol {
     grid-column: auto;
     order: 2;
   }
@@ -796,34 +803,6 @@
   outline-offset: 3px;
 }
 
-/* "Inside:" strip */
-.h2-book-inside {
-  font-family: var(--font-sans, system-ui, sans-serif);
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: var(--color-text-secondary, #666666);
-  margin: 0;
-}
-
-.h2-book-inside-label {
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 0.75rem;
-  margin-right: 0.4em;
-  color: var(--color-text-secondary, #666666);
-}
-
-.h2-book-inside a {
-  color: var(--color-text-secondary, #666666);
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-
-.h2-book-inside a:hover {
-  color: var(--h2-coral);
-}
-
 /* Responsive: single column at ≤768px */
 @media (max-width: 768px) {
   .h2-book {
@@ -856,7 +835,6 @@
 /* ---------- Focus states ---------- */
 .h2-lead-title a:focus-visible,
 .h2-stripe-card-title a:focus-visible,
-.h2-book-inside a:focus-visible,
 .h2-story2-title a:focus-visible {
   outline: 2px solid var(--h2-coral);
   outline-offset: 2px;
@@ -977,7 +955,6 @@
 
 /* ---------- Colophon ---------- */
 .h2-colophon {
-  margin-top: var(--space-9, 36px);
   padding: 24px 22px 22px;
   border: 1px solid rgba(26, 26, 26, 0.78);
 }
@@ -1055,70 +1032,8 @@
   margin: 0 6px;
 }
 
-/* Now on Threads */
-.h2-colophon-now {
-  display: grid;
-  grid-template-columns: 1fr;
-  row-gap: 8px;
-  padding: 12px 12px;
-  border: 1px solid rgba(26, 26, 26, 0.18);
-  background: rgba(26, 26, 26, 0.025);
-}
-
-.h2-colophon-now-tag {
-  font-family: var(--font-sans, system-ui);
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(26, 26, 26, 0.62);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  text-decoration: none;
-  justify-self: start;
-}
-
-.h2-colophon-now-tag:hover {
-  color: var(--color-text, #1A1A1A);
-}
-
-.h2-colophon-now-tag::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  background: var(--h2-coral);
-  border-radius: 50%;
-  box-shadow: 0 0 0 3px rgba(255, 50, 82, 0.18);
-  animation: h2-colophon-now-pulse 2.4s ease-in-out infinite;
-}
-
-.h2-colophon-now-ext {
-  margin-left: 2px;
-  color: rgba(26, 26, 26, 0.62);
-}
-
-@keyframes h2-colophon-now-pulse {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(255, 50, 82, 0.18); }
-  50%      { box-shadow: 0 0 0 5px rgba(255, 50, 82, 0.08); }
-}
-
-.h2-colophon-now-line {
-  font-family: var(--font-serif, Georgia, serif);
-  font-style: italic;
-  font-size: 0.96875rem;  /* ~15.5px */
-  line-height: 1.35;
-  color: var(--color-text, #1A1A1A);
-  text-wrap: pretty;
-}
-
-.h2-colophon-now-stamp {
-  font-family: var(--font-sans, system-ui);
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(26, 26, 26, 0.62);
+.h2-colophon-nowrap {
+  white-space: nowrap;
 }
 
 /* Social strip — one bounded box, 6 cells */

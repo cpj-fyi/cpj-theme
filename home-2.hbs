@@ -89,29 +89,30 @@
         {{/get}}
       </article>
 
-      {{!-- Right: Story 2 (second-most-recent essay) --}}
-      <article class="h2-story2">
-        {{#get "posts" filter="tag:essays" limit="2" include="tags"}}
-          {{#if posts}}
-            {{#foreach posts from="2"}}
-              <p class="h2-flag h2-story2-flag">Also Reading</p>
-              <h3 class="h2-story2-title">
-                <a href="{{url}}">{{title}}</a>
-              </h3>
-              {{#if custom_excerpt}}
-                <p class="h2-story2-deck">{{custom_excerpt}}</p>
-              {{else}}
-                <p class="h2-story2-deck">{{excerpt words="35"}}</p>
-              {{/if}}
-              <div class="ds-meta">
-                <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
-                <span class="ds-meta-item">{{reading_time}}</span>
-              </div>
-              <hr class="h2-rule h2-story2-rule">
-            {{/foreach}}
-          {{/if}}
-        {{/get}}
-      </article>
+      <div class="h2-rightcol">
+        {{!-- Right: Story 2 (second-most-recent essay) --}}
+        <article class="h2-story2">
+          {{#get "posts" filter="tag:essays" limit="2" include="tags"}}
+            {{#if posts}}
+              {{#foreach posts from="2"}}
+                <p class="h2-flag h2-story2-flag">Also Reading</p>
+                <h3 class="h2-story2-title">
+                  <a href="{{url}}">{{title}}</a>
+                </h3>
+                {{#if custom_excerpt}}
+                  <p class="h2-story2-deck">{{custom_excerpt}}</p>
+                {{else}}
+                  <p class="h2-story2-deck">{{excerpt words="35"}}</p>
+                {{/if}}
+                <div class="ds-meta">
+                  <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
+                  <span class="ds-meta-item">{{reading_time}}</span>
+                </div>
+                <hr class="h2-rule h2-story2-rule">
+              {{/foreach}}
+            {{/if}}
+          {{/get}}
+        </article>
 
         <section class="h2-colophon" aria-label="About">
           <div class="h2-colophon-body">
@@ -119,32 +120,18 @@
             {{!-- Name + role lockup --}}
             <div>
               <h2 class="h2-colophon-name">Clay Parker Jones</h2>
-              <p class="h2-colophon-role">Writes here, in long form, about <em>organizations</em> and the patterns they hide from themselves.</p>
+              <p class="h2-colophon-role">Writes here, in long form, about <em>systems</em>, <em>artificial intelligence</em>, and designing for a better, more human future.</p>
             </div>
 
             {{!-- Structured facts --}}
             <dl class="h2-colophon-facts">
-              <dt>Role</dt><dd>Sr. Director &middot; Org Design <span class="h2-colophon-sep">&middot;</span> Airbnb</dd>
-              <dt>Book</dt><dd><em>Hidden Patterns</em> <span class="h2-colophon-sep">&middot;</span> 2024</dd>
+              <dt>Role</dt><dd>Sr. Director, Org Design <span class="h2-colophon-nowrap"><span class="h2-colophon-sep">&middot;</span> Airbnb</span></dd>
+              <dt>Book</dt><dd><em>Hidden Patterns</em> <span class="h2-colophon-nowrap"><span class="h2-colophon-sep">&middot;</span> 2026</span></dd>
               <dt>Based</dt><dd>Brooklyn, NY</dd>
-              {{#get "posts" limit="all"}}
-                <dt>Archive</dt><dd>2006 &rarr; 26 <span class="h2-colophon-sep">&middot;</span> {{posts.length}} posts</dd>
+              {{#get "posts" limit="1"}}
+                <dt>Archive</dt><dd>2006 &rarr; 26 <span class="h2-colophon-nowrap"><span class="h2-colophon-sep">&middot;</span> {{meta.pagination.total}} posts</span></dd>
               {{/get}}
             </dl>
-
-            {{!-- Now on Threads --}}
-            {{#if @custom.latest_thread_text}}
-              <div class="h2-colophon-now">
-                <a class="h2-colophon-now-tag" href="{{#if @custom.latest_thread_url}}{{@custom.latest_thread_url}}{{else}}#{{/if}}" aria-label="Most recent Threads post" target="_blank" rel="noopener">
-                  Now on Threads
-                  <span class="h2-colophon-now-ext" aria-hidden="true">&#8599;</span>
-                </a>
-                <span class="h2-colophon-now-line">{{@custom.latest_thread_text}}</span>
-                {{#if @custom.latest_thread_stamp}}
-                  <span class="h2-colophon-now-stamp">{{@custom.latest_thread_stamp}}</span>
-                {{/if}}
-              </div>
-            {{/if}}
 
             {{!-- Social strip (reuses Ghost social_accounts; styled as a single bounded strip) --}}
             <div class="h2-colophon-socials">
@@ -189,6 +176,7 @@
 
           </div>
         </section>
+      </div>
 
     </div>
   </section>
@@ -338,16 +326,7 @@
           <a class="h2-btn h2-btn-primary" href="/buy/">Buy the book &rarr;</a>
           <a class="h2-btn h2-btn-text" href="/introduction/">Read a free chapter</a>
         </div>
-        <p class="h2-book-inside">
-          <span class="h2-book-inside-label">Inside:</span>
-          <a href="/start-end/">Start &amp; End</a> &middot;
-          <a href="/foundations/">Foundations</a> &middot;
-          <a href="/structuring/">Structuring</a> &middot;
-          <a href="/direction/">Direction</a> &middot;
-          <a href="/practice/">Practice</a> &middot;
-          <a href="/learning/">Learning</a> &middot;
-          <a href="/space/">Space</a>
-        </p>
+
       </div>
     </div>
   </section>
@@ -359,7 +338,7 @@
         if (!Number.isFinite(n) || n <= 0) return '';
         if (n < 1000) return n.toLocaleString('en-US');
         var rounded = Math.floor(n / 100) * 100;
-        return rounded.toLocaleString('en-US');
+        return rounded.toLocaleString('en-US') + '+';
       }
       document.querySelectorAll('.h2-subscriber-count').forEach(function (el) {
         var raw = parseInt((el.getAttribute('data-count') || el.textContent || '').replace(/[^0-9]/g, ''), 10);
