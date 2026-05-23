@@ -387,6 +387,8 @@
       const minDist = 7;       // center-to-center collision distance
       const yStep = 7;         // vertical slot spacing
       const maxStack = 2;      // capped at ±2 slots above/below centerline
+      const padLeft = 8;       // left edge breathing
+      const padRight = 24;     // right edge breathing — bigger to keep distance from caption
 
       function monthIndex(ym) {
         const [y, m] = ym.split('-').map(n => parseInt(n, 10));
@@ -444,6 +446,7 @@
 
         while (svg.firstChild) svg.removeChild(svg.firstChild);
         const W = svg.clientWidth || svg.getBoundingClientRect().width || 800;
+        const innerW = Math.max(1, W - padLeft - padRight);
         const H = parseFloat(getComputedStyle(svg).height) || 36;
         const cy = H / 2;
         svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
@@ -466,7 +469,7 @@
         for (let y = startYear; y <= endYear; y++) {
           const monthIdx = y * 12;
           if (monthIdx < xMin || monthIdx > xMax) continue;
-          const tx = ((monthIdx - xMin) / range) * W;
+          const tx = padLeft + ((monthIdx - xMin) / range) * innerW;
           const tick = document.createElementNS(SVG_NS, 'line');
           tick.setAttribute('x1', tx);
           tick.setAttribute('x2', tx);
@@ -497,7 +500,7 @@
 
         for (let i = 0; i < indexed.length; i++) {
           const item = indexed[i];
-          const idealX = ((item.m - xMin) / range) * W;
+          const idealX = padLeft + ((item.m - xMin) / range) * innerW;
           let chosen = null;
           for (let c = 0; c < CANDIDATES.length; c++) {
             const cx = idealX + CANDIDATES[c][0];
