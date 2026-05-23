@@ -1,127 +1,571 @@
+{{!--
+    Homepage — cpj.fyi as a publication of one.
+    See docs/superpowers/specs/2026-05-21-homepage-redesign-design.md
+--}}
 {{!< default}}
 
-{{!-- Hero banner with author name --}}
-<div class="home-hero">
-    <div class="container">
-        <h1 class="home-hero-name">{{@custom.book_author}}</h1>
-        {{#if @site.description}}
-            <p class="home-hero-description">{{@site.description}}</p>
-        {{/if}}
+<link rel="stylesheet" type="text/css" href="{{asset "css/home-2.css"}}">
+
+<main class="h2-page">
+
+  <hr class="h2-rule h2-rule-fullbleed">
+
+  {{!-- ============ Pub masthead (centered) ============ --}}
+  <header class="h2-pubmast">
+    <div class="h2-container">
+      <h1 class="h2-pubmast-title">Clay Parker Jones</h1>
+      {{#if @site.description}}
+        <p class="h2-pubmast-subhead">{{@site.description}}</p>
+      {{/if}}
     </div>
-</div>
+  </header>
 
-<div class="container">
-    <div class="home-layout">
-        {{!-- Left column: Featured (latest) essay --}}
-        <div class="home-book home-feature-essay">
-            {{#get "posts" filter="tag:essays" limit="1" include="tags"}}
-                {{#if posts}}
-                    {{#foreach posts}}
-                        <div class="essay-feature-label">Latest Essay</div>
-                        <a href="{{url}}" class="essay-feature-image-link" aria-hidden="true" tabindex="-1">
-                            <img class="essay-feature-image" src="{{#if feature_image}}{{feature_image}}{{else}}{{@custom.art_url}}/{{slug}}.svg{{/if}}" alt="" loading="eager" width="1200" height="630">
-                        </a>
-                        <h1 class="essay-feature-title">
-                            <a href="{{url}}">{{title}}</a>
-                        </h1>
-                        {{#if custom_excerpt}}
-                            <p class="essay-feature-excerpt">{{custom_excerpt}}</p>
-                        {{/if}}
-                        <div class="essay-feature-preview">
-                            {{content words="350"}}
-                        </div>
-                        <a href="{{url}}" class="essay-feature-link btn btn-primary btn-large">Keep reading →</a>
-                    {{/foreach}}
-                {{/if}}
-            {{/get}}
-        </div>
+  <hr class="h2-rule h2-rule-fullbleed">
 
-        {{!-- Middle column: Essays --}}
-        <section class="home-essays">
-            <h2 class="section-title section-title-essays">Essays</h2>
+  {{!-- ============ Top main: 3-column (Radar rail · Lead · Secondary) ============ --}}
+  <section class="h2-section h2-topmain-section">
+    <div class="h2-container h2-topmain">
 
-            {{!-- limit=5 + foreach from="2" so we skip the featured essay (latest) and show the next 4 --}}
-            {{#get "posts" filter="tag:essays" limit="5" include="tags"}}
-                {{#if posts}}
-                    <div class="essays-feed">
-                        {{#foreach posts from="2"}}
-                            <article class="essay-card">
-                                <h3 class="essay-card-title">
-                                    <a href="{{url}}">{{title}}</a>
-                                </h3>
-                                <p class="essay-card-excerpt">{{excerpt}}</p>
-                                <div class="ds-meta">
-                                    <span class="ds-meta-item">{{date format="MM DD YY"}}</span>
-                                    {{#foreach tags}}
-                                        {{#match slug "essays"}}{{else match slug "radar"}}{{else match slug "five-things"}}{{else match slug "hidden-patterns"}}
-                                        {{else}}
-                                            <a href="{{url}}" class="ds-meta-item topical-tag-pill">{{name}}</a>
-                                        {{/match}}
-                                    {{/foreach}}
-                                </div>
-                            </article>
-                        {{/foreach}}
-                    </div>
-                {{/if}}
-            {{/get}}
-        </section>
-
-        {{!-- Right column: Five Things --}}
-        <section class="home-five-things">
-            <h2 class="section-title section-title-five-things">Five Things</h2>
-
-            {{#get "posts" filter="tag:five-things" limit="5" include="tags"}}
-                {{#if posts}}
-                    <div class="five-things-feed">
-                        {{#foreach posts}}
-                            <article class="five-things-card">
-                                <h3 class="five-things-card-title">
-                                    <a href="{{url}}">{{title}}</a>
-                                </h3>
-                                <p class="five-things-card-excerpt">{{excerpt}}</p>
-                            </article>
-                        {{/foreach}}
-                    </div>
-                {{/if}}
-            {{/get}}
-        </section>
-    </div>
-</div>
-
-{{!-- Radar section - full width dark mode --}}
-<section class="home-radar-section">
-    <div class="container">
-        <div class="section-header section-header-radar">
-            <div class="section-header-content">
-                <h2 class="section-title section-title-radar">Radar</h2>
-                <p class="section-subtitle">Daily observations on organization design.</p>
+      {{!-- Left rail: Radar --}}
+      <aside class="h2-rail h2-rail-radar" aria-label="Radar">
+        <header class="h2-rail-head">
+          <span class="h2-rail-livedot" aria-hidden="true"></span>
+          <h2 class="h2-rail-flag">Radar</h2>
+          {{#get "posts" filter="tag:radar" limit="all"}}
+            <span class="h2-rail-count">{{posts.length}}</span>
+          {{/get}}
+        </header>
+        {{#get "posts" filter="tag:radar" limit="5" include="tags"}}
+          {{#if posts}}
+            <div class="h2-rail-list">
+              {{#foreach posts}}
+                <a class="h2-rail-item" href="{{url}}">
+                  <time class="h2-rail-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MM·DD·YY"}}</time>
+                  <h3 class="h2-rail-title">{{title}}</h3>
+                </a>
+              {{/foreach}}
             </div>
-            <a href="{{@site.url}}/radar/" class="section-link">View all</a>
-            <div class="radar-dot"></div>
+          {{/if}}
+        {{/get}}
+        <a class="h2-rail-more" href="/radar/">
+          <span>More on Radar</span>
+          <span class="h2-rail-more-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </aside>
+
+      {{!-- Center: Lead story (latest essay) --}}
+      <article class="h2-lead">
+        {{#get "posts" filter="tag:essays" limit="1" include="tags"}}
+          {{#if posts}}
+            {{#foreach posts}}
+              <p class="h2-flag h2-lead-flag">Lead Essay</p>
+              <h2 class="h2-lead-title">
+                <a href="{{url}}">{{title}}</a>
+              </h2>
+              <div class="ds-meta">
+                <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
+                <span class="ds-meta-item ds-meta-comments" aria-label="Comments">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  <span class="ds-meta-comments-text">{{comment_count}}</span>
+                </span>
+                {{#foreach tags}}
+                  {{#match slug "essays"}}{{else match slug "radar"}}{{else match slug "five-things"}}{{else match slug "hidden-patterns"}}
+                  {{else}}
+                    <a href="{{url}}" class="ds-meta-item topical-tag-pill">{{name}}</a>
+                  {{/match}}
+                {{/foreach}}
+              </div>
+              <div class="h2-lead-lede-wrap">
+                <div class="h2-lead-lede">
+                  {{content words="220"}}
+                </div>
+                <div class="h2-lead-lede-fade" aria-hidden="true"></div>
+                <a class="h2-lead-continue-btn" href="{{url}}">Continue reading &rarr;</a>
+              </div>
+            {{/foreach}}
+          {{else}}
+            <p class="h2-lead-empty">No essays yet — back soon.</p>
+          {{/if}}
+        {{/get}}
+      </article>
+
+      <div class="h2-rightcol">
+        {{!-- Right: Story 2 (second-most-recent essay) --}}
+        <article class="h2-story2">
+          {{#get "posts" filter="tag:essays" limit="2" include="tags"}}
+            {{#if posts}}
+              {{#foreach posts from="2"}}
+                <p class="h2-flag h2-story2-flag">Also Reading</p>
+                <h3 class="h2-story2-title">
+                  <a href="{{url}}">{{title}}</a>
+                </h3>
+                {{#if custom_excerpt}}
+                  <p class="h2-story2-deck">{{custom_excerpt}}</p>
+                {{else}}
+                  <p class="h2-story2-deck">{{excerpt words="35"}}</p>
+                {{/if}}
+                <div class="ds-meta">
+                  <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
+                  <span class="ds-meta-item">{{reading_time}}</span>
+                </div>
+                <hr class="h2-rule h2-story2-rule">
+              {{/foreach}}
+            {{/if}}
+          {{/get}}
+        </article>
+
+        <section class="h2-colophon" aria-label="About">
+          <div class="h2-colophon-body">
+
+            {{!-- Name + role lockup --}}
+            <div>
+              <h2 class="h2-colophon-name">Clay Parker Jones</h2>
+              <p class="h2-colophon-role">Writes here, in long form, about <em>systems</em>, <em>artificial intelligence</em>, and designing for a better, more human future.</p>
+            </div>
+
+            {{!-- Structured facts --}}
+            <dl class="h2-colophon-facts">
+              <dt>Role</dt><dd>Sr. Director, Org Design <span class="h2-colophon-nowrap"><span class="h2-colophon-sep">&middot;</span> Airbnb</span></dd>
+              <dt>Book</dt><dd><em>Hidden Patterns</em> <span class="h2-colophon-nowrap"><span class="h2-colophon-sep">&middot;</span> 2026</span></dd>
+              <dt>Based</dt><dd>Brooklyn, NY</dd>
+              {{#get "posts" limit="1"}}
+                <dt>Archive</dt><dd>2006 &rarr; 26 <span class="h2-colophon-nowrap"><span class="h2-colophon-sep">&middot;</span> {{meta.pagination.total}} posts</span></dd>
+              {{/get}}
+            </dl>
+
+            {{!-- Social strip (reuses Ghost social_accounts; styled as a single bounded strip) --}}
+            <div class="h2-colophon-socials">
+              {{#social_accounts @site}}
+                <a href="{{href}}" aria-label="{{name}}" rel="me noopener" target="_blank">
+                  {{#match type "linkedin"}}
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  {{else match type "bluesky"}}
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 01-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
+                  {{else match type "threads"}}
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32L7.734 7.847c.98-1.454 2.568-2.256 4.478-2.256h.044c3.194.02 5.097 1.975 5.287 5.388.108.046.216.094.321.142 1.49.7 2.58 1.761 3.154 3.07.797 1.82.871 4.79-1.548 7.158-1.85 1.81-4.094 2.628-7.277 2.65Zm1.003-11.69c-.242 0-.487.007-.739.021-1.836.103-2.98.946-2.916 2.143.067 1.256 1.452 1.839 2.784 1.767 1.224-.065 2.818-.543 3.086-3.71a10.5 10.5 0 0 0-2.215-.221z"/></svg>
+                  {{else match type "tiktok"}}
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+                  {{else match type "instagram"}}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"/></svg>
+                  {{else match type "youtube"}}
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2c-.2-.9-.9-1.6-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4c-.9.2-1.6.9-1.8 1.8C2 8.8 2 12 2 12s0 3.2.4 4.8c.2.9.9 1.6 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4c.9-.2 1.6-.9 1.8-1.8.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8zM10 15V9l5.2 3L10 15z"/></svg>
+                  {{else match type "mastodon"}}
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 0 0 .023-.043v-1.809a.052.052 0 0 0-.02-.041.053.053 0 0 0-.046-.01 20.282 20.282 0 0 1-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 0 1-.319-1.433.053.053 0 0 1 .066-.054c1.517.363 3.072.546 4.632.546.376 0 .75 0 1.125-.01 1.57-.044 3.224-.124 4.768-.422.038-.008.077-.015.11-.024 2.435-.464 4.753-1.92 4.989-5.604.008-.145.03-1.52.03-1.67.002-.512.167-3.63-.024-5.545zm-3.748 9.195h-2.561V8.29c0-1.309-.55-1.976-1.67-1.976-1.23 0-1.846.79-1.846 2.35v3.403h-2.546V8.663c0-1.56-.617-2.35-1.848-2.35-1.112 0-1.668.668-1.67 1.977v6.218H4.822V8.102c0-1.31.337-2.35 1.011-3.12.696-.77 1.608-1.164 2.74-1.164 1.311 0 2.302.5 2.962 1.498l.638 1.06.638-1.06c.66-.999 1.65-1.498 2.96-1.498 1.13 0 2.043.395 2.74 1.164.675.77 1.011 1.81 1.011 3.12z"/></svg>
+                  {{else match type "x"}}
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  {{else match type "facebook"}}
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+                  {{else}}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>
+                  {{/match}}
+                </a>
+              {{/social_accounts}}
+            </div>
+
+            {{!-- Subscribe + subscriber-count caption --}}
+            <div class="h2-colophon-subscribe-wrap">
+              <a class="h2-colophon-subscribe" href="#/portal/signup" data-portal="signup">
+                Subscribe <span class="h2-colophon-subscribe-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+              {{#if @custom.subscriber_count}}
+                <p class="h2-colophon-sub-meta">
+                  <span><b class="h2-subscriber-count" data-count="{{@custom.subscriber_count}}">{{@custom.subscriber_count}}</b> readers</span>
+                </p>
+              {{/if}}
+            </div>
+
+          </div>
+        </section>
+      </div>
+
+    </div>
+  </section>
+
+  {{!-- ============ AI stripe ============ --}}
+  <section class="h2-section h2-stripe h2-stripe-ai">
+    <div class="h2-container">
+      {{#get "tags" filter="slug:ai" limit="1"}}
+        {{#if tags}}
+          {{#foreach tags}}
+            <header class="h2-stripe-h">
+              <div class="h2-stripe-h-left">
+                <span class="h2-stripe-eyebrow" aria-hidden="true">Theme</span>
+                <h2 class="h2-stripe-title">{{name}}</h2>
+              </div>
+              <a class="h2-stripe-see" href="{{url}}">See all <span aria-hidden="true">&rarr;</span></a>
+            </header>
+            {{#if description}}
+              <p class="h2-stripe-dek">{{description}}</p>
+            {{/if}}
+          {{/foreach}}
+        {{/if}}
+      {{/get}}
+
+      {{!-- Violin rule: dots = ALL posts in the category, regardless of essays/speaking filter --}}
+      {{#get "posts" filter="tag:ai" limit="all" order="published_at asc"}}
+        {{#if posts}}
+          <div class="h2-violin" aria-label="Filing density">
+            <svg class="h2-violin-svg" data-violin
+                 data-posts='[{{#foreach posts}}"{{date format="YYYY-MM"}}"{{#unless @last}},{{/unless}}{{/foreach}}]'
+                 aria-hidden="true"></svg>
+            <span class="h2-violin-caption">
+              <b>{{posts.length}}</b>&nbsp;posts &middot;
+              {{#foreach posts limit="1"}}&rsquo;{{date format="YY"}}{{/foreach}}
+              &mdash;
+              {{#foreach posts}}{{#if @last}}&rsquo;{{date format="YY"}}{{/if}}{{/foreach}}
+            </span>
+          </div>
+        {{/if}}
+      {{/get}}
+
+      {{#get "posts" filter="tag:ai+tag:[essays,speaking]" limit="3" include="tags"}}
+        {{#if posts}}
+          <div class="h2-stripe-grid">
+            {{#foreach posts}}
+              <article class="h2-stripe-card">
+                <h3 class="h2-stripe-card-title"><a href="{{url}}">{{title}}</a></h3>
+                <div class="ds-meta">
+                  <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
+                  <span class="ds-meta-item ds-meta-comments" aria-label="Comments">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  <span class="ds-meta-comments-text">{{comment_count}}</span>
+                </span>
+                </div>
+                <p class="h2-stripe-card-excerpt">{{excerpt words="35"}}</p>
+              </article>
+            {{/foreach}}
+          </div>
+        {{else}}
+          <p class="h2-stripe-empty">No posts yet.</p>
+        {{/if}}
+      {{/get}}
+    </div>
+  </section>
+
+  {{!-- ============ Org Design stripe ============ --}}
+  <section class="h2-section h2-stripe h2-stripe-orgdesign">
+    <div class="h2-container">
+      {{#get "tags" filter="slug:org-design" limit="1"}}
+        {{#if tags}}
+          {{#foreach tags}}
+            <header class="h2-stripe-h">
+              <div class="h2-stripe-h-left">
+                <span class="h2-stripe-eyebrow" aria-hidden="true">Theme</span>
+                <h2 class="h2-stripe-title">{{name}}</h2>
+              </div>
+              <a class="h2-stripe-see" href="{{url}}">See all <span aria-hidden="true">&rarr;</span></a>
+            </header>
+            {{#if description}}
+              <p class="h2-stripe-dek">{{description}}</p>
+            {{/if}}
+          {{/foreach}}
+        {{/if}}
+      {{/get}}
+
+      {{!-- Violin rule: dots = ALL posts in the category, regardless of essays/speaking filter --}}
+      {{#get "posts" filter="tag:org-design" limit="all" order="published_at asc"}}
+        {{#if posts}}
+          <div class="h2-violin" aria-label="Filing density">
+            <svg class="h2-violin-svg" data-violin
+                 data-posts='[{{#foreach posts}}"{{date format="YYYY-MM"}}"{{#unless @last}},{{/unless}}{{/foreach}}]'
+                 aria-hidden="true"></svg>
+            <span class="h2-violin-caption">
+              <b>{{posts.length}}</b>&nbsp;posts &middot;
+              {{#foreach posts limit="1"}}&rsquo;{{date format="YY"}}{{/foreach}}
+              &mdash;
+              {{#foreach posts}}{{#if @last}}&rsquo;{{date format="YY"}}{{/if}}{{/foreach}}
+            </span>
+          </div>
+        {{/if}}
+      {{/get}}
+
+      {{#get "posts" filter="tag:org-design+tag:[essays,speaking]" limit="3" include="tags"}}
+        {{#if posts}}
+          <div class="h2-stripe-grid">
+            {{#foreach posts}}
+              <article class="h2-stripe-card">
+                <h3 class="h2-stripe-card-title"><a href="{{url}}">{{title}}</a></h3>
+                <div class="ds-meta">
+                  <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
+                  <span class="ds-meta-item ds-meta-comments" aria-label="Comments">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  <span class="ds-meta-comments-text">{{comment_count}}</span>
+                </span>
+                </div>
+                <p class="h2-stripe-card-excerpt">{{excerpt words="35"}}</p>
+              </article>
+            {{/foreach}}
+          </div>
+        {{else}}
+          <p class="h2-stripe-empty">No posts yet.</p>
+        {{/if}}
+      {{/get}}
+    </div>
+  </section>
+
+  {{!-- ============ Hidden Patterns module ============ --}}
+  <section class="h2-section h2-book-section">
+    <div class="h2-container h2-book">
+      <div class="h2-book-cover-wrap">
+        <img class="h2-book-cover"
+             src="{{asset "images/hidden-patterns-cover.png"}}"
+             alt="Hidden Patterns book cover"
+             loading="lazy">
+      </div>
+      <div class="h2-book-copy">
+        <p class="h2-flag h2-book-flag">The Book</p>
+        <h2 class="h2-book-title">Hidden Patterns</h2>
+        <p class="h2-book-deck">
+          Most &ldquo;people problems&rdquo; are org design problems. This book shows you how to fix them for good.
+        </p>
+        <blockquote class="h2-book-pullquote">
+          <p>&ldquo;Most management books offer theory; <em>Hidden Patterns</em> offers transformation. It empowers anyone to make practical, concrete changes that yield tangible results and elevate every dimension of work&mdash;from revenue and profit to meaning and satisfaction.&rdquo;</p>
+          <cite class="h2-book-pullquote-cite">&mdash; Marissa Jarratt, CMO, 7-Eleven</cite>
+        </blockquote>
+        <div class="h2-book-actions">
+          <a class="h2-btn h2-btn-primary" href="/buy/">Buy the book &rarr;</a>
+          <a class="h2-btn h2-btn-text" href="/introduction/">Read a free chapter</a>
         </div>
 
-        {{#get "posts" filter="tag:radar" limit="3" include="tags"}}
-            {{#if posts}}
-                <div class="related-posts-grid">
-                    {{#foreach posts}}
-                        <article class="post-card post-card-text-only">
-                            <h3 class="post-card-title">
-                                <a href="{{url}}">{{title}}</a>
-                            </h3>
-                            <p class="post-card-excerpt">{{excerpt}}</p>
-                            <div class="ds-meta">
-                                <span class="ds-meta-item">{{date format="MM DD YY"}}</span>
-                                {{#foreach tags}}
-                                    {{#match slug "essays"}}{{else match slug "radar"}}{{else match slug "five-things"}}{{else match slug "hidden-patterns"}}
-                                    {{else}}
-                                        <a href="{{url}}" class="ds-meta-item topical-tag-pill">{{name}}</a>
-                                    {{/match}}
-                                {{/foreach}}
-                            </div>
-                        </article>
-                    {{/foreach}}
-                </div>
-            {{/if}}
-        {{/get}}
+      </div>
     </div>
-</section>
+  </section>
+
+  {{!-- ============ Subscriber count formatter ============ --}}
+  <script>
+    (function () {
+      function fmt(n) {
+        if (!Number.isFinite(n) || n <= 0) return '';
+        return n.toLocaleString('en-US');
+      }
+
+      function applyToAll(n) {
+        var text = fmt(n);
+        if (!text) return;
+        document.querySelectorAll('.h2-subscriber-count').forEach(function (el) {
+          el.textContent = text;
+          el.setAttribute('data-count', String(n));
+        });
+      }
+
+      // 1. Render the fallback (whatever's already in data-count) immediately.
+      document.querySelectorAll('.h2-subscriber-count').forEach(function (el) {
+        var raw = parseInt((el.getAttribute('data-count') || el.textContent || '').replace(/[^0-9]/g, ''), 10);
+        if (Number.isFinite(raw) && raw > 0) {
+          el.textContent = fmt(raw);
+        }
+      });
+
+      // 2. Then try the worker for a live count.
+      var WORKER_URL = 'https://cpj-worker.clay-893.workers.dev/subscribers';
+      var controller = new AbortController();
+      var timer = setTimeout(function () { controller.abort(); }, 4000);
+
+      fetch(WORKER_URL, { signal: controller.signal })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (data) {
+          clearTimeout(timer);
+          if (!data) return;
+          var n = data && data.count;
+          if (Number.isFinite(n) && n > 0) applyToAll(n);
+        })
+        .catch(function () { /* keep fallback */ });
+    })();
+  </script>
+
+  {{!-- ============ Violin beeswarm renderer ============ --}}
+  <script>
+    (function () {
+      const SVG_NS = 'http://www.w3.org/2000/svg';
+      const dotR = 3;
+      const minDist = 7;   // minimum center-to-center distance between dots
+
+      function monthIndex(ym) {
+        const [y, m] = ym.split('-').map(n => parseInt(n, 10));
+        return y * 12 + (m - 1);
+      }
+
+      function renderOne(svg) {
+        let posts;
+        try {
+          posts = JSON.parse(svg.getAttribute('data-posts') || '[]');
+        } catch (e) {
+          posts = [];
+        }
+        if (!posts.length) return;
+
+        const months = posts.map(monthIndex);
+        const xMin = Math.min.apply(null, months);
+        const xMax = Math.max.apply(null, months);
+        const range = Math.max(1, xMax - xMin);
+
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+        const W = svg.clientWidth || svg.getBoundingClientRect().width || 800;
+        const H = parseFloat(getComputedStyle(svg).height) || 28;
+        const cy = H / 2;
+        svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        svg.setAttribute('preserveAspectRatio', 'none');
+
+        // hairline centerline
+        const line = document.createElementNS(SVG_NS, 'line');
+        line.setAttribute('x1', 0);
+        line.setAttribute('x2', W);
+        line.setAttribute('y1', cy);
+        line.setAttribute('y2', cy);
+        line.setAttribute('stroke', '#1A1A1A');
+        line.setAttribute('stroke-opacity', '0.18');
+        line.setAttribute('stroke-width', '1');
+        svg.appendChild(line);
+
+        function collides(x, y, placed) {
+          for (let i = 0; i < placed.length; i++) {
+            const p = placed[i];
+            const dx = x - p.x;
+            const dy = y - p.y;
+            if (dx * dx + dy * dy < minDist * minDist) return true;
+          }
+          return false;
+        }
+
+        // Candidate spiral around the ideal position: try the centerline first,
+        // then small offsets that grow outward, alternating x and y so clusters
+        // form natural blobs rather than tall vertical columns.
+        const candidates = [[0, 0]];
+        for (let r = 1; r <= 18; r++) {
+          const step = minDist * 0.6;
+          const offsets = [
+            [0,         -r * step],
+            [0,          r * step],
+            [-r * step,  0],
+            [ r * step,  0],
+            [-r * step * 0.7, -r * step * 0.7],
+            [ r * step * 0.7, -r * step * 0.7],
+            [-r * step * 0.7,  r * step * 0.7],
+            [ r * step * 0.7,  r * step * 0.7],
+          ];
+          for (let i = 0; i < offsets.length; i++) candidates.push(offsets[i]);
+        }
+
+        const placed = [];
+        const sorted = months.slice().sort((a, b) => a - b);
+
+        for (let i = 0; i < sorted.length; i++) {
+          const m = sorted[i];
+          const idealX = ((m - xMin) / range) * W;
+          let chosen = null;
+          for (let c = 0; c < candidates.length; c++) {
+            const cx = idealX + candidates[c][0];
+            const cy_try = cy + candidates[c][1];
+            if (!collides(cx, cy_try, placed)) {
+              chosen = { x: cx, y: cy_try };
+              break;
+            }
+          }
+          if (!chosen) chosen = { x: idealX, y: cy };
+          chosen.last = i === sorted.length - 1;
+          placed.push(chosen);
+        }
+
+        for (let i = 0; i < placed.length; i++) {
+          const p = placed[i];
+          const c = document.createElementNS(SVG_NS, 'circle');
+          c.setAttribute('cx', p.x.toFixed(2));
+          c.setAttribute('cy', p.y.toFixed(2));
+          c.setAttribute('r', dotR);
+          if (p.last) {
+            c.setAttribute('fill', '#FF3252');
+          } else {
+            c.setAttribute('fill', '#1A1A1A');
+            c.setAttribute('fill-opacity', '0.45');
+          }
+          svg.appendChild(c);
+        }
+      }
+
+      function renderAll() {
+        document.querySelectorAll('[data-violin]').forEach(renderOne);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', renderAll);
+      } else {
+        renderAll();
+      }
+      let resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(renderAll, 80);
+      });
+    })();
+  </script>
+
+  {{!-- ============ Talks promo ============ --}}
+  <section class="h2-talks" aria-labelledby="h2-talks-title">
+    <div class="h2-talks-bg" aria-hidden="true">
+      <img class="h2-talks-img"
+           src="{{asset "images/talks-stage.jpg"}}"
+           alt=""
+           loading="lazy"
+           width="2560"
+           height="1708">
+      <div class="h2-talks-overlay"></div>
+    </div>
+    <div class="h2-talks-inner">
+      <p class="h2-flag h2-talks-flag">Speaking</p>
+      <h2 class="h2-talks-title" id="h2-talks-title">Bring this thinking to your team.</h2>
+      <p class="h2-talks-deck">Keynotes and workshops on organization design, AI, and the patterns that shape how work actually works.</p>
+      <div class="h2-talks-actions">
+        <a class="h2-btn h2-btn-primary h2-talks-cta" href="/talks/">See recent engagements &amp; book &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  {{!-- ============ ccccharter promo stripe ============ --}}
+  <section class="h2-charter-stripe" aria-labelledby="h2-charter-title">
+    <div class="h2-container h2-charter-inner">
+
+      <div class="h2-charter-top">
+        <p class="h2-charter-pitch">
+          <span class="h2-charter-pitch-dot" aria-hidden="true"></span>
+          Try my product
+        </p>
+
+        <div class="h2-charter-brand">
+          <img class="h2-charter-logo" src="{{asset "images/ccccharter-logo.png"}}" alt="" width="28" height="28">
+          <span class="h2-charter-wordmark">ccc<em>charter</em></span>
+        </div>
+      </div>
+
+      <h2 class="h2-charter-title" id="h2-charter-title">70% of team effectiveness comes from org design, so get it right.</h2>
+      <p class="h2-charter-subhead">One shape, every team. Linked. Versioned. Drafted from your Slack when you want it. Written by hand when you don&rsquo;t.</p>
+
+      <div class="h2-charter-actions">
+        <a class="h2-charter-btn h2-charter-btn-primary" href="https://www.ccccharter.com" target="_blank" rel="noopener">
+          Get started
+          <span class="h2-charter-btn-arrow" aria-hidden="true">&#8599;</span>
+        </a>
+        <a class="h2-charter-btn h2-charter-btn-ghost" href="https://www.ccccharter.com/pricing" target="_blank" rel="noopener">See pricing</a>
+      </div>
+
+      <div class="h2-charter-features">
+        <article class="h2-charter-feature">
+          <span class="h2-charter-feature-num">01</span>
+          <h3 class="h2-charter-feature-title">Teams as the unit</h3>
+          <p class="h2-charter-feature-body">Software built for people who work in teams, who care about mission and purpose, and want to get more done, faster.</p>
+        </article>
+        <article class="h2-charter-feature">
+          <span class="h2-charter-feature-num">02</span>
+          <h3 class="h2-charter-feature-title">An org as a graph</h3>
+          <p class="h2-charter-feature-body">Roles in one charter link to roles in another. Subteams nest under superteams. Mentions become real edges &mdash; not lost prose.</p>
+        </article>
+        <article class="h2-charter-feature">
+          <span class="h2-charter-feature-num">03</span>
+          <h3 class="h2-charter-feature-title">Versioned, not lost</h3>
+          <p class="h2-charter-feature-body">Every save is a version. Subscribe to a charter and get notified when it changes. See who edited what.</p>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+</main>
