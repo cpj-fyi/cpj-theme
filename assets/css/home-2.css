@@ -385,101 +385,143 @@
   align-items: start;
 }
 
-/* ---- Left rail: Radar ---- */
-
-.h2-rail-radar {
-  background: rgba(20, 20, 20, 0.55);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  color: var(--color-bg-card, #fff);
-  padding: var(--space-5, 20px);
-  min-width: 0;
+/* ---------- Radar rail (Option C — Straightforward) ---------- */
+.h2-rail {
+  /* layout — keep whatever grid placement the top-main has set */
+  display: flex;
+  flex-direction: column;
 }
 
-/* Rail header: dot + flag */
+.h2-rail-radar {
+  background: #0A0A0A;
+  color: #FFFFFF;
+  border-radius: 2px;
+  padding: 28px 24px 22px;
+}
+
 .h2-rail-head {
   display: flex;
   align-items: center;
-  gap: var(--space-2, 8px);
-  margin-bottom: var(--space-5, 20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  padding-bottom: var(--space-4, 16px);
-}
-
-/* Neon green flag override on dark background */
-.h2-rail-flag {
-  color: var(--h2-radar-fg);
-  margin: 0;
-}
-
-/* List reset */
-.h2-rail-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* Each rail item: date above title, tight */
-.h2-rail-item {
-  padding-bottom: var(--space-4, 16px);
-  margin-bottom: var(--space-4, 16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.h2-rail-item:last-child {
-  margin-bottom: var(--space-5, 20px);
-  border-bottom: none;
-}
-
-/* Date — sans, neon green, very small */
-.h2-rail-date {
-  display: block;
+  gap: 10px;
   font-family: var(--font-sans, system-ui);
-  font-size: 0.625rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--h2-radar-fg);
-  margin-bottom: var(--space-1, 4px);
-}
-
-/* Title — serif, white, compact */
-.h2-rail-title {
-  font-family: var(--font-serif, Georgia, serif);
-  font-size: 0.9375rem;
+  font-size: 11px;
   font-weight: 400;
-  line-height: 1.3;
-  color: var(--color-bg-card, #fff);
-  margin: 0;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-.h2-rail-title a {
+.h2-rail-livedot {
+  width: 7px;
+  height: 7px;
+  background: var(--h2-coral);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.h2-rail-flag {
+  font: inherit; /* inherits the head's sans 11px uppercase */
+  margin: 0;
+  letter-spacing: inherit;
+  text-transform: inherit;
+}
+
+.h2-rail-count {
+  margin-left: auto;
+  font-family: var(--font-sans, system-ui);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.h2-rail-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.h2-rail-item {
+  display: block;
+  padding: 14px 0 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   color: inherit;
   text-decoration: none;
 }
 
-.h2-rail-title a:hover {
+.h2-rail-item:last-of-type {
+  border-bottom: 0;
+}
+
+.h2-rail-item:hover .h2-rail-title {
   text-decoration: underline;
+  text-decoration-color: var(--h2-coral);
   text-underline-offset: 3px;
 }
 
-/* "More on Radar →" — neon green link at bottom */
-.h2-rail-more {
-  display: inline-block;
-  font-family: var(--font-sans, system-ui, sans-serif);
-  font-size: 0.6875rem;
+.h2-rail-item:focus-visible {
+  outline: 2px solid var(--h2-coral);
+  outline-offset: 3px;
+}
+
+.h2-rail-date {
+  display: block;
+  font-family: var(--font-sans, system-ui);
   font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--h2-radar-fg);
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0 0 6px;
+}
+
+.h2-rail-title {
+  font-family: var(--font-serif, Georgia, serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.25;
+  color: #FFFFFF;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.h2-rail-more {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  font-family: var(--font-sans, system-ui);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #FFFFFF;
   text-decoration: none;
-  transition: text-decoration-color 0.15s ease;
 }
 
 .h2-rail-more:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.h2-rail-more:focus-visible {
+  outline: 2px solid var(--h2-coral);
+  outline-offset: 3px;
+}
+
+.h2-rail-more-arrow {
+  font-family: var(--font-serif, Georgia, serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--h2-coral);
 }
 
 /* ---- Right column: Story 2 ---- */
@@ -868,8 +910,6 @@
 .h2-stripe-card-title a:focus-visible,
 .h2-stripe-seeall:focus-visible,
 .h2-book-inside a:focus-visible,
-.h2-rail-title a:focus-visible,
-.h2-rail-more:focus-visible,
 .h2-story2-title a:focus-visible,
 .h2-story2-continue a:focus-visible {
   outline: 2px solid var(--h2-coral);

@@ -27,23 +27,30 @@
     <div class="h2-container h2-topmain">
 
       {{!-- Left rail: Radar --}}
-      <aside class="h2-rail h2-rail-radar">
+      <aside class="h2-rail h2-rail-radar" aria-label="Radar">
         <header class="h2-rail-head">
-          <h2 class="h2-flag h2-rail-flag">Radar</h2>
+          <span class="h2-rail-livedot" aria-hidden="true"></span>
+          <h2 class="h2-rail-flag">Radar</h2>
+          {{#get "posts" filter="tag:radar" limit="all"}}
+            <span class="h2-rail-count">{{posts.length}}</span>
+          {{/get}}
         </header>
         {{#get "posts" filter="tag:radar" limit="5" include="tags"}}
           {{#if posts}}
-            <ol class="h2-rail-list">
+            <div class="h2-rail-list">
               {{#foreach posts}}
-                <li class="h2-rail-item">
-                  <time class="h2-rail-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM"}}</time>
-                  <h3 class="h2-rail-title"><a href="{{url}}">{{title}}</a></h3>
-                </li>
+                <a class="h2-rail-item" href="{{url}}">
+                  <time class="h2-rail-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MM·DD·YY"}}</time>
+                  <h3 class="h2-rail-title">{{title}}</h3>
+                </a>
               {{/foreach}}
-            </ol>
-            <a class="h2-rail-more" href="/radar/">More on Radar →</a>
+            </div>
           {{/if}}
         {{/get}}
+        <a class="h2-rail-more" href="/radar/">
+          <span>More on Radar</span>
+          <span class="h2-rail-more-arrow" aria-hidden="true">&rarr;</span>
+        </a>
       </aside>
 
       {{!-- Center: Lead story (latest essay) --}}
