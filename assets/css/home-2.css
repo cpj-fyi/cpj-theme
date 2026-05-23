@@ -251,7 +251,7 @@
 .h2-stripe-h-left {
   display: flex;
   align-items: flex-end;
-  gap: 14px;
+  gap: 10px;
 }
 
 .h2-stripe-eyebrow {
@@ -313,13 +313,15 @@
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 14px;
+  margin-top: var(--space-3, 12px);
   margin-bottom: var(--space-9, 36px);
 }
 
 .h2-violin-svg {
   display: block;
   width: 100%;
-  height: 18px;
+  height: 28px;
+  overflow: visible;
 }
 
 .h2-violin-caption {
@@ -403,16 +405,19 @@
 
   .h2-stripe-h {
     grid-template-columns: 1fr;
-    row-gap: var(--space-3, 12px);
+    row-gap: var(--space-2, 8px);
+  }
+
+  .h2-stripe-eyebrow {
+    display: none;  /* hide the rotated eyebrow on mobile — the title carries the meaning */
   }
 
   .h2-stripe-see {
     justify-self: start;
   }
 
-  /* Violin: keep visible but tighten its height on small screens */
   .h2-violin-svg {
-    height: 14px;
+    height: 22px;
   }
 }
 
