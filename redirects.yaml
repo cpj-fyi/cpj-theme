@@ -3,3 +3,6 @@
 - from: ^/new/?$
   to: /
   permanent: true
+- from: ^/colophon/?$
+  to: /
+  permanent: true

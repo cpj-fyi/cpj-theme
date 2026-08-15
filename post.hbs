@@ -33,7 +33,7 @@
             {{#foreach authors}}
                 <span class="ds-meta-item">{{name}}</span>
             {{/foreach}}
-            <span class="ds-meta-item">{{date format="MMMM D, YYYY"}}</span>
+            <time class="ds-meta-item" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MM DD YY"}}</time>
             {{#if reading_time}}
                 <span class="ds-meta-item" data-reading-time>{{reading_time}}</span>
             {{/if}}

@@ -13,7 +13,7 @@
 
 <div class="container">
     <div class="tags-index">
-        {{#get "tags" limit="all" include="count.posts" order="name ASC"}}
+        {{#get "tags" limit="100" include="count.posts" order="name ASC"}}
             {{#foreach tags}}
                 <a href="{{url}}" class="tags-index-item">
                     <span class="tags-index-name">{{name}}</span>

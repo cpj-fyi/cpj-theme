@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" type="text/css" href="{{asset "css/home-2.css"}}">
 
-<main class="h2-page">
+<div class="h2-page">
 
   <hr class="h2-rule h2-rule-fullbleed">
 
@@ -31,8 +31,8 @@
         <header class="h2-rail-head">
           <span class="h2-rail-livedot" aria-hidden="true"></span>
           <h2 class="h2-rail-flag">Radar</h2>
-          {{#get "posts" filter="tag:radar" limit="all"}}
-            <span class="h2-rail-count">{{posts.length}}</span>
+          {{#get "posts" filter="tag:radar" limit="1"}}
+            <span class="h2-rail-count">{{meta.pagination.total}}</span>
           {{/get}}
         </header>
         {{#get "posts" filter="tag:radar" limit="5" include="tags"}}
@@ -40,7 +40,7 @@
             <div class="h2-rail-list">
               {{#foreach posts}}
                 <a class="h2-rail-item" href="{{url}}">
-                  <time class="h2-rail-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MM·DD·YY"}}</time>
+                  <time class="h2-rail-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MM DD YY"}}</time>
                   <h3 class="h2-rail-title">{{title}}</h3>
                 </a>
               {{/foreach}}
@@ -63,7 +63,7 @@
                 <a href="{{url}}">{{title}}</a>
               </h2>
               <div class="ds-meta">
-                <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
+                <time class="ds-meta-item" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MM DD YY"}}</time>
                 <span class="ds-meta-item ds-meta-comments" aria-label="Comments">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                   <span class="ds-meta-comments-text">{{comment_count}}</span>
@@ -105,7 +105,7 @@
                   <p class="h2-story2-deck">{{excerpt words="35"}}</p>
                 {{/if}}
                 <div class="ds-meta">
-                  <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
+                  <time class="ds-meta-item" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MM DD YY"}}</time>
                   <span class="ds-meta-item">{{reading_time}}</span>
                 </div>
                 <hr class="h2-rule h2-story2-rule">
@@ -202,17 +202,17 @@
       {{/get}}
 
       {{!-- Violin rule: dots = ALL posts in the category, regardless of essays/speaking filter --}}
-      {{#get "posts" filter="tag:ai" limit="all" order="published_at asc"}}
+      {{#get "posts" filter="tag:ai" limit="100" order="published_at asc"}}
         {{#if posts}}
-          <div class="h2-violin" aria-label="Filing density">
-            <svg class="h2-violin-svg" data-violin aria-hidden="true"></svg>
+          <div class="h2-violin">
+            <svg class="h2-violin-svg" data-violin role="group" aria-label="Publication density timeline; each point opens a post"></svg>
             <ul class="h2-violin-data" hidden aria-hidden="true">
               {{#foreach posts}}
-                <li data-d="{{date format="YYYY-MM"}}" data-t="{{title}}" data-u="{{url}}"></li>
+                <li data-d="{{date format="YYYY-MM-DD"}}" data-t="{{title}}" data-u="{{url}}"></li>
               {{/foreach}}
             </ul>
             <span class="h2-violin-caption">
-              <b>{{posts.length}}</b>&nbsp;posts &middot;
+              <b>{{meta.pagination.total}}</b>&nbsp;posts &middot;
               {{#foreach posts limit="1"}}&rsquo;{{date format="YY"}}{{/foreach}}
               &mdash;
               {{#foreach posts}}{{#if @last}}&rsquo;{{date format="YY"}}{{/if}}{{/foreach}}
@@ -228,7 +228,7 @@
               <article class="h2-stripe-card">
                 <h3 class="h2-stripe-card-title"><a href="{{url}}">{{title}}</a></h3>
                 <div class="ds-meta">
-                  <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
+                  <time class="ds-meta-item" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MM DD YY"}}</time>
                   <span class="ds-meta-item ds-meta-comments" aria-label="Comments">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                   <span class="ds-meta-comments-text">{{comment_count}}</span>
@@ -266,17 +266,17 @@
       {{/get}}
 
       {{!-- Violin rule: dots = ALL posts in the category, regardless of essays/speaking filter --}}
-      {{#get "posts" filter="tag:org-design" limit="all" order="published_at asc"}}
+      {{#get "posts" filter="tag:org-design" limit="100" order="published_at asc"}}
         {{#if posts}}
-          <div class="h2-violin" aria-label="Filing density">
-            <svg class="h2-violin-svg" data-violin aria-hidden="true"></svg>
+          <div class="h2-violin">
+            <svg class="h2-violin-svg" data-violin role="group" aria-label="Publication density timeline; each point opens a post"></svg>
             <ul class="h2-violin-data" hidden aria-hidden="true">
               {{#foreach posts}}
-                <li data-d="{{date format="YYYY-MM"}}" data-t="{{title}}" data-u="{{url}}"></li>
+                <li data-d="{{date format="YYYY-MM-DD"}}" data-t="{{title}}" data-u="{{url}}"></li>
               {{/foreach}}
             </ul>
             <span class="h2-violin-caption">
-              <b>{{posts.length}}</b>&nbsp;posts &middot;
+              <b>{{meta.pagination.total}}</b>&nbsp;posts &middot;
               {{#foreach posts limit="1"}}&rsquo;{{date format="YY"}}{{/foreach}}
               &mdash;
               {{#foreach posts}}{{#if @last}}&rsquo;{{date format="YY"}}{{/if}}{{/foreach}}
@@ -292,7 +292,7 @@
               <article class="h2-stripe-card">
                 <h3 class="h2-stripe-card-title"><a href="{{url}}">{{title}}</a></h3>
                 <div class="ds-meta">
-                  <time class="ds-meta-item">{{date format="MM DD YY"}}</time>
+                  <time class="ds-meta-item" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MM DD YY"}}</time>
                   <span class="ds-meta-item ds-meta-comments" aria-label="Comments">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                   <span class="ds-meta-comments-text">{{comment_count}}</span>
@@ -337,90 +337,35 @@
     </div>
   </section>
 
-  {{!-- ============ Subscriber count formatter ============ --}}
-  <script>
-    (function () {
-      function fmt(n) {
-        if (!Number.isFinite(n) || n <= 0) return '';
-        return n.toLocaleString('en-US');
-      }
-
-      function applyToAll(n) {
-        var text = fmt(n);
-        if (!text) return;
-        document.querySelectorAll('.h2-subscriber-count').forEach(function (el) {
-          el.textContent = text;
-          el.setAttribute('data-count', String(n));
-        });
-      }
-
-      // 1. Render the fallback (whatever's already in data-count) immediately.
-      document.querySelectorAll('.h2-subscriber-count').forEach(function (el) {
-        var raw = parseInt((el.getAttribute('data-count') || el.textContent || '').replace(/[^0-9]/g, ''), 10);
-        if (Number.isFinite(raw) && raw > 0) {
-          el.textContent = fmt(raw);
-        }
-      });
-
-      // 2. Then try the worker for a live count.
-      var WORKER_URL = 'https://cpj-worker.clay-893.workers.dev/subscribers';
-      var controller = new AbortController();
-      var timer = setTimeout(function () { controller.abort(); }, 4000);
-
-      fetch(WORKER_URL, { signal: controller.signal })
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (data) {
-          clearTimeout(timer);
-          if (!data) return;
-          var n = data && data.count;
-          if (Number.isFinite(n) && n > 0) applyToAll(n);
-        })
-        .catch(function () { /* keep fallback */ });
-    })();
-  </script>
-
-  {{!-- ============ Violin beeswarm renderer ============ --}}
+  {{!-- ============ Violin density renderer ============ --}}
   <script>
     (function () {
       const SVG_NS = 'http://www.w3.org/2000/svg';
-      const dotR = 3;
-      const minDist = 7;       // center-to-center collision distance
-      const yStep = 7;         // vertical slot spacing
-      const maxStack = 2;      // capped at ±2 slots above/below centerline
-      const padLeft = 8;       // left edge breathing
-      const padRight = 24;     // right edge breathing — bigger to keep distance from caption
+      const DAY_MS = 86400000;
+      const dotR = 2.75;
+      const padX = 8;
 
-      function monthIndex(ym) {
-        const [y, m] = ym.split('-').map(n => parseInt(n, 10));
-        return y * 12 + (m - 1);
+      function dayIndex(isoDate) {
+        const parts = isoDate.split('-').map(function (part) { return parseInt(part, 10); });
+        return Date.UTC(parts[0], parts[1] - 1, parts[2]) / DAY_MS;
       }
 
-      function buildCandidates() {
-        const cands = [[0, 0]];
-        const stepX = minDist;     // 7
-        const maxX = 14;            // 2 lateral slots per side per level
-        const yLevels = [];
-        for (let s = 1; s <= maxStack; s++) {
-          yLevels.push(-s * yStep);
-          yLevels.push(s * yStep);
-        }
-        // Centerline first
-        for (let k = 1; k * stepX <= maxX; k++) {
-          cands.push([-k * stepX, 0]);
-          cands.push([k * stepX, 0]);
-        }
-        // Each vertical level, sweep horizontally
-        for (let dy of yLevels) {
-          cands.push([0, dy]);
-          for (let k = 1; k * stepX <= maxX; k++) {
-            cands.push([-k * stepX, dy]);
-            cands.push([k * stepX, dy]);
-          }
-        }
-        return cands;
+      function standardDeviation(values) {
+        if (values.length < 2) return 0;
+        const mean = values.reduce(function (sum, value) { return sum + value; }, 0) / values.length;
+        const variance = values.reduce(function (sum, value) {
+          return sum + Math.pow(value - mean, 2);
+        }, 0) / values.length;
+        return Math.sqrt(variance);
       }
 
-      const CANDIDATES = buildCandidates();
+      function svgEl(name, attributes) {
+        const el = document.createElementNS(SVG_NS, name);
+        Object.keys(attributes || {}).forEach(function (key) {
+          el.setAttribute(key, attributes[key]);
+        });
+        return el;
+      }
 
       function readPosts(svg) {
         const root = svg.closest('.h2-violin');
@@ -439,143 +384,142 @@
         const posts = readPosts(svg);
         if (!posts.length) return;
 
-        const months = posts.map(function (p) { return monthIndex(p.d); });
-        const xMin = Math.min.apply(null, months);
-        const xMax = Math.max.apply(null, months);
-        const range = Math.max(1, xMax - xMin);
+        const days = posts.map(function (post) { return dayIndex(post.d); });
+        const dataMin = Math.min.apply(null, days);
+        const dataMax = Math.max.apply(null, days);
+        const dataRange = Math.max(1, dataMax - dataMin);
+        const sigma = standardDeviation(days);
+        const silverman = sigma ? 1.06 * sigma * Math.pow(days.length, -0.2) : 120;
+        const bandwidth = Math.max(120, Math.min(540, silverman));
+        const domainMin = dataMin - bandwidth * 1.5;
+        const domainMax = dataMax + bandwidth * 1.5;
+        const domainRange = domainMax - domainMin;
 
         while (svg.firstChild) svg.removeChild(svg.firstChild);
         const W = svg.clientWidth || svg.getBoundingClientRect().width || 800;
-        const innerW = Math.max(1, W - padLeft - padRight);
-        const H = parseFloat(getComputedStyle(svg).height) || 36;
+        const innerW = Math.max(1, W - padX * 2);
+        const H = parseFloat(getComputedStyle(svg).height) || 48;
         const cy = H / 2;
+        const maxHalfHeight = Math.max(8, cy - 5);
         svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
         svg.setAttribute('preserveAspectRatio', 'none');
 
-        // hairline centerline
-        const line = document.createElementNS(SVG_NS, 'line');
-        line.setAttribute('x1', 0);
-        line.setAttribute('x2', W);
-        line.setAttribute('y1', cy);
-        line.setAttribute('y2', cy);
-        line.setAttribute('stroke', '#1A1A1A');
-        line.setAttribute('stroke-opacity', '0.18');
-        line.setAttribute('stroke-width', '1');
-        svg.appendChild(line);
-
-        // Year ticks
-        const startYear = Math.ceil(xMin / 12);
-        const endYear = Math.floor(xMax / 12);
-        for (let y = startYear; y <= endYear; y++) {
-          const monthIdx = y * 12;
-          if (monthIdx < xMin || monthIdx > xMax) continue;
-          const tx = padLeft + ((monthIdx - xMin) / range) * innerW;
-          const tick = document.createElementNS(SVG_NS, 'line');
-          tick.setAttribute('x1', tx);
-          tick.setAttribute('x2', tx);
-          tick.setAttribute('y1', cy + dotR + 3);
-          tick.setAttribute('y2', cy + dotR + 6);
-          tick.setAttribute('stroke', '#1A1A1A');
-          tick.setAttribute('stroke-opacity', '0.28');
-          tick.setAttribute('stroke-width', '1');
-          svg.appendChild(tick);
+        function scaleX(day) {
+          return padX + ((day - domainMin) / domainRange) * innerW;
         }
 
-        // Pair posts with placed positions (sorted by month asc, matching previous behavior)
-        const indexed = posts.map(function (p, i) {
-          return { post: p, m: months[i] };
-        }).sort(function (a, b) { return a.m - b.m; });
-
-        const placed = [];
-
-        function collides(x, y) {
-          for (let i = 0; i < placed.length; i++) {
-            const p = placed[i];
-            const dx = x - p.x;
-            const dy = y - p.y;
-            if (dx * dx + dy * dy < minDist * minDist) return true;
+        // Sample a Gaussian kernel density estimate and mirror it around the time axis.
+        const sampleCount = Math.max(80, Math.min(180, Math.round(innerW / 4)));
+        const samples = [];
+        let maxDensity = 0;
+        for (let i = 0; i < sampleCount; i++) {
+          const day = domainMin + (i / (sampleCount - 1)) * domainRange;
+          let density = 0;
+          for (let j = 0; j < days.length; j++) {
+            const distance = (day - days[j]) / bandwidth;
+            density += Math.exp(-0.5 * distance * distance);
           }
-          return false;
+          // Force a clean taper at both ends of the plotting domain.
+          if (i === 0 || i === sampleCount - 1) density = 0;
+          maxDensity = Math.max(maxDensity, density);
+          samples.push({ day: day, density: density });
         }
 
-        for (let i = 0; i < indexed.length; i++) {
-          const item = indexed[i];
-          const idealX = padLeft + ((item.m - xMin) / range) * innerW;
-          let chosen = null;
-          for (let c = 0; c < CANDIDATES.length; c++) {
-            const cx = idealX + CANDIDATES[c][0];
-            const cyTry = cy + CANDIDATES[c][1];
-            if (!collides(cx, cyTry)) {
-              chosen = { x: cx, y: cyTry };
-              break;
-            }
-          }
-          if (!chosen) chosen = { x: idealX, y: cy };
-          chosen.post = item.post;
-          chosen.last = i === indexed.length - 1;
-          placed.push(chosen);
+        const top = [];
+        const bottom = [];
+        samples.forEach(function (sample) {
+          const x = scaleX(sample.day);
+          const halfHeight = maxDensity ? (sample.density / maxDensity) * maxHalfHeight : 0;
+          top.push(x.toFixed(2) + ' ' + (cy - halfHeight).toFixed(2));
+          bottom.unshift(x.toFixed(2) + ' ' + (cy + halfHeight).toFixed(2));
+        });
+        const densityPath = svgEl('path', {
+          d: 'M ' + top.join(' L ') + ' L ' + bottom.join(' L ') + ' Z',
+          class: 'h2-violin-density'
+        });
+        svg.appendChild(densityPath);
+
+        const axis = svgEl('line', {
+          x1: padX,
+          x2: W - padX,
+          y1: cy,
+          y2: cy,
+          class: 'h2-violin-axis'
+        });
+        svg.appendChild(axis);
+
+        // Year ticks sit below the density shape without competing with article points.
+        const startYear = new Date(domainMin * DAY_MS).getUTCFullYear();
+        const endYear = new Date(domainMax * DAY_MS).getUTCFullYear();
+        for (let year = startYear; year <= endYear; year++) {
+          const yearDay = Date.UTC(year, 0, 1) / DAY_MS;
+          if (yearDay <= domainMin || yearDay >= domainMax) continue;
+          const tickX = scaleX(yearDay);
+          svg.appendChild(svgEl('line', {
+            x1: tickX.toFixed(2),
+            x2: tickX.toFixed(2),
+            y1: H - 6,
+            y2: H - 2,
+            class: 'h2-violin-tick'
+          }));
         }
 
-        // Build each dot as an <a class="h2-violin-dot"> wrapping circle + hit + leader + text
-        // Tooltip lives in the empty 32px above the SVG. Fixed y for all dots.
-        const TIP_Y = -8;        // 8px above the viewBox top — sits in the .h2-violin top margin
-        const LEADER_TOP = -4;   // leader stops 4px below the text baseline
+        // Keep every article interactive, but place all points on the centerline.
+        const indexed = posts.map(function (post, i) {
+          return { post: post, day: days[i] };
+        }).sort(function (a, b) { return a.day - b.day; });
+        const totalsByDay = {};
+        const seenByDay = {};
+        indexed.forEach(function (item) { totalsByDay[item.day] = (totalsByDay[item.day] || 0) + 1; });
 
-        for (let i = 0; i < placed.length; i++) {
-          const p = placed[i];
+        indexed.forEach(function (item, i) {
+          const ordinal = seenByDay[item.day] || 0;
+          seenByDay[item.day] = ordinal + 1;
+          const duplicateOffset = (ordinal - (totalsByDay[item.day] - 1) / 2) * 6;
+          const x = Math.max(padX, Math.min(W - padX, scaleX(item.day) + duplicateOffset));
+          const isLatest = i === indexed.length - 1;
+          const anchor = svgEl('a', {
+            href: item.post.u,
+            class: 'h2-violin-dot',
+            tabindex: '0',
+            'aria-label': item.post.t + ', ' + item.post.d
+          });
+          anchor.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', item.post.u);
 
-          const a = document.createElementNS(SVG_NS, 'a');
-          a.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', p.post.u);
-          a.setAttribute('href', p.post.u);
-          a.setAttribute('class', 'h2-violin-dot');
-          a.setAttribute('tabindex', '0');
+          const title = svgEl('title');
+          title.textContent = item.post.t;
+          anchor.appendChild(title);
 
-          // Visible dot
-          const c = document.createElementNS(SVG_NS, 'circle');
-          c.setAttribute('cx', p.x.toFixed(2));
-          c.setAttribute('cy', p.y.toFixed(2));
-          c.setAttribute('r', dotR);
-          if (p.last) {
-            c.setAttribute('fill', '#FF3252');
-            c.setAttribute('stroke', '#1A1A1A');
-            c.setAttribute('stroke-opacity', '0.20');
-          } else {
-            c.setAttribute('fill', '#1A1A1A');
-            c.setAttribute('fill-opacity', '0.50');
-            c.setAttribute('stroke', '#1A1A1A');
-            c.setAttribute('stroke-opacity', '0.55');
-          }
-          c.setAttribute('stroke-width', '0.75');
-          a.appendChild(c);
+          anchor.appendChild(svgEl('circle', {
+            cx: x.toFixed(2),
+            cy: cy.toFixed(2),
+            r: dotR,
+            class: 'h2-violin-point' + (isLatest ? ' is-latest' : '')
+          }));
+          anchor.appendChild(svgEl('circle', {
+            cx: x.toFixed(2),
+            cy: cy.toFixed(2),
+            r: 9,
+            class: 'h2-violin-hit'
+          }));
+          anchor.appendChild(svgEl('line', {
+            x1: x.toFixed(2),
+            x2: x.toFixed(2),
+            y1: (cy - dotR).toFixed(2),
+            y2: -4,
+            class: 'h2-violin-leader'
+          }));
 
-          // Invisible larger hit target (~9px radius)
-          const hit = document.createElementNS(SVG_NS, 'circle');
-          hit.setAttribute('cx', p.x.toFixed(2));
-          hit.setAttribute('cy', p.y.toFixed(2));
-          hit.setAttribute('r', 9);
-          hit.setAttribute('class', 'h2-violin-hit');
-          a.appendChild(hit);
-
-          // Leader line (vertical, dot top → fixed tooltip baseline)
-          const leader = document.createElementNS(SVG_NS, 'line');
-          leader.setAttribute('x1', p.x.toFixed(2));
-          leader.setAttribute('x2', p.x.toFixed(2));
-          leader.setAttribute('y1', (p.y - dotR).toFixed(2));
-          leader.setAttribute('y2', LEADER_TOP);
-          leader.setAttribute('class', 'h2-violin-leader');
-          a.appendChild(leader);
-
-          // Title text (SF Mono small) at fixed top position
-          const text = document.createElementNS(SVG_NS, 'text');
-          text.setAttribute('x', p.x.toFixed(2));
-          text.setAttribute('y', TIP_Y);
-          text.setAttribute('text-anchor', 'middle');
-          text.setAttribute('class', 'h2-violin-tip');
-          text.textContent = p.post.t;
-          a.appendChild(text);
-
-          svg.appendChild(a);
-        }
+          const tooltip = svgEl('text', {
+            x: x.toFixed(2),
+            y: -8,
+            'text-anchor': x < W * 0.25 ? 'start' : (x > W * 0.75 ? 'end' : 'middle'),
+            class: 'h2-violin-tip'
+          });
+          tooltip.textContent = item.post.t;
+          anchor.appendChild(tooltip);
+          svg.appendChild(anchor);
+        });
       }
 
       function renderAll() {
@@ -616,52 +560,4 @@
     </div>
   </section>
 
-  {{!-- ============ ccccharter promo stripe ============ --}}
-  <section class="h2-charter-stripe" aria-labelledby="h2-charter-title">
-    <div class="h2-container h2-charter-inner">
-
-      <div class="h2-charter-top">
-        <p class="h2-charter-pitch">
-          <span class="h2-charter-pitch-dot" aria-hidden="true"></span>
-          Try my product
-        </p>
-
-        <div class="h2-charter-brand">
-          <img class="h2-charter-logo" src="{{asset "images/ccccharter-logo.png"}}" alt="" width="28" height="28">
-          <span class="h2-charter-wordmark">ccc<em>charter</em></span>
-        </div>
-      </div>
-
-      <h2 class="h2-charter-title" id="h2-charter-title">70% of team effectiveness comes from org design, so get it right.</h2>
-      <p class="h2-charter-subhead">One shape, every team. Linked. Versioned. Drafted from your Slack when you want it. Written by hand when you don&rsquo;t.</p>
-
-      <div class="h2-charter-actions">
-        <a class="h2-charter-btn h2-charter-btn-primary" href="https://www.ccccharter.com" target="_blank" rel="noopener">
-          Get started
-          <span class="h2-charter-btn-arrow" aria-hidden="true">&#8599;</span>
-        </a>
-        <a class="h2-charter-btn h2-charter-btn-ghost" href="https://www.ccccharter.com/pricing" target="_blank" rel="noopener">See pricing</a>
-      </div>
-
-      <div class="h2-charter-features">
-        <article class="h2-charter-feature">
-          <span class="h2-charter-feature-num">01</span>
-          <h3 class="h2-charter-feature-title">Teams as the unit</h3>
-          <p class="h2-charter-feature-body">Software built for people who work in teams, who care about mission and purpose, and want to get more done, faster.</p>
-        </article>
-        <article class="h2-charter-feature">
-          <span class="h2-charter-feature-num">02</span>
-          <h3 class="h2-charter-feature-title">An org as a graph</h3>
-          <p class="h2-charter-feature-body">Roles in one charter link to roles in another. Subteams nest under superteams. Mentions connect the team graph.</p>
-        </article>
-        <article class="h2-charter-feature">
-          <span class="h2-charter-feature-num">03</span>
-          <h3 class="h2-charter-feature-title">Versioned, not lost</h3>
-          <p class="h2-charter-feature-body">Every save is a version. Subscribe to a charter and get notified when it changes. See who edited what.</p>
-        </article>
-      </div>
-
-    </div>
-  </section>
-
-</main>
+</div>

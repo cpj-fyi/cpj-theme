@@ -19,6 +19,7 @@
         initMobileChapterNav();
         initChapterTitleStyling();
         initCommentCounts();
+        initSubscriberCount();
         initRetailerTracking();
         initPostExtras();   // footnotes + sidenotes + math, in order
         initEverything();
@@ -1011,67 +1012,91 @@
         }
 
         /**
-         * Calculate moon phase using astronomical algorithm
-         * Returns a value from 0 to 1 where:
-         * 0 = New Moon, 0.25 = First Quarter, 0.5 = Full Moon, 0.75 = Last Quarter
-         */
-        function getMoonPhase(date) {
-            // Recent known new moon: January 18, 2026 at 19:52 UTC
-            // Using a recent reference minimizes accumulated calculation error
-            const knownNewMoon = new Date(Date.UTC(2026, 0, 18, 19, 52, 0));
-            const synodicMonth = 29.53058867; // Average lunar cycle in days
-
-            const daysSinceKnown = (date.getTime() - knownNewMoon.getTime()) / (1000 * 60 * 60 * 24);
-            const lunations = daysSinceKnown / synodicMonth;
-            const phase = lunations - Math.floor(lunations);
-
-            return phase;
-        }
-
-        /**
          * Rotate the moon disc based on current phase
-         * Simple Hodinkee-style: disc image rotates behind mask image
-         * Phase 0 = new moon, Phase 0.5 = full moon
-         * One full rotation (360°) = one lunar cycle
+         * The existing two-moon SVG advances 180° during one lunar cycle.
          */
         function updateMoonPhase(phase) {
-            // Convert phase (0-1) to rotation degrees
-            // +44° offset calibrates disc position to match visual moon position
-            const rotation = (phase * 360) + 44;
+            if (!window.CPJMoonphase || !Number.isFinite(phase)) return;
+            const rotation = window.CPJMoonphase.getDiscRotation(phase);
 
             moonDiscs.forEach(function(disc) {
                 disc.style.transform = `rotate(${rotation}deg)`;
             });
 
-            // Update title with phase name
-            if (moonphaseEl) {
-                const phaseName = getMoonPhaseName(phase);
-                moonphaseEl.setAttribute('title', phaseName);
-            }
-        }
+            const phaseName = window.CPJMoonphase.getPhaseName(phase);
+            const illumination = window.CPJMoonphase.getIllumination(phase);
+            const label = `${phaseName} · ${Math.round(illumination * 100)}% illuminated`;
 
-        function getMoonPhaseName(phase) {
-            if (phase < 0.03 || phase > 0.97) return 'New Moon';
-            if (phase < 0.22) return 'Waxing Crescent';
-            if (phase < 0.28) return 'First Quarter';
-            if (phase < 0.47) return 'Waxing Gibbous';
-            if (phase < 0.53) return 'Full Moon';
-            if (phase < 0.72) return 'Waning Gibbous';
-            if (phase < 0.78) return 'Last Quarter';
-            return 'Waning Crescent';
+            if (moonphaseEl) {
+                moonphaseEl.setAttribute('title', label);
+                moonphaseEl.setAttribute('aria-label', label);
+            }
+
+            document.querySelectorAll('.mobile-moonphase').forEach(function(el) {
+                el.setAttribute('title', label);
+                el.setAttribute('aria-label', label);
+            });
         }
 
         // Initialize
         updateDateTime();
-        updateMoonPhase(getMoonPhase(new Date()));
+        if (window.CPJMoonphase) {
+            updateMoonPhase(window.CPJMoonphase.getLunarPhase(new Date()));
+        }
 
         // Update time every minute
         setInterval(updateDateTime, 60000);
 
         // Update moon phase every hour (it changes slowly)
         setInterval(function() {
-            updateMoonPhase(getMoonPhase(new Date()));
+            if (window.CPJMoonphase) {
+                updateMoonPhase(window.CPJMoonphase.getLunarPhase(new Date()));
+            }
         }, 3600000);
+    }
+
+    /**
+     * Format the configured subscriber fallback on every page, then replace it
+     * with the live Worker count when available.
+     */
+    function initSubscriberCount() {
+        var countEls = document.querySelectorAll('.h2-subscriber-count');
+        if (!countEls.length) return;
+
+        function formatCount(n) {
+            if (!Number.isFinite(n) || n <= 0) return '';
+            return n.toLocaleString('en-US');
+        }
+
+        function applyToAll(n) {
+            var text = formatCount(n);
+            if (!text) return;
+
+            countEls.forEach(function(el) {
+                el.textContent = text;
+                el.setAttribute('data-count', String(n));
+            });
+        }
+
+        countEls.forEach(function(el) {
+            var raw = parseInt((el.getAttribute('data-count') || el.textContent || '').replace(/[^0-9]/g, ''), 10);
+            if (Number.isFinite(raw) && raw > 0) el.textContent = formatCount(raw);
+        });
+
+        var controller = new AbortController();
+        var timer = setTimeout(function() { controller.abort(); }, 4000);
+
+        fetch('https://cpj-worker.clay-893.workers.dev/subscribers', { signal: controller.signal })
+            .then(function(response) { return response.ok ? response.json() : null; })
+            .then(function(data) {
+                clearTimeout(timer);
+                var count = data && data.count;
+                if (Number.isFinite(count) && count > 0) applyToAll(count);
+            })
+            .catch(function() {
+                clearTimeout(timer);
+                // Keep the formatted fallback.
+            });
     }
 
     /**

@@ -8,7 +8,7 @@
 :where(.h2-page) {
   --h2-coral: #FF3252;
   --h2-radar-bg: #222222;
-  --h2-radar-fg: #00ff88;
+  --h2-radar-fg: var(--radar-accent, #FF3252);
   --h2-page-bg: #F8F8F8;
   --h2-rule-color: rgba(0, 0, 0, 0.12);
   --h2-rule: 1px solid var(--h2-rule-color);
@@ -320,7 +320,7 @@
 .h2-violin-svg {
   display: block;
   width: 100%;
-  height: 36px;
+  height: 48px;
   overflow: visible;
 }
 
@@ -340,13 +340,50 @@
 }
 
 .h2-violin-data {
-  /* hidden data carrier — the JS reads its li elements to build dots */
+  /* Hidden data carrier — the JS reads its list items to build the plot. */
   display: none;
 }
 
-/* Dot group: hover state reveals leader + title */
+.h2-violin-density {
+  fill: rgba(26, 26, 26, 0.11);
+  stroke: rgba(26, 26, 26, 0.28);
+  stroke-width: 0.75;
+}
+
+.h2-violin-axis {
+  stroke: rgba(26, 26, 26, 0.24);
+  stroke-width: 1;
+}
+
+.h2-violin-tick {
+  stroke: rgba(26, 26, 26, 0.28);
+  stroke-width: 1;
+}
+
+/* Article points remain links, but sit on the density plot's centerline. */
 .h2-violin-dot {
   cursor: pointer;
+}
+
+.h2-violin-point {
+  fill: rgba(26, 26, 26, 0.62);
+  stroke: rgba(26, 26, 26, 0.72);
+  stroke-width: 0.75;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 100ms ease, fill 100ms ease, stroke 100ms ease;
+}
+
+.h2-violin-point.is-latest {
+  fill: var(--h2-coral);
+  stroke: rgba(26, 26, 26, 0.24);
+}
+
+.h2-violin-dot:hover .h2-violin-point,
+.h2-violin-dot:focus-visible .h2-violin-point {
+  fill: var(--h2-coral);
+  stroke: var(--h2-coral);
+  transform: scale(1.35);
 }
 
 .h2-violin-leader,
@@ -465,7 +502,7 @@
   }
 
   .h2-violin-svg {
-    height: 30px;
+    height: 40px;
   }
 }
 
@@ -716,6 +753,11 @@
   .h2-lead {
     grid-column: auto;
     order: 1;
+  }
+
+  .h2-lead-lede {
+    max-height: 28rem;
+    overflow: hidden;
   }
 
   .h2-rightcol {
@@ -1178,237 +1220,4 @@
 .h2-colophon-sub-meta b {
   color: var(--color-text, #1A1A1A);
   font-weight: 400;
-}
-
-/* ---------- ccccharter stripe (SaaS-promo, dark-mode) ---------- */
-.h2-charter-stripe {
-  background: #0A0A0A;
-  color: #FFFFFF;
-  /* Full-bleed band: breaks out of any container */
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  padding: clamp(40px, 5vw, 64px) 0;
-}
-
-.h2-charter-inner {
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 0 var(--space-6, 24px);
-  text-align: center;
-}
-
-.h2-charter-top {
-  display: inline-flex;
-  align-items: center;
-  gap: 24px;
-  margin-bottom: 32px;
-}
-
-.h2-charter-pitch {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-sans, system-ui);
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.65);
-  margin: 0;
-}
-
-.h2-charter-pitch-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #D83586;
-  box-shadow: 0 0 0 3px rgba(216, 53, 134, 0.22);
-}
-
-.h2-charter-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #FFFFFF;
-}
-
-.h2-charter-logo {
-  display: block;
-  width: 28px;
-  height: 28px;
-}
-
-.h2-charter-wordmark {
-  font-family: var(--font-sans, system-ui);
-  font-size: 16px;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-}
-
-.h2-charter-wordmark em {
-  font-family: var(--font-serif, Georgia, serif);
-  font-style: italic;
-  font-weight: 400;
-}
-
-
-.h2-charter-title {
-  font-family: var(--font-serif, Georgia, serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(2rem, 4.5vw, 3.25rem);
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  color: #FFFFFF;
-  margin: 0 auto 14px;
-  max-width: 14em;
-  text-wrap: balance;
-}
-
-.h2-charter-subhead {
-  font-family: var(--font-sans, system-ui);
-  font-size: 1.0625rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0 auto 24px;
-  max-width: 56ch;
-  text-wrap: pretty;
-}
-
-/* CTAs */
-.h2-charter-actions {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 48px;
-}
-
-.h2-charter-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 44px;
-  padding: 0 20px;
-  font-family: var(--font-sans, system-ui);
-  font-size: 14px;
-  font-weight: 400;
-  letter-spacing: 0;
-  text-decoration: none;
-  border-radius: 999px;
-  transition: background 120ms ease, color 120ms ease, transform 120ms ease;
-}
-
-.h2-charter-btn-primary {
-  background: #D83586;
-  color: #FFFFFF;
-}
-
-.h2-charter-btn-primary:hover {
-  background: #C12878;
-}
-
-.h2-charter-btn-primary:focus-visible {
-  outline: 2px solid #FFFFFF;
-  outline-offset: 3px;
-}
-
-.h2-charter-btn-arrow {
-  display: inline-block;
-  transition: transform 120ms ease;
-  font-size: 13px;
-}
-
-.h2-charter-btn-primary:hover .h2-charter-btn-arrow {
-  transform: translate(2px, -2px);
-}
-
-.h2-charter-btn-ghost {
-  background: transparent;
-  color: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-}
-
-.h2-charter-btn-ghost:hover {
-  color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.36);
-}
-
-.h2-charter-btn-ghost:focus-visible {
-  outline: 2px solid #FFFFFF;
-  outline-offset: 3px;
-}
-
-/* Features (3-up) */
-.h2-charter-features {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 48px;
-  row-gap: 28px;
-  text-align: left;
-  margin: 0 0 10px;
-}
-
-.h2-charter-feature {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.h2-charter-feature-num {
-  font-family: var(--font-sans, system-ui);
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.10em;
-  color: rgba(255, 255, 255, 0.45);
-}
-
-.h2-charter-feature-title {
-  font-family: var(--font-serif, Georgia, serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 1.25rem;
-  line-height: 1.2;
-  color: #FFFFFF;
-  margin: 0;
-}
-
-.h2-charter-feature-body {
-  font-family: var(--font-sans, system-ui);
-  font-size: 0.9375rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0;
-}
-
-
-@media (max-width: 900px) {
-  .h2-charter-features {
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 32px;
-  }
-}
-
-@media (max-width: 600px) {
-  .h2-charter-features {
-    grid-template-columns: 1fr;
-    text-align: left;
-  }
-
-  .h2-charter-top {
-    flex-wrap: wrap;
-    gap: 12px 16px;
-    margin-bottom: 24px;
-  }
-
-  .h2-charter-actions {
-    margin-bottom: 36px;
-  }
 }

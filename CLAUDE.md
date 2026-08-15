@@ -56,7 +56,7 @@ The archive templates (tag-essays.hbs, tag-radar.hbs, tag-five-things.hbs) use e
 ### Colors
 - Background: `#F8F8F8`
 - Accent: `#FF3252` (coral red)
-- Radar neon green: `#00ff88`
+- Radar accent: semantic `--radar-accent`, currently coral `#FF3252`
 - Radar dark background: `#222222`
 
 ### Section Colors (for chapter nav buttons)
@@ -79,12 +79,12 @@ The archive templates (tag-essays.hbs, tag-radar.hbs, tag-five-things.hbs) use e
 Radar pages (`body.tag-radar`) use dark mode styling:
 - Dark background (#222222)
 - White text
-- Neon green (#00ff88) for links, tags, accents
+- Coral (`--radar-accent`) for links, tags, and accents
 - Header border turns white
 - Mobile menu gets dark backgrounds
 
 ### Radar Scan Animation
-The radar section header has an animated green dot that sweeps across with random "blip" effects. Implemented in `initRadarScan()` in main.js.
+The radar section header has an animated accent dot that sweeps across with random "blip" effects. Implemented in `initRadarScan()` in main.js.
 
 ## Mobile Menu
 
@@ -132,12 +132,11 @@ Simple layered images approach:
 
 ### Animation (assets/js/main.js)
 ```javascript
-// Phase calculation from known new moon (Jan 6, 2000)
-const synodicMonth = 29.53058867; // days
-const phase = (daysSinceKnown / synodicMonth) % 1;
+// assets/js/moonphase.js derives phase from Sun–Moon elongation.
+const phase = CPJMoonphase.getLunarPhase(new Date());
 
-// Simple rotation: phase 0 = 0°, phase 0.5 = 180°, phase 1 = 360°
-const rotation = phase * 360;
+// The disc has two opposite moons, so it advances 180° per lunar cycle.
+const rotation = CPJMoonphase.getDiscRotation(phase);
 moonDisc.style.transform = `rotate(${rotation}deg)`;
 ```
 

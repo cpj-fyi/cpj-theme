@@ -56,7 +56,7 @@
             {{#foreach posts}}
                 <li>
                     <a href="{{url}}">{{title}}</a>
-                    <span class="sidebar-recent-date">{{date format="MMM D"}}</span>
+                    <time class="sidebar-recent-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MM DD YY"}}</time>
                 </li>
             {{/foreach}}
         </ul>
