@@ -10,6 +10,12 @@ A custom Ghost 6.x theme for [cpj.fyi](https://cpj.fyi), featuring Clay Parker J
 - **Configurable Sidebar**: Newsletter signup, featured content, custom HTML
 - **Clean Typography**: Freight Text Pro serif with system sans UI elements
 
+## Native chapter resources (1.0.2)
+
+The theme loads `assets/css/native-resources.css` and `assets/js/native-resources.js` for HTML cards wrapped in `.hp-native-resource` with `data-hp-native-resource`. Resources inherit the chapter typography and adapt to the available column width. The script adds filtering, compare/read views, and an expanded dialog to the Length Limit table; other resource cards work without JavaScript.
+
+Keep resource content in each chapter's HTML card so existing Ghost access controls apply. Once these theme assets are active, remove only duplicate native-resource CSS/JS from page code injection; preserve Paperdeck and all other injections. Download links remain in the HTML cards and point to Ghost file storage.
+
 ## Installation
 
 1. Download or clone this repository
