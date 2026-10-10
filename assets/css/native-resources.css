@@ -270,8 +270,8 @@ dialog.hp-native-resource .native-table-scroll{max-height:calc(100dvh - 300px)}
 /* Book tables: inherit the approved chapter type and fit its 720px column. */
 .hp-native-resource .hp-book-scroll{max-width:100%;overflow:auto;border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);position:relative}
 .hp-native-resource .hp-book-table{width:100%;min-width:0;table-layout:fixed;font-family:var(--serif);font-size:var(--resource-text);line-height:1.5}
-.hp-native-resource .hp-book-table thead th{padding:14px 12px;font:600 12px/1.5 var(--sans);letter-spacing:normal;white-space:normal}
-.hp-native-resource .hp-book-table tbody th,.hp-native-resource .hp-book-table tbody td{padding:18px 12px;font-family:var(--serif);font-size:var(--resource-text);font-weight:400;line-height:1.5;color:var(--ink);overflow-wrap:break-word;hyphens:auto}
+.hp-native-resource .hp-book-table thead th{padding:14px 12px;font:600 12px/1.5 var(--sans);letter-spacing:normal;white-space:normal;vertical-align:top}
+.hp-native-resource .hp-book-table tbody th,.hp-native-resource .hp-book-table tbody td{padding:18px 12px;font-family:var(--serif);font-size:var(--resource-text);font-weight:400;line-height:1.5;color:var(--ink);overflow-wrap:break-word;hyphens:manual}
 .hp-native-resource .hp-book-table tbody th{position:static}
 .hp-native-resource .hp-book-table p{margin:0 0 12px;line-height:inherit}
 .hp-native-resource .hp-book-table ul{margin:0;padding-left:18px;line-height:inherit}
