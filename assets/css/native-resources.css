@@ -1,5 +1,6 @@
 
-.hp-native-resource{container:hp-native / inline-size;display:block;min-width:0;width:100%;margin:32px 0;color:var(--ink);font-family:var(--serif);font-size:var(--resource-text);line-height:1.71}
+/* Keep mobile browsers from inflating wide resource-table text; page zoom remains available. */
+.hp-native-resource{-webkit-text-size-adjust:100%;text-size-adjust:100%;container:hp-native / inline-size;display:block;min-width:0;width:100%;margin:32px 0;color:var(--ink);font-family:var(--serif);font-size:var(--resource-text);line-height:1.71}
 .hp-native-resource h2,.hp-native-resource h3{font-family:var(--serif);font-weight:400;font-style:normal;text-transform:none;letter-spacing:normal;clear:none}
 .hp-native-resource p,.hp-native-resource ul,.hp-native-resource dl{margin-top:0}
 .hp-native-resource h2,.hp-native-resource h3,.hp-native-resource p,.hp-native-resource a{color:var(--ink)}
