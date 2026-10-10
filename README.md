@@ -102,3 +102,5 @@ MIT
 ## Credits
 
 Built for Clay Parker Jones by Claude.
+
+Native resource coverage in 1.0.3 includes source-checked tables, comparisons, agendas, grouped lists, and the rewards spectrum across 24 chapters. New layouts use the same scoped font and container sizing as the initial six; comparison tables scroll within narrow columns, and independent groups stack.
