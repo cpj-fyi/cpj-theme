@@ -781,11 +781,11 @@
 
                 // Scroll current button into view (centered)
                 setTimeout(function() {
-                    btn.scrollIntoView({
-                        behavior: 'smooth',
-                        inline: 'center',
-                        block: 'nearest'
-                    });
+                    const row = mobileNav.querySelector('.mobile-chapter-nav-inner');
+                    if (row) {
+                        row.scrollLeft += btn.getBoundingClientRect().left - row.getBoundingClientRect().left
+                            - row.clientWidth / 2 + btn.offsetWidth / 2;
+                    }
                 }, 100);
             }
         });

@@ -1,0 +1,65 @@
+/* LTL Pixel: native, selectable editorial headings with no renderer required.
+   Font source and copyright: ../fonts/ltl-pixel/NOTICE.txt */
+
+@font-face {
+    font-family: "LTL Pixel";
+    src: url("../fonts/ltl-pixel/LTLPixel-Regular.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "LTL Pixel";
+    src: url("../fonts/ltl-pixel/LTLPixel-Italic.woff2") format("woff2");
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "LTL Pixel";
+    src: url("../fonts/ltl-pixel/LTLPixel-Bold.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "LTL Pixel";
+    src: url("../fonts/ltl-pixel/LTLPixel-BoldItalic.woff2") format("woff2");
+    font-style: italic;
+    font-weight: 700;
+    font-display: swap;
+}
+
+:root {
+    --font-pixel: "LTL Pixel", var(--font-serif);
+}
+
+/* Ghost's editorial headings are direct children of .content. Keep chapter
+   navigation, related posts and headings inside embedded cards independent. */
+:is(.post, .page) .post-body .content > :is(h2, h3, h4) {
+    font-family: var(--font-pixel);
+    font-synthesis: none;
+    font-kerning: normal;
+    line-height: 1.4;
+    letter-spacing: normal;
+    text-transform: none;
+    overflow-wrap: break-word;
+}
+
+:is(.post, .page) .post-body .content > h2 {
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+:is(.post, .page) .post-body .content > h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+:is(.post, .page) .post-body .content > h4 {
+    font-size: 1.25rem;
+    font-weight: 700;
+}

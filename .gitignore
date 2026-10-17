@@ -4,6 +4,7 @@ Thumbs.db
 
 # Node modules (if you add build tools later)
 node_modules/
+dist/
 
 # Zip files (generated, not source)
 *.zip

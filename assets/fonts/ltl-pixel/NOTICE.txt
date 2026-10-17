@@ -1,0 +1,14 @@
+LTL Pixel
+Copyright 2026 Clay Parker Jones.
+
+Source: https://github.com/cpj-fyi/ltl-pixel
+Version: v5.3 (2026-10-17)
+Source commit: a8e728ca347b43c53ee1f16c745050d495c754fd
+
+These four unmodified WOFF2 files are bundled for use in Clay Parker Jones's
+cpj-theme at his request. LTL Pixel is independently drawn and does not include
+Freight font data.
+
+The upstream repository states: "A reuse license has not yet been selected
+for this repository." The theme's MIT package metadata does not grant a
+separate license to these font files.
