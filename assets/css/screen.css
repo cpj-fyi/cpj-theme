@@ -251,6 +251,7 @@ hr {
 .site-nav {
     display: flex;
     align-items: center;
+    gap: var(--space-5);
 }
 
 .nav-list {
@@ -284,25 +285,62 @@ hr {
     transition: all var(--transition-fast);
 }
 
-.nav-list a.nav-home {
-    padding-top: 0;
-}
-
 .nav-list a:hover {
     color: var(--color-text);
     border-bottom-color: var(--color-text);
 }
 
-/* Nav logo (replaces Home text) */
-.nav-logo {
-    height: 16px;
-    width: auto;
-    display: block;
-}
-
 .nav-home {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    height: 44px;
     border-bottom: none !important;
     margin-right: var(--space-3);
+}
+
+/* Keep the wordmark and actions fixed while narrow desktop links can scroll. */
+@media (min-width: 769px) and (max-width: 1199px) {
+    .header-inner {
+        gap: var(--space-3);
+    }
+
+    .site-nav {
+        flex: 1;
+        min-width: 0;
+        gap: var(--space-3);
+    }
+
+    .nav-home {
+        margin-right: 0;
+    }
+
+    .nav-list {
+        flex: 1;
+        min-width: 0;
+        gap: var(--space-3);
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .nav-list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nav-list li {
+        flex: 0 0 auto;
+    }
+
+    .nav-list a,
+    .header-datetime,
+    .header-link {
+        white-space: nowrap;
+    }
+
+    .header-inner .header-actions {
+        flex: 0 0 auto;
+        gap: var(--space-2);
+    }
 }
 
 /* Header actions */
@@ -413,10 +451,18 @@ body.tag-radar .nav-radar {
    Book Sub-Navigation
    ========================================================================== */
 
+/* Shared by the book subnav on all pages and the chapter reader badges. */
+[data-section="foundations"] { --section-color: #ff3252; --section-shape: url('../images/sections/foundations.svg'); }
+[data-section="structuring"] { --section-color: #e9306b; --section-shape: url('../images/sections/structuring.svg'); }
+[data-section="direction"] { --section-color: #d83586; --section-shape: url('../images/sections/direction.svg'); }
+[data-section="practice"] { --section-color: #bd31bf; --section-shape: url('../images/sections/practice.svg'); }
+[data-section="learning"] { --section-color: #9f36ce; --section-shape: url('../images/sections/learning.svg'); }
+[data-section="space"] { --section-color: #8438f2; --section-shape: url('../images/sections/space.svg'); }
+
 .book-subnav {
     display: none;
     background: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid #D8D8D8;
 }
 
 /* Show book subnav only on book section pages and chapter pages */
@@ -434,6 +480,13 @@ body.page-template-custom-buy .book-subnav {
 .book-subnav-inner {
     display: flex;
     align-items: center;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.book-subnav-inner::-webkit-scrollbar {
+    display: none;
 }
 
 .book-subnav-list {
@@ -443,6 +496,7 @@ body.page-template-custom-buy .book-subnav {
     list-style: none;
     margin: 0;
     padding: 0;
+    min-width: max-content;
 }
 
 .book-subnav-list li {
@@ -458,15 +512,36 @@ body.page-template-custom-buy .book-subnav {
     color: var(--color-text-secondary);
     display: flex;
     align-items: center;
+    gap: 7px;
     padding: var(--space-3) 0;
     border-bottom: 3px solid transparent;
     margin-bottom: -1px;
     transition: all var(--transition-fast);
 }
 
+.book-subnav-shape {
+    width: 10px;
+    height: 10px;
+    flex: none;
+    background: var(--section-color);
+    -webkit-mask: var(--section-shape) center / contain no-repeat;
+    mask: var(--section-shape) center / contain no-repeat;
+}
+
+.book-subnav-link[data-section="direction"] .book-subnav-shape {
+    width: 12px;
+}
+
 .book-subnav-link:hover {
     color: var(--color-text);
     border-bottom-color: var(--color-text);
+}
+
+/* Inset focus rings stay visible inside the horizontal navigation scrollers. */
+.nav-list a:focus-visible,
+.book-subnav-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: -2px;
 }
 
 .book-subnav-buy {
@@ -660,9 +735,16 @@ body.page-template-custom-buy .site-main {
     display: none;
 }
 
-.mobile-logo .nav-logo {
-    height: 16px;
-    width: auto;
+.site-wordmark {
+    font: 600 12px/1 var(--font-sans);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    white-space: nowrap;
+}
+
+.mobile-logo .site-wordmark {
+    font-size: 11px;
 }
 
 /* Mobile menu content (only shows in mobile menu) */
@@ -721,11 +803,6 @@ body.page-template-custom-buy .site-main {
         align-items: center;
     }
 
-    .mobile-logo .nav-logo {
-        height: 20px;
-        width: auto;
-    }
-
     /* Mobile nav - dropdown below header, breaks out of container */
     .site-nav {
         display: none;
@@ -781,6 +858,7 @@ body.page-template-custom-buy .site-main {
     }
 
     /* Hide desktop nav list on mobile */
+    .site-nav > .nav-home,
     .site-nav .nav-list {
         display: none;
     }
@@ -2048,8 +2126,7 @@ body.tag-radar .header-link-primary {
     color: var(--radar-accent);
 }
 
-body.tag-radar .mobile-logo .nav-logo,
-body.tag-radar .nav-home .nav-logo {
+body.tag-radar .site-wordmark {
     color: #ffffff;
 }
 
@@ -2435,8 +2512,7 @@ body.tag-five-things:not(.post-template) .nav-list a:hover {
     border-bottom-color: #ffffff;
 }
 
-body.tag-five-things:not(.post-template) .mobile-logo .nav-logo,
-body.tag-five-things:not(.post-template) .nav-home .nav-logo {
+body.tag-five-things:not(.post-template) .site-wordmark {
     color: #ffffff;
 }
 

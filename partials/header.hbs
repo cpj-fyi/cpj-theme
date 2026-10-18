@@ -2,13 +2,13 @@
     <div class="header-main">
         <div class="container">
             <div class="header-inner">
-                {{!-- Mobile: Logo on left --}}
-                <a href="{{@site.url}}" class="mobile-logo" aria-label="Home">{{> "icons/logo"}}</a>
+                {{!-- Mobile: Wordmark on left --}}
+                <a href="{{@site.url}}" class="mobile-logo" aria-label="Home"><span class="site-wordmark">Clay Parker Jones</span></a>
 
                 {{!-- Desktop nav --}}
                 <nav class="site-nav" id="site-nav">
+                    <a href="{{@site.url}}" class="nav-home" aria-label="Home"><span class="site-wordmark">Clay Parker Jones</span></a>
                     <ul class="nav-list">
-                        <li><a href="{{@site.url}}" class="nav-home" aria-label="Home">{{> "icons/logo"}}</a></li>
                         <li><a href="{{@site.url}}/tag/start-end/" class="nav-book">Book</a></li>
                         <li><a href="{{@site.url}}/essays/" class="nav-essays">Essays</a></li>
                         <li><a href="{{@site.url}}/five-things/" class="nav-five-things">Five Things</a></li>
@@ -18,8 +18,8 @@
 
                     {{!-- Mobile menu content --}}
                     <div class="mobile-menu-content">
-                        {{!-- Logo at top of mobile menu --}}
-                        <a href="{{@site.url}}" class="mobile-menu-logo" aria-label="Home">{{> "icons/logo"}}</a>
+                        {{!-- Wordmark at top of mobile menu --}}
+                        <a href="{{@site.url}}" class="mobile-menu-logo" aria-label="Home"><span class="site-wordmark">Clay Parker Jones</span></a>
 
                         <div class="mobile-menu-nav">
                             <a href="{{@site.url}}/tag/start-end/" class="mobile-nav-item">

@@ -12,7 +12,7 @@ const errors = [];
 page.on('pageerror', error => errors.push(error.message));
 mkdirSync('dist/previews', { recursive: true });
 try {
-    for (const width of [320, 390, 768, 1024, 1100, 1440]) {
+    for (const width of [320, 375, 390, 768, 769, 1024, 1025, 1100, 1280, 1440]) {
         await page.setViewportSize({ width, height: 900 });
         await page.goto(base + '/13-network-of-teams/');
         await page.locator('.reader-pagination:not([hidden])').waitFor();
@@ -20,6 +20,15 @@ try {
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), true, `overflow at ${width}`);
         const font = await page.locator('.content > h2').first().evaluate(node => getComputedStyle(node).fontFamily);
         assert.match(font, /LTL Pixel/);
+        assert.equal(await page.locator('.site-header .site-wordmark').count(), 3);
+        assert.equal(await page.locator('.site-header .nav-logo').count(), 0);
+        assert.equal(await page.locator('.book-subnav-shape').count(), 6);
+        assert.match(await page.locator('.post-title .chapter-num').evaluate(node => getComputedStyle(node).fontFamily), /LTL Pixel/);
+        assert.equal(await page.locator('.chapter-list-link .reader-badge').count(), 1, 'only current sidebar chapter has a shape');
+        assert.equal(await page.locator('.chapter-btn .reader-badge').count(), 1, 'only current mobile chapter has a shape');
+        assert.equal(await page.locator('.chapter-section-range').textContent(), '13–25');
+        assert.equal(await page.locator('.chapter-kicker').textContent(), 'Structuring · Pattern 13 of 75');
+        assert.match(await page.locator('.post-title').textContent(), /^13[.\s:]/, 'title remains parseable by PatternPulse');
         assert.equal(new URL(await page.locator('.reader-pagination [rel="prev"]').getAttribute('href'), base).pathname, '/12-cooperation/');
         assert.equal(new URL(await page.locator('.reader-pagination [rel="next"]').getAttribute('href'), base).pathname, '/14-distributed-management/');
         assert.equal(await page.locator('.kg-button-card').isVisible(), false, 'legacy shortlink removed');
@@ -33,6 +42,24 @@ try {
         assert.ok(positions.titleTop >= positions.headerBottom - 1 && positions.titleBottom < 900, `book title hidden at ${width}: ${JSON.stringify(positions)}`);
         await page.screenshot({ path: `dist/previews/reader-${width}-scrolled.png` });
     }
+    await page.setViewportSize({ width: 1280, height: 900 });
+    for (const [path, section] of [['/1-true-purpose/', 'foundations'], ['/13-network-of-teams/', 'structuring'], ['/26-do-the-right-thing/', 'direction'], ['/75-movable-everything/', 'space']]) {
+        await page.goto(base + path);
+        assert.equal(await page.locator('.chapter-list-link.is-current .reader-badge').getAttribute('data-section'), section);
+        assert.equal(await page.locator('.chapter-list-link:not(.is-current) .reader-badge').count(), 0);
+        assert.match(await page.locator('.chapter-list-link.is-current .reader-badge').evaluate(node => getComputedStyle(node).fontFamily), /LTL Pixel/);
+        await page.screenshot({ path: `dist/previews/refined-${section}.png` });
+        await page.setViewportSize({ width: 375, height: 844 });
+        await page.reload();
+        const visible = await page.locator('.chapter-btn.is-current').evaluate(node => {
+            const button = node.getBoundingClientRect();
+            const strip = node.closest('.mobile-chapter-nav-inner').getBoundingClientRect();
+            return button.left >= strip.left - 1 && button.right <= strip.right + 1;
+        });
+        assert.ok(visible, `active mobile chapter is visible in ${section}`);
+        await page.screenshot({ path: `dist/previews/refined-${section}-mobile.png` });
+        await page.setViewportSize({ width: 1280, height: 900 });
+    }
     for (const [path, prev, next] of [
         ['/introduction/', null, '/1-true-purpose/'],
         ['/1-true-purpose/', '/introduction/', '/2-rule-of-law/'],
@@ -45,6 +72,14 @@ try {
             if (expected) assert.equal(new URL(await link.getAttribute('href'), base).pathname, expected);
             else assert.equal(await link.count(), 0);
         }
+        assert.doesNotMatch(await page.locator('.reader-pagination').textContent(), /[←→↗]/, 'pagination uses SVG arrows');
+    }
+    await page.goto(base + '/12-cooperation/');
+    assert.match(await page.locator('.reader-pagination [rel="next"] .reader-pagination-label').textContent(), /Next · Structuring begins/);
+    for (const path of ['/introduction/', '/pattern-list/', '/goal-index/']) {
+        await page.goto(base + path);
+        assert.equal(await page.locator('.chapter-kicker, .chapter-section-range, .chapter-list-link .reader-badge, .chapter-list-link .reader-list-num').count(), 0, 'reference pages retain text-only navigation');
+        assert.equal(await page.locator('.chapter-list-link.is-current').count(), 1);
     }
     await page.goto(base + '/13-network-of-teams/');
     await page.locator('.reader-pagination').scrollIntoViewIfNeeded();
@@ -58,7 +93,8 @@ try {
     await page.route('https://patternpulse.test/api/public/patterns/13', route => route.fulfill({ json: summary }));
     await page.goto(base + '/13-network-of-teams/?pulse=https://patternpulse.test');
     await page.locator('.pattern-pulse:not([hidden])').waitFor();
-    assert.equal((await page.locator('.pattern-pulse-toggle').boundingBox()).height, 10);
+    assert.equal((await page.locator('.pattern-pulse-strip').boundingBox()).height, 12);
+    assert.ok((await page.locator('.pattern-pulse-toggle').boundingBox()).height >= 44, 'summary has a full touch target');
     assert.equal(await page.locator('.pattern-pulse-strip > .pattern-pulse-tick').count(), 100);
     assert.deepEqual(await page.locator('.pattern-pulse-strip').evaluate(strip => [1, 2, 3, 4, 5].map(bin => strip.querySelectorAll('.pattern-pulse-bin-' + bin).length)), [10, 10, 10, 30, 40]);
     const inset = await page.locator('.pattern-pulse-strip').evaluate(strip => {
@@ -69,22 +105,28 @@ try {
     assert.ok(inset.left >= 16 && inset.right >= 16 && inset.top >= 16, 'marks inset into epigraph ground');
     await page.screenshot({ path: 'dist/previews/patternpulse-collapsed.png' });
     assert.equal(await page.locator('.pattern-pulse-toggle').getAttribute('title'), null, 'no native tooltip');
-    await page.locator('.pattern-pulse-toggle').hover();
-    await page.locator('.pattern-pulse-tooltip').waitFor({ state: 'visible' });
-    await page.screenshot({ path: 'dist/previews/patternpulse-hover.png' });
-    await page.keyboard.press('Escape');
-    await page.locator('.pattern-pulse-tooltip').waitFor({ state: 'hidden' });
-    await page.mouse.move(0, 0);
+    assert.equal(await page.locator('.pattern-pulse-tooltip').count(), 0);
+    assert.equal(await page.locator('.pattern-pulse-timestamp, .pattern-pulse-eyebrow, .pattern-pulse-finding').count(), 0);
+    assert.equal(await page.locator('.pattern-pulse-agreement').textContent(), '70% agree');
+    assert.equal(await page.locator('.pattern-pulse-responses').textContent(), '20 responses');
+    assert.equal(await page.locator('.pattern-pulse-detail-label').isVisible(), true);
     await page.locator('.pattern-pulse-toggle').focus();
-    await page.locator('.pattern-pulse-tooltip').waitFor({ state: 'visible' });
     await page.keyboard.press('Enter');
-    await page.locator('.pattern-pulse-tooltip').waitFor({ state: 'hidden' });
-    assert.equal(await page.locator('.pattern-pulse-finding').textContent(), '70% agree · 20 survey responses');
+    assert.equal(await page.locator('.pattern-pulse-hide-label').isVisible(), true);
+    assert.equal(await page.locator('.pattern-pulse-chevron').evaluate(node => node.tagName.toLowerCase()), 'svg');
+    assert.match(await page.locator('.pattern-pulse-methodology').textContent(), /Latest response/);
+    assert.equal(await page.locator('.pattern-pulse-legend-track').count(), 5);
+    assert.deepEqual(await page.locator('.pattern-pulse-legend-fill').evaluateAll(nodes => nodes.map(node => node.style.width)), ['10%', '10%', '10%', '30%', '40%']);
     assert.equal(await page.locator('.pattern-pulse-contribute').getAttribute('href'), 'https://patternpulse.test/patterns/13/use');
     await page.screenshot({ path: 'dist/previews/patternpulse-expanded.png' });
     await page.setViewportSize({ width: 390, height: 844 });
     await page.locator('.pattern-pulse').scrollIntoViewIfNeeded();
     await page.screenshot({ path: 'dist/previews/patternpulse-mobile.png' });
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), true, 'expanded research panel fits mobile');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    assert.equal(await page.locator('.pattern-pulse-chevron').evaluate(node => getComputedStyle(node).transitionDuration), '0s');
+    assert.equal(await page.locator('.chapter-btn .reader-badge').evaluate(node => getComputedStyle(node, '::before').transitionDuration), '0s');
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.goto(base + '/13-network-of-teams/?pulse=https://patternpulse.test&member=none');
     await page.locator('.pattern-pulse:not([hidden])').waitFor();
     assert.equal(await page.locator('.pattern-pulse-contribute').count(), 0);
@@ -99,14 +141,14 @@ try {
     await page.goto(base + '/13-network-of-teams/?pulse=https://patternpulse.test');
     await page.locator('.pattern-pulse:not([hidden])').waitFor();
     assert.equal(await page.locator('.pattern-pulse-pending').count(), 100);
-    assert.equal(await page.locator('.pattern-pulse-pending-label').isVisible(), true);
+    assert.match(await page.locator('.pattern-pulse-meta').textContent(), /Research in progress/);
     await page.unroute('https://patternpulse.test/api/public/patterns/13');
     await page.route('https://patternpulse.test/api/public/patterns/13', route => route.fulfill({ json: { ...summary, sampleSize: 21 } }));
     await page.goto(base + '/13-network-of-teams/?pulse=https://patternpulse.test');
     await page.waitForLoadState('networkidle');
     assert.equal(await page.locator('.pattern-pulse').count(), 0, 'invalid counts rejected without changing epigraph');
     assert.deepEqual(errors, []);
-    console.log('Reader browser checks passed: six widths, sticky titles, cross-section pagination, font loading, access guards, PatternPulse contract and keyboard expansion.');
+    console.log('Reader browser checks passed: ten widths, sticky titles, section shapes, mobile auto-scroll, cross-section pagination, fonts, access guards, PatternPulse contract and keyboard expansion.');
 } finally {
     await browser.close();
     await new Promise(resolve => server.close(resolve));
