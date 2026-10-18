@@ -19,6 +19,8 @@ This is a Ghost 6 theme, with Handlebars templates, plain CSS, and browser JavaS
 - Previous/next navigation follows numeric pattern order across sections. Introduction precedes 1; Pattern List and Goal Index are reference pages. Handle first/last chapters and existing `hd-pt.com/<number>` navigation shortlinks.
 - The book catalog currently fetches at most 100 pages. Ghost 6 does not support an unbounded `limit="all"`; revise the strategy if the catalog outgrows the limit.
 - Section order is Foundations, Structuring, Direction, Practice, Learning, Space. Their shapes are circle, inverted triangle, parallelogram, square, star, pentagon. Start & End has no numbered shape.
+- The site header uses a text wordmark. The six section shapes live in the book subnav; their color/mask properties belong in `screen.css` so all subnav pages have them. Reader chapter numerals use LTL Pixel. Only the current sidebar/mobile chapter has a filled shape; other chapter numbers are plain.
+- Keep chapter title text parseable as a leading number plus delimiter for PatternPulse. `main.js` wraps the original number first; reader enhancements refine that wrapper and preserve its text meaning.
 - Keep research survey aggregates separate from reader declarations. Leave `patternpulse_url` blank until the companion API, migration, and consent flow are deployed.
 
 ## Verify the behavior changed

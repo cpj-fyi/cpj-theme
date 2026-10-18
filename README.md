@@ -40,7 +40,7 @@ npm run package
 | --- | --- |
 | `npm test` | Runs Node tests in `test/` (currently moonphase calculations) |
 | `npm run validate` | Runs GScan against Ghost theme requirements |
-| `npm run test:reader` | Starts its own fixture server and checks layout at six widths, sticky titles, pagination, fonts, access guards, and the mocked PatternPulse contract |
+| `npm run test:reader` | Starts its own fixture server and checks layout at ten widths, sticky titles, chapter shapes, mobile scrolling, pagination, fonts, access guards, and the mocked PatternPulse contract |
 | `npm run package` | Creates `dist/cpj-theme-<version>.zip` using the version in `package.json` |
 
 For an installed Google Chrome instead of downloaded Chromium, use `PLAYWRIGHT_CHANNEL=chrome npm run test:reader`. Browser screenshots go to `dist/previews/`; both generated output and `node_modules/` are ignored by Git. The PatternPulse browser fixture is synthetic and does not validate a deployed research service.
@@ -91,12 +91,12 @@ The source of truth is `config.custom` in [package.json](package.json). These se
 | Area | Files and behavior |
 | --- | --- |
 | Shared chapter layout | `partials/chapter-reader.hbs`; sidebar title stays visible while its chapter list scrolls |
-| Navigation and scrolling | `assets/css/book-reader.css`, `assets/js/book-reader.js`; measures header/mobile-nav heights rather than assuming a fixed offset; section shapes contain system monospace chapter numbers |
+| Navigation and scrolling | `assets/css/book-reader.css`, `assets/js/book-reader.js`; measured sticky offsets, LTL Pixel chapter numerals, a filled shape for the current chapter, and section-aware previous/next links |
 | Previous/next chapters | `partials/chapter-pagination.hbs` supplies a title/URL/tag catalog; JavaScript builds numeric cross-section navigation and replaces matching authored navigation buttons |
 | Heading typography | `assets/css/typography.css`; LTL Pixel for direct editorial H2s, system sans for H3/H4, and compact heading spacing; preserves embedded resource headings |
 | PatternPulse | `assets/css/pattern-pulse.css`, `assets/js/pattern-pulse.js`; optional expandable research strip and contribution link; see [integration setup](docs/patternpulse.md) |
 
-The SF Pro Mono/SF Mono stack uses fonts available on the reader's system; Apple font files are not bundled.
+The SF Pro and SF Mono stacks use fonts available on the reader's system for interface labels and metadata; Apple font files are not bundled. Chapter numerals use the bundled LTL Pixel font.
 
 The body uses Freight Text Pro with Georgia and Times fallbacks. The theme and preview share `partials/fonts.hbs`, which loads the live site's Adobe Fonts project (`joj4bxo`). Previewing Freight requires an internet connection; the proprietary font files are served by Adobe and are not bundled.
 

@@ -49,36 +49,43 @@
         var bar = element('span', 'pattern-pulse-strip');
         bar.setAttribute('aria-hidden', 'true');
         var accessibleLabel = element('span', 'pattern-pulse-sr-only');
-        var pendingLabel = element('span', 'pattern-pulse-pending-label', 'Research in progress');
-        pendingLabel.hidden = true;
-        pendingLabel.setAttribute('aria-hidden', 'true');
-        // A visual hint duplicates the summary's accessible label, never a native title tooltip.
-        var tooltip = element('span', 'pattern-pulse-tooltip');
-        tooltip.setAttribute('aria-hidden', 'true');
-        var tooltipFinding = element('span', 'pattern-pulse-tooltip-finding');
-        var tooltipAction = element('span', 'pattern-pulse-tooltip-action', 'Explore research');
-        tooltipAction.append(element('span', 'pattern-pulse-tooltip-arrow', '→'));
-        tooltip.append(element('span', 'pattern-pulse-tooltip-label', 'PatternPulse'), tooltipFinding, tooltipAction);
-        summary.append(bar, accessibleLabel, pendingLabel, tooltip);
-        document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape' && (summary.matches(':hover') || document.activeElement === summary)) {
-                summary.classList.add('is-hint-dismissed');
-            }
-        });
-        summary.addEventListener('pointerleave', function () { summary.classList.remove('is-hint-dismissed'); });
-        summary.addEventListener('blur', function () { summary.classList.remove('is-hint-dismissed'); });
+        var meta = element('span', 'pattern-pulse-meta');
+        meta.setAttribute('aria-hidden', 'true');
+        var metaFinding = element('span', 'pattern-pulse-meta-finding');
+        var agreementLabel = element('span', 'pattern-pulse-meta-value pattern-pulse-agreement');
+        var responseLabel = element('span', 'pattern-pulse-meta-value pattern-pulse-responses');
+        metaFinding.append(element('span', 'pattern-pulse-name', 'PatternPulse'), agreementLabel, responseLabel);
+        var disclosure = element('span', 'pattern-pulse-disclosure');
+        var chevron = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        chevron.setAttribute('class', 'pattern-pulse-chevron');
+        chevron.setAttribute('viewBox', '0 0 24 24');
+        chevron.setAttribute('fill', 'none');
+        chevron.setAttribute('stroke', 'currentColor');
+        chevron.setAttribute('stroke-width', '2');
+        chevron.setAttribute('stroke-linecap', 'round');
+        chevron.setAttribute('stroke-linejoin', 'round');
+        chevron.setAttribute('aria-hidden', 'true');
+        chevron.setAttribute('focusable', 'false');
+        var chevronPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        chevronPath.setAttribute('d', 'm6 9 6 6 6-6');
+        chevron.append(chevronPath);
+        disclosure.append(element('span', 'pattern-pulse-detail-label', 'Details'), element('span', 'pattern-pulse-hide-label', 'Hide'), chevron);
+        meta.append(metaFinding, disclosure);
+        summary.append(bar, meta, accessibleLabel);
+        var findingText = '';
+        function updateAccessibleLabel() {
+            accessibleLabel.textContent = 'PatternPulse: ' + findingText + '. ' + (details.open ? 'Hide' : 'Expand') + ' research details.';
+        }
+        details.addEventListener('toggle', updateAccessibleLabel);
         var panel = element('div', 'pattern-pulse-panel');
-        var eyebrow = element('p', 'pattern-pulse-eyebrow', 'PatternPulse / In practice');
-        var finding = element('p', 'pattern-pulse-finding');
         var question = element('p', 'pattern-pulse-question');
         var legend = element('ul', 'pattern-pulse-legend');
         var methodology = element('p', 'pattern-pulse-methodology');
-        var timestamp = element('p', 'pattern-pulse-timestamp');
         var status = element('p', 'pattern-pulse-status');
         status.setAttribute('role', 'status');
-        panel.append(eyebrow, finding, question, legend, methodology, timestamp, status);
+        panel.append(question, legend, methodology, status);
         if (host.dataset.patternPulseCanContribute === 'true') {
-            var action = element('a', 'pattern-pulse-contribute', 'I use this ↗');
+            var action = element('a', 'pattern-pulse-contribute', 'I use this');
             action.href = baseUrl + '/patterns/' + patternId + '/use';
             action.referrerPolicy = 'no-referrer';
             var actionNote = element('span', 'pattern-pulse-action-note', 'Share your experience with the research.');
@@ -131,10 +138,12 @@
                 bar.replaceChildren();
                 legend.replaceChildren();
                 details.classList.toggle('pattern-pulse-empty', !available);
-                pendingLabel.hidden = available;
+                responseLabel.hidden = !available;
                 if (available) {
                     var agreement = Math.round((data.distribution[3].count + data.distribution[4].count) / data.sampleSize * 100);
-                    finding.textContent = agreement + '% agree · ' + data.sampleSize.toLocaleString() + ' survey responses';
+                    findingText = agreement + '% agree · ' + data.sampleSize.toLocaleString() + ' survey responses';
+                    agreementLabel.textContent = agreement + '% agree';
+                    responseLabel.textContent = data.sampleSize.toLocaleString() + ' responses';
                     var tickCounts = allocateTicks(data.distribution, data.sampleSize);
                     data.distribution.forEach(function (bin, index) {
                         var percentage = bin.count / data.sampleSize * 100;
@@ -142,13 +151,18 @@
                             bar.append(element('span', 'pattern-pulse-tick pattern-pulse-bin-' + (index + 1)));
                         }
                         var item = element('li', 'pattern-pulse-legend-item');
-                        var swatch = element('span', 'pattern-pulse-swatch pattern-pulse-bin-' + (index + 1));
-                        swatch.setAttribute('aria-hidden', 'true');
-                        item.append(swatch, element('span', '', bin.label), element('span', 'pattern-pulse-count', Math.round(percentage) + '% (' + bin.count.toLocaleString() + ')'));
+                        var track = element('span', 'pattern-pulse-legend-track');
+                        track.setAttribute('aria-hidden', 'true');
+                        var fill = element('span', 'pattern-pulse-legend-fill pattern-pulse-bin-' + (index + 1));
+                        fill.style.width = percentage + '%';
+                        track.append(fill);
+                        item.append(element('span', 'pattern-pulse-legend-label', bin.label), track, element('span', 'pattern-pulse-count', Math.round(percentage) + '% · ' + bin.count.toLocaleString()));
                         legend.append(item);
                     });
                 } else {
-                    finding.textContent = 'Research in progress';
+                    findingText = 'Research in progress';
+                    agreementLabel.textContent = findingText;
+                    responseLabel.textContent = '';
                     for (var pending = 0; pending < 100; pending += 1) {
                         bar.append(element('span', 'pattern-pulse-tick pattern-pulse-pending'));
                     }
@@ -157,9 +171,8 @@
                 methodology.textContent = available ? data.methodology : 'Results appear after at least 10 completed research-survey responses pass quality checks. Reader declarations are collected separately.';
                 legend.hidden = !available;
                 var updated = data.updatedAt && new Date(data.updatedAt);
-                timestamp.textContent = available && updated && !isNaN(updated.getTime()) ? 'Latest response: ' + updated.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '';
-                accessibleLabel.textContent = 'PatternPulse: ' + finding.textContent + '. Expand research details.';
-                tooltipFinding.textContent = finding.textContent;
+                if (available && updated && !isNaN(updated.getTime())) methodology.textContent += ' Latest response: ' + updated.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) + '.';
+                updateAccessibleLabel();
                 status.textContent = '';
                 hasData = true;
                 mount();
