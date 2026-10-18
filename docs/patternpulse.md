@@ -4,6 +4,8 @@ Companion backend: [PatternPulse PR #1](https://github.com/cpj-fyi/patternpulse/
 
 Set **Patternpulse URL** in Ghost → Design → Site design to `https://survey.hd-pt.com`. Leave it blank to disable the integration. No member ID, email, cookie, or page contents are sent to PatternPulse by the theme.
 
+Ghost stores custom settings per installed theme. When uploading a ZIP with a new versioned name, check this URL after activation; a new installation starts with the blank default. Set it in the **Theme** tab and save, then reload an entitled chapter to verify the research panel.
+
 The companion PatternPulse implementation must be deployed and its database migration applied first. It provides `GET /api/public/patterns/:number` and `/patterns/:number/use`. The number comes from the chapter title (`1. True Purpose`). Chapter content must carry `data-pattern-pulse-url` only when Ghost grants `access`; `data-pattern-pulse-can-contribute="true"` enables the research link for signed-in readers.
 
 A row of exactly 100 thin, rounded marks sits inside the first epigraph's white background once a valid response is received. The row is inset 24px from the top and 32px from the sides (16px at narrow mobile widths), with 12px-high marks and a summary target at least 44px high. The quotation remains a separate blockquote inside the shared background; research text is not inserted into the quotation. Chapters without a blockquote get a standalone inset panel.
@@ -25,3 +27,5 @@ The contribution page itself is a publicly reachable self-report tool, even thou
 ## Release verification
 
 On October 18, 2026, production pattern endpoints 1, 13, and 75 returned valid five-bin distributions with qualifying sample sizes of 35, 35, and 28. A browser check of the theme against the real API rendered exactly 100 marks for pattern 13 and expanded to “51% agree · 35 survey responses.” The contribution link targets the deployed consent flow; the consent page was also checked separately. These figures describe that check, not fixed expected values as research grows. No declaration or survey response was submitted during verification; write behavior is covered by the backend tests.
+
+Theme 1.2.0 was activated through Safari on the same date. The signed-in live chapter displayed the new metadata and expanded research details, and the contribution link pointed to `/patterns/13/use`. Live asset verification used the exact Ghost `?v=` URLs from the page HTML; arbitrary query strings can return older CDN-cached assets.
