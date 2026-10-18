@@ -1,8 +1,8 @@
 # PatternPulse book integration
 
-Companion backend: [PatternPulse PR #1](https://github.com/cpj-fyi/patternpulse/pull/1) (draft; not deployed). It contains the API, database migration, consent flow, source-separated survey matching, and authenticated export.
+Companion backend: [PatternPulse PR #1](https://github.com/cpj-fyi/patternpulse/pull/1), merged and deployed at [survey.hd-pt.com](https://survey.hd-pt.com) on October 18, 2026. Its database migration is applied. It contains the API, consent flow, source-separated survey matching, and authenticated export.
 
-Set **Patternpulse URL** in Ghost → Design → Site design to the deployed PatternPulse application's HTTPS origin, for example `https://research.example.com` (this is an illustrative URL, not a live service). Leave it blank to disable the integration. No member ID, email, cookie, or page contents are sent to PatternPulse by the theme.
+Set **Patternpulse URL** in Ghost → Design → Site design to `https://survey.hd-pt.com`. Leave it blank to disable the integration. No member ID, email, cookie, or page contents are sent to PatternPulse by the theme.
 
 The companion PatternPulse implementation must be deployed and its database migration applied first. It provides `GET /api/public/patterns/:number` and `/patterns/:number/use`. The number comes from the chapter title (`1. True Purpose`). Chapter content must carry `data-pattern-pulse-url` only when Ghost grants `access`; `data-pattern-pulse-can-contribute="true"` enables the research link for signed-in readers.
 
@@ -21,3 +21,7 @@ Only completed, consented, quality-passing responses from the main survey sample
 The frontend intentionally rejects missing, malformed, or mismatched data and uses text nodes for all API strings. An endpoint must return `patternId`, `patternName`, `questionText`, `methodology`, and either `status: "insufficient_data"` or `status: "available"` with integer `sampleSize >= 10`, five ordered `distribution` entries (`value` 1–5, `label`, nonnegative integer `count`), and optional ISO `updatedAt`. Counts must sum to sample size. The API is public aggregate-only; the frontend fetch omits credentials and referrers.
 
 The contribution page itself is a publicly reachable self-report tool, even though the theme link is gated. PatternPulse does not verify Ghost membership or entitlement. Treat these as self-selected declarations, not verified member counts; membership-verified contributions require a trusted server integration with Ghost.
+
+## Release verification
+
+On October 18, 2026, production pattern endpoints 1, 13, and 75 returned valid five-bin distributions with qualifying sample sizes of 35, 35, and 28. A browser check of the theme against the real API rendered exactly 100 marks for pattern 13 and expanded to “51% agree · 35 survey responses.” The contribution link targets the deployed consent flow; the consent page was also checked separately. These figures describe that check, not fixed expected values as research grows. No declaration or survey response was submitted during verification; write behavior is covered by the backend tests.
