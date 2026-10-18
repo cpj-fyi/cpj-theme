@@ -22,7 +22,6 @@ Useful preview URLs:
 | `/12-cooperation/`, `/13-network-of-teams/` | Cross-section navigation |
 | `/preview-post/` | Editorial heading typography outside the chapter layout |
 | `/13-network-of-teams/?pulse=demo` | Expandable strip with clearly labeled simulated data; contributions are not saved |
-| `?member=another-reader` | A separate fixture reader's saved state |
 | `?member=none&access=false` | Anonymous, restricted fixture |
 | `?member=preview-reader&access=false` | Signed-in fixture without access |
 
@@ -41,7 +40,7 @@ npm run package
 | --- | --- |
 | `npm test` | Runs Node tests in `test/` (currently moonphase calculations) |
 | `npm run validate` | Runs GScan against Ghost theme requirements |
-| `npm run test:reader` | Starts its own fixture server and checks layout at six widths, sticky titles, pagination, fonts, reader state, and the mocked PatternPulse contract |
+| `npm run test:reader` | Starts its own fixture server and checks layout at six widths, sticky titles, pagination, fonts, access guards, and the mocked PatternPulse contract |
 | `npm run package` | Creates `dist/cpj-theme-<version>.zip` using the version in `package.json` |
 
 For an installed Google Chrome instead of downloaded Chromium, use `PLAYWRIGHT_CHANNEL=chrome npm run test:reader`. Browser screenshots go to `dist/previews/`; both generated output and `node_modules/` are ignored by Git. The PatternPulse browser fixture is synthetic and does not validate a deployed research service.
@@ -94,13 +93,12 @@ The source of truth is `config.custom` in [package.json](package.json). These se
 | Shared chapter layout | `partials/chapter-reader.hbs`; sidebar title stays visible while its chapter list scrolls |
 | Navigation and scrolling | `assets/css/book-reader.css`, `assets/js/book-reader.js`; measures header/mobile-nav heights rather than assuming a fixed offset; section shapes contain system monospace chapter numbers |
 | Previous/next chapters | `partials/chapter-pagination.hbs` supplies a title/URL/tag catalog; JavaScript builds numeric cross-section navigation and replaces matching authored navigation buttons |
-| Heading typography | `assets/css/typography.css`; bundled LTL Pixel for direct editorial H2/H3/H4 in post/page content, preserving embedded resource headings |
-| Read marks | `partials/reading-state.hbs`, `assets/js/reading-state.js`; signed-in readers with Ghost `access` can toggle read status, stored per member UUID and chapter in this browser |
+| Heading typography | `assets/css/typography.css`; LTL Pixel for direct editorial H2s, system sans for H3/H4, and compact heading spacing; preserves embedded resource headings |
 | PatternPulse | `assets/css/pattern-pulse.css`, `assets/js/pattern-pulse.js`; optional expandable research strip and contribution link; see [integration setup](docs/patternpulse.md) |
 
-Read marks are browser-local, survive reloads, and update other tabs on the same origin. They do not synchronize across devices or write to Ghost. Clearing browser storage removes them. The SF Pro Mono/SF Mono stack uses fonts available on the reader's system; Apple font files are not bundled.
+The SF Pro Mono/SF Mono stack uses fonts available on the reader's system; Apple font files are not bundled.
 
-The body uses Freight Text Pro with Georgia and Times fallbacks. `default.hbs` still contains an Adobe Fonts project placeholder; supply a valid project through the site's existing font configuration if Freight is required.
+The body uses Freight Text Pro with Georgia and Times fallbacks. The theme and preview share `partials/fonts.hbs`, which loads the live site's Adobe Fonts project (`joj4bxo`). Previewing Freight requires an internet connection; the proprietary font files are served by Adobe and are not bundled.
 
 ## Native resources and editorial layout
 

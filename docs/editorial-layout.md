@@ -2,6 +2,10 @@
 
 These notes describe the existing post-body behavior in `assets/css/screen.css` and `assets/js/main.js`. Chapter reader overrides are in `assets/css/book-reader.css`; editorial heading fonts are in `assets/css/typography.css`.
 
+## Heading hierarchy
+
+Direct editorial H2s use LTL Pixel at 32px with a compact line height and an 8px gap below. H3/H4 use the system sans stack (SF Pro on Apple), at 18px/16px, bold and uppercase. Heading margins and line heights live in `typography.css`; preserve the tighter spacing when adjusting fonts. Embedded resource headings retain their independent styles.
+
 ## Content structure
 
 ```text

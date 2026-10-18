@@ -7,8 +7,7 @@ This is a Ghost 6 theme, with Handlebars templates, plain CSS, and browser JavaS
 - `default.hbs` includes shared styles and scripts. Keep their order intentional: base styles, scoped feature styles, then Ghost head/foot hooks.
 - `page.hbs` detects section-tagged Pages; `custom-chapter.hbs` is the selectable chapter template. Both delegate to `partials/chapter-reader.hbs`. Edit shared chapter markup there.
 - `assets/css/book-reader.css` and `assets/js/book-reader.js` own chapter shapes, sticky reader layout, and previous/next links. `partials/chapter-pagination.hbs` provides the catalog; `partials/mobile-chapter-nav.hbs` provides mobile navigation.
-- `assets/css/typography.css` owns LTL Pixel for direct editorial H2/H3/H4. Keep this scoped so `.hp-native-resource`, cards, sidebars, and archive headings retain their own typography. Preserve the bundled font notice.
-- `assets/js/reading-state.js` owns browser-local read marks. `partials/reading-state.hbs` renders its controls only when Ghost grants `access` and provides `@member.uuid`.
+- `assets/css/typography.css` owns LTL Pixel for direct editorial H2s, system sans for H3/H4, and compact heading spacing. Keep this scoped so `.hp-native-resource`, cards, sidebars, and archive headings retain their own typography. Preserve the bundled font notice.
 - `assets/css/native-resources.css` and `assets/js/native-resources.js` enhance resource HTML cards stored in Ghost. Preserve their containment, typography, and existing download links.
 - PatternPulse integration lives in `assets/css/pattern-pulse.css`, `assets/js/pattern-pulse.js`, and [docs/patternpulse.md](docs/patternpulse.md). Its API and contribution service are in the separate `cpj-fyi/patternpulse` repository.
 - `assets/js/main.js` contains older site interactions, Markdown transforms, sidenotes, and reading-time calculation. `moonphase.js` contains separately tested lunar calculations.
@@ -16,7 +15,6 @@ This is a Ghost 6 theme, with Handlebars templates, plain CSS, and browser JavaS
 ## Reader invariants
 
 - Keep Ghost `{{content}}` and server-provided `access` authoritative. Client-side UI or preview query parameters do not grant access to chapter content.
-- Read marks are manual, per-member UUID, per-chapter, and local to this browser. Do not describe them as account synchronization or send member identifiers to PatternPulse.
 - Measure header and mobile-nav heights via `--reader-header-height` and `--reader-mobile-height`; avoid restoring hard-coded sticky offsets. The desktop title stays outside the scrolling chapter list. Check both sides of the 1024px sidebar breakpoint and the 768px fixed-header breakpoint.
 - Previous/next navigation follows numeric pattern order across sections. Introduction precedes 1; Pattern List and Goal Index are reference pages. Handle first/last chapters and existing `hd-pt.com/<number>` navigation shortlinks.
 - The book catalog currently fetches at most 100 pages. Ghost 6 does not support an unbounded `limit="all"`; revise the strategy if the catalog outgrows the limit.

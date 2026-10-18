@@ -37,6 +37,7 @@ hbs.registerHelper('get', function (_resource, options) {
 hbs.registerHelper('is', function (...args) { const options = args.pop(); return options.inverse(this); });
 const reader = hbs.compile(fs.readFileSync(path.join(root, 'partials/chapter-reader.hbs'), 'utf8'));
 const header = hbs.compile(fs.readFileSync(path.join(root, 'partials/header.hbs'), 'utf8'));
+const fonts = hbs.compile('{{> "fonts"}}');
 
 export function renderPreview(url, origin) {
     const chapter = chapters.find(item => item.url === url.pathname) || chapters.find(item => item.title.startsWith('13.'));
@@ -47,11 +48,11 @@ export function renderPreview(url, origin) {
     const paragraphs = Array.from({ length: 28 }, (_, i) => `${i % 4 === 0 ? '<h2>A useful pattern</h2>' : ''}<p>This is preview text for checking reading, navigation, and layout. Teams need enough context to make decisions together. The chapter title should remain visible as the text moves through the reading column.</p>`).join('');
     const html = `<blockquote class="kg-blockquote-alt">Hierarchies are dead, but networks need structure</blockquote><h2>Patterns in practice</h2><h3>Start with your team</h3><h4>Make a small change</h4>${access ? paragraphs : '<div class="gh-post-upgrade-cta">Fixture: this chapter requires access.</div>'}<div class="kg-card kg-button-card"><a href="https://hd-pt.com/${Number(chapter.title.match(/^\d+/)?.[0] || 0) + 1}?ref=cpj.fyi">Next chapter</a></div>`;
     const context = { ...chapter, html, access };
-    const styles = ['screen', 'native-resources', 'typography', 'book-reader', 'reading-state', 'pattern-pulse'].filter(name => fs.existsSync(path.join(root, 'assets/css', name + '.css')));
-    const scripts = ['moonphase', 'main', 'native-resources', 'book-reader', 'reading-state', 'pattern-pulse'].filter(name => fs.existsSync(path.join(root, 'assets/js', name + '.js')));
+    const styles = ['screen', 'native-resources', 'typography', 'book-reader', 'pattern-pulse'].filter(name => fs.existsSync(path.join(root, 'assets/css', name + '.css')));
+    const scripts = ['moonphase', 'main', 'native-resources', 'book-reader', 'pattern-pulse'].filter(name => fs.existsSync(path.join(root, 'assets/js', name + '.js')));
     const body = url.pathname === '/preview-post/' ? `<article class="post"><div class="post-body"><div class="content">${html}</div></div></article>` : reader(context, { data });
     const notice = demo ? '<p style="margin:16px 24px;font:12px/1.4 monospace">Local preview · sample text and simulated PatternPulse data. No research results or declarations are recorded here.</p>' : '';
-    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reader preview</title>${styles.map(name => `<link rel="stylesheet" href="/assets/css/${name}.css">`).join('')}</head><body class="page-template tag-${chapter.tags[0].slug}"><div class="site-wrapper">${header(context, { data })}<main class="site-main">${notice}${body}</main></div>${scripts.map(name => `<script src="/assets/js/${name}.js"></script>`).join('')}</body></html>`;
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reader preview</title>${fonts()}${styles.map(name => `<link rel="stylesheet" href="/assets/css/${name}.css">`).join('')}</head><body class="page-template tag-${chapter.tags[0].slug}"><div class="site-wrapper">${header(context, { data })}<main class="site-main">${notice}${body}</main></div>${scripts.map(name => `<script src="/assets/js/${name}.js"></script>`).join('')}</body></html>`;
 }
 
 export function createPreviewServer() {

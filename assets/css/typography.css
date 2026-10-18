@@ -1,4 +1,4 @@
-/* LTL Pixel: native, selectable editorial headings with no renderer required.
+/* LTL Pixel: native, selectable editorial H2s with no renderer required.
    Font source and copyright: ../fonts/ltl-pixel/NOTICE.txt */
 
 @font-face {
@@ -40,26 +40,37 @@
 /* Ghost's editorial headings are direct children of .content. Keep chapter
    navigation, related posts and headings inside embedded cards independent. */
 :is(.post, .page) .post-body .content > :is(h2, h3, h4) {
-    font-family: var(--font-pixel);
-    font-synthesis: none;
     font-kerning: normal;
-    line-height: 1.4;
-    letter-spacing: normal;
-    text-transform: none;
     overflow-wrap: break-word;
 }
 
 :is(.post, .page) .post-body .content > h2 {
+    font-family: var(--font-pixel);
+    font-synthesis: none;
     font-size: 2rem;
     font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: normal;
+    text-transform: none;
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-2);
+}
+
+:is(.post, .page) .post-body .content > :is(h3, h4) {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-2);
 }
 
 :is(.post, .page) .post-body .content > h3 {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1.125rem;
+    margin-top: var(--space-6);
 }
 
 :is(.post, .page) .post-body .content > h4 {
-    font-size: 1.25rem;
-    font-weight: 700;
+    font-size: var(--text-base);
+    margin-top: var(--space-5);
 }

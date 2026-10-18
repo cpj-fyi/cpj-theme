@@ -2,6 +2,36 @@
 (function () {
     'use strict';
     var sections = ['start-end', 'foundations', 'structuring', 'direction', 'practice', 'learning', 'space'];
+    var svgNamespace = 'http://www.w3.org/2000/svg';
+    // Center the original logo geometry, including the full 52-unit parallelogram.
+    // Keep these viewports in sync with assets/images/sections/*.svg.
+    var shapeViews = {
+        foundations: '-1.5 0.27342 44 44',
+        structuring: '47.5 -0.10163 44 44',
+        direction: '91.5 -0.22658 54 44',
+        practice: '151.5 0.27342 44 44',
+        learning: '204.5 -0.22664 44 44',
+        space: '258 -1.35736 44 44'
+    };
+    function shapeDefinitions() {
+        if (document.getElementById('reader-logo-shapes')) return true;
+        var logoPath = document.querySelector('.nav-logo path');
+        if (!logoPath) return false;
+        // Reuse the theme's logo once. Each nav badge references this definition,
+        // so outline rendering needs no fetches or duplicate path strings.
+        var svg = document.createElementNS(svgNamespace, 'svg');
+        svg.setAttribute('class', 'reader-shape-definitions');
+        svg.setAttribute('aria-hidden', 'true');
+        svg.setAttribute('focusable', 'false');
+        var defs = document.createElementNS(svgNamespace, 'defs');
+        var shape = logoPath.cloneNode(true);
+        shape.setAttribute('id', 'reader-logo-shapes');
+        shape.setAttribute('vector-effect', 'non-scaling-stroke');
+        defs.appendChild(shape);
+        svg.appendChild(defs);
+        document.body.appendChild(svg);
+        return true;
+    }
     function path(url) { return new URL(url, window.location.href).pathname.replace(/\/$/, '') || '/'; }
     function number(title, url) {
         var match = title.trim().match(/^(\d+)[.\s:]+/) || path(url).match(/^\/(\d+)-/);
@@ -12,11 +42,27 @@
             return node.closest('.tag-' + section) || node.classList.contains('chapter-btn-' + section);
         }) || 'start-end';
     }
-    function badge(num, section) {
+    function badge(num, section, navigation) {
         var el = document.createElement('span');
         el.className = 'reader-badge';
         el.dataset.section = section;
-        el.textContent = String(num);
+        if (navigation && shapeViews[section] && shapeDefinitions()) {
+            el.classList.add('reader-nav-badge');
+            var svg = document.createElementNS(svgNamespace, 'svg');
+            svg.setAttribute('class', 'reader-badge-outline');
+            svg.setAttribute('viewBox', shapeViews[section]);
+            svg.setAttribute('aria-hidden', 'true');
+            svg.setAttribute('focusable', 'false');
+            var shape = document.createElementNS(svgNamespace, 'use');
+            shape.setAttribute('href', '#reader-logo-shapes');
+            svg.appendChild(shape);
+            var figure = document.createElement('span');
+            figure.className = 'reader-badge-number';
+            figure.textContent = String(num);
+            el.append(svg, figure);
+        } else {
+            el.textContent = String(num);
+        }
         return el;
     }
     function titleWithoutNumber(title) { return title.replace(/^\d+[.\s:]+/, ''); }
@@ -33,13 +79,13 @@
             var section = sectionFor(link);
             if (section === 'start-end') return;
             if (link.classList.contains('chapter-btn')) {
-                link.replaceChildren(badge(num, section));
+                link.replaceChildren(badge(num, section, true));
                 link.classList.add('reader-shaped');
             } else {
                 var label = document.createElement('span');
                 label.className = 'reader-chapter-title';
                 label.textContent = titleWithoutNumber(title);
-                titleNode.replaceChildren(badge(num, section), document.createTextNode(' '), label);
+                titleNode.replaceChildren(badge(num, section, true), document.createTextNode(' '), label);
             }
         });
     }
