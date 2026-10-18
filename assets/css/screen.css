@@ -537,6 +537,13 @@ body.page-template-custom-buy .book-subnav {
     border-bottom-color: var(--color-text);
 }
 
+/* Inset focus rings stay visible inside the horizontal navigation scrollers. */
+.nav-list a:focus-visible,
+.book-subnav-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: -2px;
+}
+
 .book-subnav-buy {
     color: var(--color-accent);
 }
