@@ -1,0 +1,9 @@
+{{!-- Titles, URLs and section tags only; never request gated chapter content. --}}
+<nav class="reader-pagination" aria-label="Previous and next chapters" hidden></nav>
+{{#get "pages" filter="tag:[start-end,foundations,structuring,direction,practice,learning,space]" include="tags" limit="100" order="published_at asc" as |book_chapters|}}
+    <template id="book-chapter-catalog">
+        {{#foreach book_chapters}}
+            <a href="{{url}}" data-sections="{{#foreach tags}}{{slug}} {{/foreach}}">{{title}}</a>
+        {{/foreach}}
+    </template>
+{{/get}}

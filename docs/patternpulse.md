@@ -1,0 +1,23 @@
+# PatternPulse book integration
+
+Companion backend: [PatternPulse PR #1](https://github.com/cpj-fyi/patternpulse/pull/1) (draft; not deployed). It contains the API, database migration, consent flow, source-separated survey matching, and authenticated export.
+
+Set **Patternpulse URL** in Ghost → Design → Site design to the deployed PatternPulse application's HTTPS origin, for example `https://research.example.com` (this is an illustrative URL, not a live service). Leave it blank to disable the integration. No member ID, email, cookie, or page contents are sent to PatternPulse by the theme.
+
+The companion PatternPulse implementation must be deployed and its database migration applied first. It provides `GET /api/public/patterns/:number` and `/patterns/:number/use`. The number comes from the chapter title (`1. True Purpose`). Chapter content must carry `data-pattern-pulse-url` only when Ghost grants `access`; `data-pattern-pulse-can-contribute="true"` enables the research link for signed-in readers.
+
+A row of exactly 100 thin, rounded marks sits inside the first epigraph's white background once a valid response is received. The row is inset 24px from the top and 32px from the sides (16px at narrow mobile widths), with 10px-high marks and a 44px pointer target. The quotation remains a separate blockquote inside the shared background; research text is not inserted into the quotation. Chapters without a blockquote get a standalone inset panel.
+
+Hovering or keyboard-focusing the strip shows a compact charcoal research hint. Escape dismisses it; opening the details hides it. The same finding and expansion instruction are available in the summary's accessible name, with no native browser tooltip.
+
+The five response bins are charcoal (`#222222`) for strongly disagree, mid grey (`#888888`) for disagree, white for neutral, coral (`#ff3252`) for agree, and purple (`#8438f2`) for strongly agree. White marks have a subtle inset hairline so they remain visible against the white epigraph; the legend uses the same colors. Largest-remainder allocation converts the real response distribution to exactly 100 marks; tied remainders are resolved in response order, and a bin with zero responses receives zero marks. A mark represents approximately one percentage point, not one respondent. Expanded native `<details>` shows independently rounded percentages alongside exact counts, agreement percentage, sample size, the exact question, latest-response date, and sampling caveat. The raw counts remain authoritative; rounding can make displayed percentages sum to 99% or 101%.
+
+It refreshes every five minutes while visible and when the reader returns to the tab. The API may cache for five minutes. Failed initial requests leave the epigraph unchanged; failed refreshes label previously fetched results.
+
+Only completed, consented, quality-passing responses from the main survey sample are aggregated. Samples below 10 show 100 neutral placeholder marks and a visible **Research in progress** label, with no invented distribution or small-sample counts. Reader “I use this” declarations are separate from survey answers and never increase this chart's agreement counts.
+
+**I use this** opens a first-party PatternPulse consent form. No declaration is recorded merely by opening the link. After explicit consent, an anonymous browser cookie deduplicates declarations and the optional survey consent screen can connect them to screener answers. Book-reader survey responses carry `source=book_reader`; they are excluded from the main public chart. The new backend exports allow research matching using the anonymous respondent ID. This version does not collect email, send email, or synchronize against Ghost accounts. That would require a separate explicit contact-consent and authenticated identity flow.
+
+The frontend intentionally rejects missing, malformed, or mismatched data and uses text nodes for all API strings. An endpoint must return `patternId`, `patternName`, `questionText`, `methodology`, and either `status: "insufficient_data"` or `status: "available"` with integer `sampleSize >= 10`, five ordered `distribution` entries (`value` 1–5, `label`, nonnegative integer `count`), and optional ISO `updatedAt`. Counts must sum to sample size. The API is public aggregate-only; the frontend fetch omits credentials and referrers.
+
+The contribution page itself is a publicly reachable self-report tool, even though the theme link is gated. PatternPulse does not verify Ghost membership or entitlement. Treat these as self-selected declarations, not verified member counts; membership-verified contributions require a trusted server integration with Ghost.

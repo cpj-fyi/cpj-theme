@@ -1,0 +1,704 @@
+[
+  {
+    "title": "Introduction",
+    "url": "/introduction/",
+    "tags": [
+      {
+        "slug": "start-end"
+      }
+    ]
+  },
+  {
+    "title": "Pattern List",
+    "url": "/pattern-list/",
+    "tags": [
+      {
+        "slug": "start-end"
+      }
+    ]
+  },
+  {
+    "title": "Goal Index",
+    "url": "/goal-index/",
+    "tags": [
+      {
+        "slug": "start-end"
+      }
+    ]
+  },
+  {
+    "title": "1. True Purpose",
+    "url": "/1-true-purpose/",
+    "tags": [
+      {
+        "slug": "foundations"
+      }
+    ]
+  },
+  {
+    "title": "2. Rule of Law",
+    "url": "/2-rule-of-law/",
+    "tags": [
+      {
+        "slug": "foundations"
+      }
+    ]
+  },
+  {
+    "title": "3. Structural and Psychological Safety",
+    "url": "/3-structural-and-psychological-safety/",
+    "tags": [
+      {
+        "slug": "foundations"
+      }
+    ]
+  },
+  {
+    "title": "4. Expanded Available Power",
+    "url": "/4-expanded-available-power/",
+    "tags": [
+      {
+        "slug": "foundations"
+      }
+    ]
+  },
+  {
+    "title": "5. Curiosity",
+    "url": "/5-curiosity/",
+    "tags": [
+      {
+        "slug": "foundations"
+      }
+    ]
+  },
+  {
+    "title": "6. Do No Harm",
+    "url": "/6-do-no-harm/",
+    "tags": [
+      {
+        "slug": "foundations"
+      }
+    ]
+  },
+  {
+    "title": "7. Wholeness",
+    "url": "/7-wholeness/",
+    "tags": [
+      {
+        "slug": "foundations"
+      }
+    ]
+  },
+  {
+    "title": "8. Role-Soul Distinction",
+    "url": "/8-role-soul-distinction/",
+    "tags": [
+      {
+        "slug": "foundations"
+      }
+    ]
+  },
+  {
+    "title": "9. Dissolvability",
+    "url": "/9-dissolvability/",
+    "tags": [
+      {
+        "slug": "foundations"
+      }
+    ]
+  },
+  {
+    "title": "10. Consent & Consensus",
+    "url": "/10-consent-consensus/",
+    "tags": [
+      {
+        "slug": "foundations"
+      }
+    ]
+  },
+  {
+    "title": "11. Pace Layers",
+    "url": "/11-pace-layers/",
+    "tags": [
+      {
+        "slug": "foundations"
+      }
+    ]
+  },
+  {
+    "title": "12. Cooperation",
+    "url": "/12-cooperation/",
+    "tags": [
+      {
+        "slug": "foundations"
+      }
+    ]
+  },
+  {
+    "title": "13. Network of Teams",
+    "url": "/13-network-of-teams/",
+    "tags": [
+      {
+        "slug": "structuring"
+      }
+    ]
+  },
+  {
+    "title": "14. Distributed Management",
+    "url": "/14-distributed-management/",
+    "tags": [
+      {
+        "slug": "structuring"
+      }
+    ]
+  },
+  {
+    "title": "15. Elections",
+    "url": "/15-elections/",
+    "tags": [
+      {
+        "slug": "structuring"
+      }
+    ]
+  },
+  {
+    "title": "16. Purpose, Customer, Platform",
+    "url": "/16-purpose-customer-platform/",
+    "tags": [
+      {
+        "slug": "structuring"
+      }
+    ]
+  },
+  {
+    "title": "17. Platform Teams",
+    "url": "/17-platform-teams/",
+    "tags": [
+      {
+        "slug": "structuring"
+      }
+    ]
+  },
+  {
+    "title": "18. Self-Managed Teams",
+    "url": "/18-self-managed-teams/",
+    "tags": [
+      {
+        "slug": "structuring"
+      }
+    ]
+  },
+  {
+    "title": "19. Lean Teams",
+    "url": "/19-lean-teams/",
+    "tags": [
+      {
+        "slug": "structuring"
+      }
+    ]
+  },
+  {
+    "title": "20. Talent Marketplace",
+    "url": "/20-talent-marketplace/",
+    "tags": [
+      {
+        "slug": "structuring"
+      }
+    ]
+  },
+  {
+    "title": "21. Guilds",
+    "url": "/21-guilds/",
+    "tags": [
+      {
+        "slug": "structuring"
+      }
+    ]
+  },
+  {
+    "title": "22. Chapters",
+    "url": "/22-chapters/",
+    "tags": [
+      {
+        "slug": "structuring"
+      }
+    ]
+  },
+  {
+    "title": "23. Domains, Assets & Standards",
+    "url": "/23-domains-assets-standards/",
+    "tags": [
+      {
+        "slug": "structuring"
+      }
+    ]
+  },
+  {
+    "title": "24. Upward Representation",
+    "url": "/24-upward-representation/",
+    "tags": [
+      {
+        "slug": "structuring"
+      }
+    ]
+  },
+  {
+    "title": "25. Team Incentives",
+    "url": "/25-team-incentives/",
+    "tags": [
+      {
+        "slug": "structuring"
+      }
+    ]
+  },
+  {
+    "title": "26. Do the Right Thing",
+    "url": "/26-do-the-right-thing/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "27. Active Steering",
+    "url": "/27-active-steering/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "28. Objectives & Key Results",
+    "url": "/28-objectives-key-results/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "29. Strategy Heuristic",
+    "url": "/29-strategy-heuristic/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "30. Structured Decision-Making",
+    "url": "/30-structured-decision-making/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "31. Advice",
+    "url": "/31-advice/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "32. Transparency",
+    "url": "/32-transparency/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "33. Relative Targets",
+    "url": "/33-relative-targets/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "34. Pull Updates",
+    "url": "/34-pull-updates/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "35. Demos",
+    "url": "/35-demos/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "36. Metrics Review",
+    "url": "/36-metrics-review/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "37. Backlog Management",
+    "url": "/37-backlog-management/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "38. Conflict as a Resource",
+    "url": "/38-conflict-as-a-resource/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "39. Conflict Resolution",
+    "url": "/39-conflict-resolution/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "40. Colleague Letter of Understanding",
+    "url": "/40-colleague-letter-of-understanding/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "41. Open Space Technology",
+    "url": "/41-open-space-technology/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "42. Future Backward",
+    "url": "/42-future-backward/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "43. Team Charter",
+    "url": "/43-team-charter/",
+    "tags": [
+      {
+        "slug": "direction"
+      }
+    ]
+  },
+  {
+    "title": "44. Check In & Out",
+    "url": "/44-check-in-out/",
+    "tags": [
+      {
+        "slug": "practice"
+      }
+    ]
+  },
+  {
+    "title": "45. Only Important Notes",
+    "url": "/45-only-important-notes/",
+    "tags": [
+      {
+        "slug": "practice"
+      }
+    ]
+  },
+  {
+    "title": "46. Iterative Shipping",
+    "url": "/46-iterative-shipping/",
+    "tags": [
+      {
+        "slug": "practice"
+      }
+    ]
+  },
+  {
+    "title": "47. Action Meeting",
+    "url": "/47-action-meeting/",
+    "tags": [
+      {
+        "slug": "practice"
+      }
+    ]
+  },
+  {
+    "title": "48. Rounds",
+    "url": "/48-rounds/",
+    "tags": [
+      {
+        "slug": "practice"
+      }
+    ]
+  },
+  {
+    "title": "49. Adaptive Agenda",
+    "url": "/49-adaptive-agenda/",
+    "tags": [
+      {
+        "slug": "practice"
+      }
+    ]
+  },
+  {
+    "title": "50. Work in Public",
+    "url": "/50-work-in-public/",
+    "tags": [
+      {
+        "slug": "practice"
+      }
+    ]
+  },
+  {
+    "title": "51. Meeting Roles",
+    "url": "/51-meeting-roles/",
+    "tags": [
+      {
+        "slug": "practice"
+      }
+    ]
+  },
+  {
+    "title": "52. Triage",
+    "url": "/52-triage/",
+    "tags": [
+      {
+        "slug": "practice"
+      }
+    ]
+  },
+  {
+    "title": "53. Have One Conversation",
+    "url": "/53-have-one-conversation/",
+    "tags": [
+      {
+        "slug": "practice"
+      }
+    ]
+  },
+  {
+    "title": "54. Pairing",
+    "url": "/54-pairing/",
+    "tags": [
+      {
+        "slug": "practice"
+      }
+    ]
+  },
+  {
+    "title": "55. Kanban",
+    "url": "/55-kanban/",
+    "tags": [
+      {
+        "slug": "practice"
+      }
+    ]
+  },
+  {
+    "title": "56. Facilitation",
+    "url": "/56-facilitation/",
+    "tags": [
+      {
+        "slug": "practice"
+      }
+    ]
+  },
+  {
+    "title": "57. Logbook",
+    "url": "/57-logbook/",
+    "tags": [
+      {
+        "slug": "learning"
+      }
+    ]
+  },
+  {
+    "title": "58. Emergent Leadership",
+    "url": "/58-emergent-leadership/",
+    "tags": [
+      {
+        "slug": "learning"
+      }
+    ]
+  },
+  {
+    "title": "59. Health Check",
+    "url": "/59-health-check/",
+    "tags": [
+      {
+        "slug": "learning"
+      }
+    ]
+  },
+  {
+    "title": "60. Hack Day",
+    "url": "/60-hack-day/",
+    "tags": [
+      {
+        "slug": "learning"
+      }
+    ]
+  },
+  {
+    "title": "61. Flow State Work",
+    "url": "/61-flow-state-work/",
+    "tags": [
+      {
+        "slug": "learning"
+      }
+    ]
+  },
+  {
+    "title": "62. Experimentation",
+    "url": "/62-experimentation/",
+    "tags": [
+      {
+        "slug": "learning"
+      }
+    ]
+  },
+  {
+    "title": "63. Team/Process as Product",
+    "url": "/63-team-process-as-product/",
+    "tags": [
+      {
+        "slug": "learning"
+      }
+    ]
+  },
+  {
+    "title": "64. Length Limit",
+    "url": "/64-length-limit/",
+    "tags": [
+      {
+        "slug": "learning"
+      }
+    ]
+  },
+  {
+    "title": "65. Cadence",
+    "url": "/65-cadence/",
+    "tags": [
+      {
+        "slug": "learning"
+      }
+    ]
+  },
+  {
+    "title": "66. Retrospectives",
+    "url": "/66-retrospectives/",
+    "tags": [
+      {
+        "slug": "learning"
+      }
+    ]
+  },
+  {
+    "title": "67. Boundary Management",
+    "url": "/67-boundary-management/",
+    "tags": [
+      {
+        "slug": "learning"
+      }
+    ]
+  },
+  {
+    "title": "68. Process on the Wall",
+    "url": "/68-process-on-the-wall/",
+    "tags": [
+      {
+        "slug": "space"
+      }
+    ]
+  },
+  {
+    "title": "69. Fail Wall",
+    "url": "/69-fail-wall/",
+    "tags": [
+      {
+        "slug": "space"
+      }
+    ]
+  },
+  {
+    "title": "70. No Leadership Offices",
+    "url": "/70-no-leadership-offices/",
+    "tags": [
+      {
+        "slug": "space"
+      }
+    ]
+  },
+  {
+    "title": "71. No Assigned Desks",
+    "url": "/71-no-assigned-desks/",
+    "tags": [
+      {
+        "slug": "space"
+      }
+    ]
+  },
+  {
+    "title": "72. Space for Work",
+    "url": "/72-space-for-work/",
+    "tags": [
+      {
+        "slug": "space"
+      }
+    ]
+  },
+  {
+    "title": "73. Hiding Places",
+    "url": "/73-hiding-places/",
+    "tags": [
+      {
+        "slug": "space"
+      }
+    ]
+  },
+  {
+    "title": "74. Whiteboards at Intersections",
+    "url": "/74-whiteboards-at-intersections/",
+    "tags": [
+      {
+        "slug": "space"
+      }
+    ]
+  },
+  {
+    "title": "75. Movable Everything",
+    "url": "/75-movable-everything/",
+    "tags": [
+      {
+        "slug": "space"
+      }
+    ]
+  }
+]
