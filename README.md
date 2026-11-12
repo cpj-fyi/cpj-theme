@@ -104,8 +104,10 @@ previews fetched without JavaScript.
 
 The automated tests render the actual head/partial against a Ghost-helper
 fixture. After installing, check the served HTML for one `og:image`, one
-`twitter:image`, and one `twitter:card` on a generated-art post, a feature-image
-post, a book page and an archive. Existing Messages previews may remain cached.
+`twitter:image`, and one `twitter:card` on generated-art posts and book pages.
+Check feature-image posts when available. Archives may legitimately have no
+image and use a `summary` card; verify that no duplicate tags are added.
+Existing Messages previews may remain cached.
 
 When installing a versioned ZIP, preserve all custom theme settings from the
 previous installation, including `patternpulse_url`.
