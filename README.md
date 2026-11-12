@@ -38,7 +38,7 @@ npm run package
 
 | Command | What it does |
 | --- | --- |
-| `npm test` | Runs Node tests in `test/` (currently moonphase calculations) |
+| `npm test` | Runs moonphase and social-preview metadata regression tests in `test/` |
 | `npm run validate` | Runs GScan against Ghost theme requirements |
 | `npm run test:reader` | Starts its own fixture server and checks layout at ten widths, sticky titles, chapter shapes, mobile scrolling, pagination, fonts, access guards, and the mocked PatternPulse contract |
 | `npm run package` | Creates `dist/cpj-theme-<version>.zip` using the version in `package.json` |
@@ -85,6 +85,30 @@ The source of truth is `config.custom` in [package.json](package.json). These se
 | `art_url` | Base URL for generated post artwork |
 | `subscriber_count` | Fallback subscriber count |
 | `patternpulse_url` | Deployed PatternPulse HTTPS origin; blank disables the integration |
+
+## Social previews
+
+`default.hbs` leaves social metadata to Ghost for posts/pages with feature images,
+home and archive pages, and installations without `art_url`. For posts/pages
+without a feature image, `partials/post-social-meta.hbs` supplies one OG image and
+one Twitter image: the explicit per-channel social image when set, otherwise the
+generated `art_url/<slug>.png`. Social titles and descriptions retain editor
+overrides. Only generated images are declared as 1200 × 630.
+
+That branch uses `ghost_head exclude="social_data"` so Ghost cannot append the
+site cover as a second preview image. Canonical URLs, SEO metadata, JSON-LD,
+feeds, code injection and Ghost integrations still come from `ghost_head`.
+Do not restore an extra image tag before an unfiltered `ghost_head`: Messages
+can combine both images into a collage. Client-side tag removal cannot fix
+previews fetched without JavaScript.
+
+The automated tests render the actual head/partial against a Ghost-helper
+fixture. After installing, check the served HTML for one `og:image`, one
+`twitter:image`, and one `twitter:card` on a generated-art post, a feature-image
+post, a book page and an archive. Existing Messages previews may remain cached.
+
+When installing a versioned ZIP, preserve all custom theme settings from the
+previous installation, including `patternpulse_url`.
 
 ## Reader architecture
 
