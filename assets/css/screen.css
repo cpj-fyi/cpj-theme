@@ -4186,6 +4186,15 @@ body.tag-radar .content .kg-bookmark-thumbnail {
     transition: background var(--transition-fast);
 }
 
+.search-result-group {
+    padding: var(--space-3) var(--space-5) var(--space-1);
+    margin: 0;
+    font: 11px/1.4 var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+}
+
 .search-result.is-active,
 .search-result:hover {
     background: var(--color-bg-alt);

@@ -11,6 +11,7 @@ This is a Ghost 6 theme, with Handlebars templates, plain CSS, and browser JavaS
 - `assets/css/native-resources.css` and `assets/js/native-resources.js` enhance resource HTML cards stored in Ghost. Preserve their containment, typography, and existing download links.
 - PatternPulse integration lives in `assets/css/pattern-pulse.css`, `assets/js/pattern-pulse.js`, and [docs/patternpulse.md](docs/patternpulse.md). Its API and contribution service are in the separate `cpj-fyi/patternpulse` repository.
 - `assets/js/main.js` contains older site interactions, Markdown transforms, sidenotes, and reading-time calculation. `moonphase.js` contains separately tested lunar calculations.
+- `assets/js/search.js` combines Pagefind posts with bounded, server-side book matches. Keep full book text and its index out of public theme assets and Pagefind exports; see README's site search section.
 
 ## Reader invariants
 

@@ -1,7 +1,7 @@
 {{!--
     Search modal — opens via Cmd+K (Mac) / Ctrl+K (Win/Linux) or the
-    header search button. Powered by Pagefind, which loads its own
-    index from the configured base URL on first open.
+    header search button. Pagefind searches public posts; the book service
+    searches the full text and returns fixed, bounded previews.
 --}}
 <div class="search-modal" id="search-modal" hidden>
     <div class="search-modal-backdrop" data-search-close></div>
@@ -25,8 +25,8 @@
             </button>
         </form>
 
-        <div class="search-modal-results" id="search-results">
-            <p class="search-modal-empty">Type to search posts, essays, and chapters.</p>
+        <div class="search-modal-results" id="search-results" aria-live="polite">
+            <p class="search-modal-empty">Search posts and all 75 book patterns.</p>
         </div>
 
         <div class="search-modal-footer">

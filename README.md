@@ -114,6 +114,24 @@ previous installation, including `patternpulse_url`.
 
 ## Reader architecture
 
+### Site search
+
+`assets/js/search.js` merges Pagefind's public post results with full-book
+matches from `https://mcp.hd-pt.com/search`. Hidden Patterns results appear first,
+with a fixed short opening preview and a chapter link; full chapter access still
+uses Ghost's existing permissions. The private book index never reaches the
+browser. The companion Worker searches all 75 patterns and caps previews at
+40 words / 280 characters. Do not replace it with a public Pagefind book export.
+
+The two sources have independent six-second timeouts. If either fails, the other
+still works. When book search is unavailable, publicly crawled chapter previews
+can appear in Pagefind results. Clearing or closing search cancels the current
+request and discards stale results. `test/search.test.js` covers these cases.
+The public Pagefind index still refreshes through `.github/workflows/pagefind.yml`;
+chapter headings explicitly participate in that index, including gated pages.
+
+### Chapter layout
+
 | Area | Files and behavior |
 | --- | --- |
 | Shared chapter layout | `partials/chapter-reader.hbs`; sidebar title stays visible while its chapter list scrolls |
